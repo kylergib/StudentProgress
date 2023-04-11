@@ -2,6 +2,7 @@ package com.kgibs87.studentprogress;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,8 +25,13 @@ public class MainActivity extends AppCompatActivity {
     public void submitName(View view) {
         //get text in name edit text
         String nameEntered = nameEditText.getText().toString();
-        if (nameEntered.equals("")) Toast.makeText(MainActivity.this, "Name cannot be blank.", Toast.LENGTH_LONG).show();
+        if (nameEntered.equals("")) {
+            Toast.makeText(MainActivity.this, "Name cannot be blank.", Toast.LENGTH_LONG).show();
+            return;
+        }
         Log.d(debugTag, nameEntered);
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardIntent);
 
     }
 }
