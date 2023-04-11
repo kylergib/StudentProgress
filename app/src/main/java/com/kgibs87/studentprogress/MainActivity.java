@@ -26,5 +26,6 @@ public class MainActivity extends AppCompatActivity {
         String nameEntered = nameEditText.getText().toString();
         if (nameEntered.equals("")) Toast.makeText(MainActivity.this, "Name cannot be blank.", Toast.LENGTH_LONG).show();
         Log.d(debugTag, nameEntered);
+
     }
 }
