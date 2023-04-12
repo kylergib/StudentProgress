@@ -1,7 +1,5 @@
 package com.kgibs87.studentprogress;
 
-//public class FreshInstallTest {
-//}
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -30,16 +28,16 @@ public class FreshInstallTest {
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule =
             new ActivityTestRule<>(MainActivity.class,true,false);
 
-    @Before
-    public void clearSharedPreferencesFolder() {
-        // Get a reference to the shared preferences file
-        SharedPreferences sharedPreferences = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        // Clear the shared preferences file
-        sharedPreferences.edit().clear().apply();
-    }
 
     @Test
     public void freshInstallTestSubmit() {
+
+        // Get a reference to the shared preferences file
+        SharedPreferences sharedPreferences =
+                InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        // Clear the shared preferences file
+        sharedPreferences.edit().clear().apply();
         // Initialize Espresso-Intents
         Intents.init();
 
@@ -63,7 +61,6 @@ public class FreshInstallTest {
         Intents.release();
 
     }
-
 
 }
 
