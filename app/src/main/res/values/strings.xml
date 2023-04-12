@@ -3,4 +3,6 @@
     <string name="home_header">Student Progress App</string>
     <string name="name_question">Please Enter Your Name Below:</string>
     <string name="main_submit_button">Submit</string>
+    <string name="welcome_text">Welcome!</string>
+    <string name="dashboard_default_status">You have no terms added. Click the plus to get started.</string>
 </resources>
