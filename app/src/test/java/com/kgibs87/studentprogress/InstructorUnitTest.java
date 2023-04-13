@@ -15,7 +15,7 @@ public class InstructorUnitTest {
         String number = "555-555-5050";
         String email = "testemail@gmail.com";
 
-        Instructor newInstructor = defaultInstructor();
+        Instructor newInstructor = DefaultObjectsForTests.defaultInstructor();
 
         checkInstructorProperties(newInstructor, name, number, email);
     }
@@ -26,7 +26,7 @@ public class InstructorUnitTest {
         String number = "655-555-5050";
         String email = "newemail@gmail.com";
 
-        Instructor newInstructor = defaultInstructor();
+        Instructor newInstructor = DefaultObjectsForTests.defaultInstructor();
 
         newInstructor.setInstructorName(name);
         newInstructor.setInstructorPhoneNumber(number);
@@ -45,14 +45,7 @@ public class InstructorUnitTest {
         assertTrue(nameMatch && numberMatch && emailMatch);
     }
 
-    public Instructor defaultInstructor() {
-        String name = "Test Instructor";
-        String number = "555-555-5050";
-        String email = "testemail@gmail.com";
 
-
-        return new Instructor(name, number, email);
-    }
 
 
 }

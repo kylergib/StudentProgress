@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress;
+package com.kgibs87.studentprogress.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,17 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import com.kgibs87.studentprogress.R;
+
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 public class MainActivity extends AppCompatActivity {
     String debugTag = "Debug";
@@ -46,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void submitName(View view) throws IOException {
+    public void submitName(View view) {
         //get text in name edit text
         String nameEntered = nameEditText.getText().toString();
         if (nameEntered.equals("")) {

@@ -16,7 +16,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import static org.hamcrest.core.AllOf.allOf;
 
-import org.junit.Before;
+import com.kgibs87.studentprogress.view.DashboardActivity;
+import com.kgibs87.studentprogress.view.MainActivity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

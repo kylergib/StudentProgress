@@ -1,5 +1,6 @@
 package com.kgibs87.studentprogress;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import com.kgibs87.studentprogress.model.Assessment;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class AssessmentUnitTest {
         String assessmentType = "Objective";
         LocalDate endDate = LocalDate.of(2023,1,2);
 
-        Assessment testAssessment = defaultObjectiveAssessment();
+        Assessment testAssessment = DefaultObjectsForTests.defaultObjectiveAssessment();
 
         checkMatches(testAssessment,assessmentTitle,assessmentType,endDate);
     }
@@ -26,7 +27,7 @@ public class AssessmentUnitTest {
         String assessmentType = "Performance";
         LocalDate endDate = LocalDate.of(2023,1,3);
 
-        Assessment testAssessment = defaultObjectiveAssessment();
+        Assessment testAssessment = DefaultObjectsForTests.defaultObjectiveAssessment();
 
         testAssessment.setAssessmentTitle(assessmentTitle);
         testAssessment.setAssessmentType(assessmentType);
@@ -44,7 +45,7 @@ public class AssessmentUnitTest {
         LocalDate endDate = LocalDate.of(2023,1,2);
 
 
-        Assessment testAssessment = defaultPerformanceAssessment();
+        Assessment testAssessment = DefaultObjectsForTests.defaultPerformanceAssessment();
 
         checkMatches(testAssessment,assessmentTitle,assessmentType,endDate);
     }
@@ -56,7 +57,7 @@ public class AssessmentUnitTest {
         String assessmentType = "Objective";
         LocalDate endDate = LocalDate.of(2023,1,3);
 
-        Assessment testAssessment = defaultPerformanceAssessment();
+        Assessment testAssessment = DefaultObjectsForTests.defaultPerformanceAssessment();
 
         testAssessment.setAssessmentTitle(assessmentTitle);
         testAssessment.setAssessmentType(assessmentType);
@@ -66,35 +67,15 @@ public class AssessmentUnitTest {
 
     }
 
-
-
-
-    public Assessment defaultPerformanceAssessment() {
-
-        String assessmentTitle = "Test Assessment";
-        String assessmentType = "Performance";
-        LocalDate endDate = LocalDate.of(2023,1,2);
-        Assessment testAssessment = new Assessment(assessmentType, assessmentTitle);
-        testAssessment.setAssessmentEndDate(endDate);
-        return testAssessment;
-    }
-
-    public Assessment defaultObjectiveAssessment() {
-
-        String assessmentTitle = "Test Assessment";
-        String assessmentType = "Objective";
-        LocalDate endDate = LocalDate.of(2023,1,2);
-        Assessment testAssessment = new Assessment(assessmentType, assessmentTitle);
-        testAssessment.setAssessmentEndDate(endDate);
-        return testAssessment;
-    }
-
     public void checkMatches(Assessment testAssessment, String assessmentTitle,
                              String assessmentType, LocalDate endDate) {
-
+        //TODO: change this to assertEquals so it shows comparison in log if test fails.
         boolean titleMatch = testAssessment.getAssessmentTitle().equals(assessmentTitle);
         boolean typeMatch = testAssessment.getAssessmentType().equals(assessmentType);
         boolean dateMatch = testAssessment.getAssessmentEndDate().equals(endDate);
+
+        assertEquals(testAssessment.getAssessmentTitle(), assessmentTitle);
+        assertEquals(testAssessment.getAssessmentType(), assessmentType);
         assertTrue(titleMatch && typeMatch && dateMatch);
     }
 }

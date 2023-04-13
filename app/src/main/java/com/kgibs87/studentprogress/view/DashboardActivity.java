@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress;
+package com.kgibs87.studentprogress.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.kgibs87.studentprogress.R;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -15,7 +17,9 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         TextView welcomeText = findViewById(R.id.welcomeText);
-        welcomeText.setText("Welcome " + MainActivity.sharedPref.getString("name",null));
+//        welcomeText.setText("Welcome " + MainActivity.sharedPref.getString("name",null));
+        String welcomeMessage = getResources().getString(R.string.welcome_text);
+        welcomeText.setText(String.format(welcomeMessage, MainActivity.sharedPref.getString("name",null)));
 
     }
 

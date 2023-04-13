@@ -16,8 +16,6 @@ import static junit.framework.TestCase.assertTrue;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -26,7 +24,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import static org.hamcrest.core.AllOf.allOf;
 
-import org.junit.Before;
+import com.kgibs87.studentprogress.view.DashboardActivity;
+import com.kgibs87.studentprogress.view.MainActivity;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
