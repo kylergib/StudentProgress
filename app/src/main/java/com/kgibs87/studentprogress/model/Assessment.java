@@ -4,40 +4,50 @@ import java.time.LocalDate;
 
 
 public class Assessment {
-    private String assessmentType;
-    private String assessmentTitle;
-    private LocalDate assessmentEndDate;
+    private String type;
+    private String title;
+    private LocalDate endDate;
+    private int id;
+    private String course;
 
-    public Assessment(String assessmentType, String assessmentTitle) {
-        setAssessmentType(assessmentType);
-        setAssessmentTitle(assessmentTitle);
+    public Assessment(String type, String title) {
+        setAssessmentType(type);
+        setAssessmentTitle(title);
     }
 
     public String getAssessmentType() {
-        return assessmentType;
+        return type;
     }
 
-    public void setAssessmentType(String assessmentType) {
+    public void setAssessmentType(String type) {
         //TODO: move logic to activity?
-        boolean isPerformance = assessmentType.equalsIgnoreCase("performance");
-        boolean isObjective = assessmentType.equalsIgnoreCase("objective");
-        if (isPerformance || isObjective) this.assessmentType = assessmentType;
+        boolean isPerformance = type.equalsIgnoreCase("performance");
+        boolean isObjective = type.equalsIgnoreCase("objective");
+        if (isPerformance || isObjective) this.type = type;
 
     }
 
     public String getAssessmentTitle() {
-        return assessmentTitle;
+        return title;
     }
 
-    public void setAssessmentTitle(String assessmentTitle) {
-        this.assessmentTitle = assessmentTitle;
+    public void setAssessmentTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getAssessmentEndDate() {
-        return assessmentEndDate;
+        return endDate;
     }
 
-    public void setAssessmentEndDate(LocalDate assessmentEndDate) {
-        this.assessmentEndDate = assessmentEndDate;
+    public void setAssessmentEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getAssessmentId() {
+        return id;
+    }
+
+    public void setAssessmentId(int id) {
+        this.id = id;
     }
 }

@@ -8,19 +8,25 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.model.StudentDatabase;
+import com.kgibs87.studentprogress.model.User;
 
 public class DashboardActivity extends AppCompatActivity {
+
+    private static StudentDatabase mStudentDb ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+
         TextView welcomeText = findViewById(R.id.welcomeText);
 //        welcomeText.setText("Welcome " + MainActivity.sharedPref.getString("name",null));
         String welcomeMessage = getResources().getString(R.string.welcome_text);
         welcomeText.setText(String.format(welcomeMessage, MainActivity.sharedPref.getString("name",null)));
-
+        User testUser = new User(MainActivity.sharedPref.getString("name",null));
+        mStudentDb = StudentDatabase.getInstance(getApplicationContext());
     }
 
     public void addTermClick(View view) {

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
     private String userName;
-    private List<Term> userTerms;
+    private ArrayList<Term> userTerms;
 
     public User(String userName) {
         this.userName = userName;
@@ -20,8 +20,12 @@ public class User {
         this.userName = userName;
     }
 
-    public List<Term> getUserTerms() {
+    public ArrayList<Term> getUserTerms() {
         return userTerms;
+    }
+
+    public void setUserTerms(ArrayList<Term> userTerms) {
+        this.userTerms = userTerms;
     }
 
     public void addTerm(Term userTerm) {

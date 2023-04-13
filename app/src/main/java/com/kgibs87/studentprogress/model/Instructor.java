@@ -1,38 +1,40 @@
 package com.kgibs87.studentprogress.model;
 
 public class Instructor {
-    private String instructorName;
-    private String instructorPhoneNumber;
-    private String instructorEmail;
+    private int id;
+    private String name;
+    private String number;
+    private String email;
+    private String course;
 
-    public Instructor(String instructorName, String instructorPhoneNumber, String instructorEmail) {
-        this.instructorName = instructorName;
-        this.instructorPhoneNumber = instructorPhoneNumber;
-        this.instructorEmail = instructorEmail;
+    public Instructor(String name, String number, String email) {
+        this.name = name;
+        this.number = number;
+        this.email = email;
     }
 
     public String getInstructorName() {
-        return instructorName;
+        return name;
     }
 
-    public void setInstructorName(String instructorName) {
-        this.instructorName = instructorName;
+    public void setInstructorName(String name) {
+        this.name = name;
     }
 
     public String getInstructorPhoneNumber() {
-        return instructorPhoneNumber;
+        return number;
     }
 
-    public void setInstructorPhoneNumber(String instructorPhoneNumber) {
-        this.instructorPhoneNumber = instructorPhoneNumber;
+    public void setInstructorPhoneNumber(String number) {
+        this.number = number;
     }
 
     public String getInstructorEmail() {
-        return instructorEmail;
+        return email;
     }
 
-    public void setInstructorEmail(String instructorEmail) {
-        this.instructorEmail = instructorEmail;
+    public void setInstructorEmail(String email) {
+        this.email = email;
     }
 
 

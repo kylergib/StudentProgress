@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.model.StudentDatabase;
 
 import java.io.IOException;
 
@@ -22,16 +23,20 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences sharedPref;
     public static SharedPreferences.Editor sharedPrefEditor;
 
+    private static StudentDatabase mStudentDb ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         sharedPref = getSharedPreferences("preferences",Context.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();
-
+        //todo: change the check to reading from sqlite database
         if (sharedPref.getString("name",null) == null) {
             setContentView(R.layout.activity_main);
             nameEditText = findViewById(R.id.nameEditText);
+            mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         } else {
             startDashboard();
         }

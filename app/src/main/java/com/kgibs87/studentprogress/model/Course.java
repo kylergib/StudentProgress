@@ -1,18 +1,62 @@
 package com.kgibs87.studentprogress.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Course {
-    private String courseName;
-    private List<Assessment> courseAssessments;
-    private List<String> courseNotes;
-    private Date courseStartDate;
-    private Date courseEndDate;
-    private List<Instructor> courseInstructors;
-    private String courseStatus;
+    private String name;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String status;
+    private String id;
+    private String term;
 
+    public Course(String name, ArrayList<Assessment> assessments,
+                  ArrayList<String> notes, LocalDate startDate,
+                  LocalDate endDate, ArrayList<Instructor> courseInstructors,
+                  String status) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+    }
 
+    public Course(String name, ArrayList<String> notes) {
+        this.name = name;
+    }
 
+    public String getCourseName() {
+        return name;
+    }
 
+    public void setCourseName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getCourseStartDate() {
+        return startDate;
+    }
+
+    public void setCourseStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getCourseEndDate() {
+        return endDate;
+    }
+
+    public void setCourseEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getCourseStatus() {
+        //TODO: logic for (in progress, completed, dropped, plan to take)
+        return status;
+    }
+
+    public void setCourseStatus(String status) {
+        this.status = status;
+    }
 }
