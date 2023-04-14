@@ -15,6 +15,14 @@ public class Assessment {
         setAssessmentTitle(title);
     }
 
+    public Assessment(String type, String title, LocalDate endDate, int id, String course) {
+        this.type = type;
+        this.title = title;
+        this.endDate = endDate;
+        this.id = id;
+        this.course = course;
+    }
+
     public String getAssessmentType() {
         return type;
     }
@@ -49,5 +57,13 @@ public class Assessment {
 
     public void setAssessmentId(int id) {
         this.id = id;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 }

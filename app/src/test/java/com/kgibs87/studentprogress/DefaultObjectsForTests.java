@@ -3,6 +3,7 @@ package com.kgibs87.studentprogress;
 import com.kgibs87.studentprogress.model.Assessment;
 import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.Instructor;
+import com.kgibs87.studentprogress.model.Note;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,23 +36,19 @@ public class DefaultObjectsForTests {
         String number = "555-555-5050";
         String email = "testemail@gmail.com";
 
-        return new Instructor(name, number, email);
+        return new Instructor(1, name, number, email, defaultCourse().getCourseName());
     }
 
     public static Course defaultCourse() {
         String courseName = "C100 - Test";
-        ArrayList<Assessment> courseAssessments = new ArrayList<>();
-        ArrayList<String> courseNotes = new ArrayList<>();
-        courseNotes.add("Test Note 1");
         LocalDate courseStartDate = LocalDate.of(2023,1,2);
         LocalDate courseEndDate = LocalDate.of(2023,2,2);
-        ArrayList<Instructor> courseInstructors = new ArrayList<>();
         String courseStatus = "plan to take";
 
-        courseAssessments.add(defaultPerformanceAssessment());
-        courseInstructors.add(defaultInstructor());
-
-        return new Course(courseName,courseAssessments,courseNotes,courseStartDate,
-                courseEndDate,courseInstructors,courseStatus);
+        return new Course(courseName,courseStartDate,
+                courseEndDate,courseStatus);
+    }
+    public static Note defaultNote() {
+        return new Note("This is a test note", defaultCourse().getCourseName(),1);
     }
 }

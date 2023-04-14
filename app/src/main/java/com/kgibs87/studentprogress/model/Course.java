@@ -13,10 +13,8 @@ public class Course {
     private String id;
     private String term;
 
-    public Course(String name, ArrayList<Assessment> assessments,
-                  ArrayList<String> notes, LocalDate startDate,
-                  LocalDate endDate, ArrayList<Instructor> courseInstructors,
-                  String status) {
+    public Course(String name, LocalDate startDate,
+                  LocalDate endDate, String status) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -58,5 +56,21 @@ public class Course {
 
     public void setCourseStatus(String status) {
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
     }
 }

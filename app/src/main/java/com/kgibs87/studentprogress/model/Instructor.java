@@ -7,10 +7,12 @@ public class Instructor {
     private String email;
     private String course;
 
-    public Instructor(String name, String number, String email) {
+    public Instructor(int id, String name, String number, String email, String course) {
+        this.id = id;
         this.name = name;
         this.number = number;
         this.email = email;
+        this.course = course;
     }
 
     public String getInstructorName() {
@@ -37,5 +39,19 @@ public class Instructor {
         this.email = email;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
 }
