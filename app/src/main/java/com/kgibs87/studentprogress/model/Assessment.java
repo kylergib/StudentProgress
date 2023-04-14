@@ -15,7 +15,7 @@ public class Assessment {
         setAssessmentTitle(title);
     }
 
-    public Assessment(String type, String title, LocalDate endDate, int id, String course) {
+    public Assessment(int id, String type, String title, LocalDate endDate,  String course) {
         this.type = type;
         this.title = title;
         this.endDate = endDate;

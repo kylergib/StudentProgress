@@ -12,20 +12,20 @@ import java.util.List;
 public class DefaultObjectsForTests {
 
     public static Assessment defaultPerformanceAssessment() {
-        String assessmentTitle = "Test Assessment";
+        String assessmentTitle = "Performance Assessment";
         String assessmentType = "Performance";
         LocalDate endDate = LocalDate.of(2023,1,2);
-        Assessment testAssessment = new Assessment(assessmentType, assessmentTitle);
+        Assessment testAssessment = new Assessment(1, assessmentType, assessmentTitle, endDate, "Test Course");
         testAssessment.setAssessmentEndDate(endDate);
 
         return testAssessment;
     }
 
     public static Assessment defaultObjectiveAssessment() {
-        String assessmentTitle = "Test Assessment";
+        String assessmentTitle = "Objective Assessment";
         String assessmentType = "Objective";
         LocalDate endDate = LocalDate.of(2023,1,2);
-        Assessment testAssessment = new Assessment(assessmentType, assessmentTitle);
+        Assessment testAssessment = new Assessment(2, assessmentType, assessmentTitle, endDate, "Test Course");
         testAssessment.setAssessmentEndDate(endDate);
 
         return testAssessment;
