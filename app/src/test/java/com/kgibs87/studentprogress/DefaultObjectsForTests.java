@@ -4,6 +4,7 @@ import com.kgibs87.studentprogress.model.Assessment;
 import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.Instructor;
 import com.kgibs87.studentprogress.model.Note;
+import com.kgibs87.studentprogress.model.Term;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -51,5 +52,9 @@ public class DefaultObjectsForTests {
     }
     public static Note defaultNote() {
         return new Note("This is a test note", defaultCourse().getCourseName(),1);
+    }
+
+    public static Term defaultTerm() {
+        return new Term("Spring Term", LocalDate.of(2023,1,1),LocalDate.of(2023,6,30),1);
     }
 }
