@@ -33,7 +33,7 @@ public class DefaultObjectsForTests {
 
     public static Instructor defaultInstructor() {
         String name = "Test Instructor";
-        String number = "555-555-5050";
+        String number = "5555555050";
         String email = "testemail@gmail.com";
 
         return new Instructor(1, name, number, email, defaultCourse().getCourseName());

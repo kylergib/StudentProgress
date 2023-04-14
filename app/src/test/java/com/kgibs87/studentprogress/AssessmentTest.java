@@ -16,18 +16,19 @@ public class AssessmentTest {
 
     @Before
     public void setDefaultAssessment() {
-        objectiveAssessment = DefaultObjectsForTests.defaultObjectiveAssessment();
         performanceAssessment = DefaultObjectsForTests.defaultPerformanceAssessment();
     }
 
     @Test
     public void getAssessmentType() {
+        objectiveAssessment = DefaultObjectsForTests.defaultObjectiveAssessment();
         assertEquals("Performance",performanceAssessment.getAssessmentType());
         assertEquals("Objective",objectiveAssessment.getAssessmentType());
     }
 
     @Test
     public void setAssessmentType() {
+        objectiveAssessment = DefaultObjectsForTests.defaultObjectiveAssessment();
         performanceAssessment.setAssessmentType("Objective");
         objectiveAssessment.setAssessmentType("Performance");
 
