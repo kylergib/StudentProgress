@@ -10,19 +10,18 @@ public class Course {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
-    private String id;
+    private int id;
     private String term;
 
     public Course(String name, LocalDate startDate,
-                  LocalDate endDate, String status) {
+                  LocalDate endDate, String status,
+                  int id, String term) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
-    }
-
-    public Course(String name, ArrayList<String> notes) {
-        this.name = name;
+        this.id = id;
+        this.term = term;
     }
 
     public String getCourseName() {
@@ -58,11 +57,11 @@ public class Course {
         this.status = status;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

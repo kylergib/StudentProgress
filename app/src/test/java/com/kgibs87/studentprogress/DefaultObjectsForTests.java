@@ -46,7 +46,8 @@ public class DefaultObjectsForTests {
         String courseStatus = "plan to take";
 
         return new Course(courseName,courseStartDate,
-                courseEndDate,courseStatus);
+                courseEndDate,courseStatus,
+                1,"Spring Term");
     }
     public static Note defaultNote() {
         return new Note("This is a test note", defaultCourse().getCourseName(),1);
