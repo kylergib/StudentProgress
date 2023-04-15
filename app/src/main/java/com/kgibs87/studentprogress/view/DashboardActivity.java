@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.model.StudentDatabase;
-import com.kgibs87.studentprogress.model.User;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -25,7 +24,6 @@ public class DashboardActivity extends AppCompatActivity {
 //        welcomeText.setText("Welcome " + MainActivity.sharedPref.getString("name",null));
         String welcomeMessage = getResources().getString(R.string.welcome_text);
         welcomeText.setText(String.format(welcomeMessage, MainActivity.sharedPref.getString("name",null)));
-        User testUser = new User(MainActivity.sharedPref.getString("name",null));
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
     }
 

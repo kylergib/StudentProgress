@@ -16,7 +16,7 @@ public class Assessment {
     }
 
     public Assessment(int id, String type, String title, LocalDate endDate,  String course) {
-        this.type = type;
+        setAssessmentType(type);
         this.title = title;
         this.endDate = endDate;
         this.id = id;
@@ -28,7 +28,6 @@ public class Assessment {
     }
 
     public void setAssessmentType(String type) {
-        //TODO: move logic to activity?
         boolean isPerformance = type.equalsIgnoreCase("performance");
         boolean isObjective = type.equalsIgnoreCase("objective");
         if (isPerformance || isObjective) this.type = type;

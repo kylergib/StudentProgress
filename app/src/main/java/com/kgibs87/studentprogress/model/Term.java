@@ -1,7 +1,6 @@
 package com.kgibs87.studentprogress.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Term {
     private String name;

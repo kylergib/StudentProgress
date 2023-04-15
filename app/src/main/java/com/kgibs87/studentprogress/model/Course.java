@@ -1,9 +1,6 @@
 package com.kgibs87.studentprogress.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Course {
     private String name;
@@ -19,7 +16,7 @@ public class Course {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
+        setCourseStatus(status);
         this.id = id;
         this.term = term;
     }
@@ -49,12 +46,17 @@ public class Course {
     }
 
     public String getCourseStatus() {
-        //TODO: logic for (in progress, completed, dropped, plan to take)
         return status;
     }
 
     public void setCourseStatus(String status) {
-        this.status = status;
+        boolean isInProgress = status.equalsIgnoreCase("in progress");
+        boolean isCompleted = status.equalsIgnoreCase("completed");
+        boolean isDropped = status.equalsIgnoreCase("dropped");
+        boolean isPlanToTake = status.equalsIgnoreCase("plan to take");
+
+        if (isInProgress || isCompleted || isDropped || isPlanToTake)
+            this.status = status;
     }
 
     public int getId() {

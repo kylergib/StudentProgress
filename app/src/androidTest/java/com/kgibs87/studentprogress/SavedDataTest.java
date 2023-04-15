@@ -74,9 +74,9 @@ public class SavedDataTest {
         intended(allOf(
                 hasComponent(DashboardActivity.class.getName())
         ));
-
+        
         onView(ViewMatchers.withId(R.id.welcomeText))
-                .check(matches(withText("Welcome " + sharedPref.getString("name", null))));
+                .check(matches(withText(String.format("Welcome, %s!", sharedPref.getString("name", null)))));
 
         // Must be called at end of each test case
         Intents.release();

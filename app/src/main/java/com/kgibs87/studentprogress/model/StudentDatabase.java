@@ -1,11 +1,9 @@
 package com.kgibs87.studentprogress.model;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.util.Log;
 
 public class StudentDatabase extends SQLiteOpenHelper {
 
@@ -25,11 +23,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
         }
         return mStudentDb;
     }
-    //tODO: remove usertable, i dont think i am going to use it since it is only 1 person per app/device
-//    private static final class UserTable {
-//        private static final String TABLE = "User";
-//        private static final String COL_NAME = "name";
-//    }
+
 
     private static final class TermTable {
         private static final String TABLE = "Terms";
@@ -79,17 +73,14 @@ public class StudentDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-//        sqLiteDatabase.execSQL("create table " + UserTable.TABLE + " (" +
-//                UserTable.COL_NAME + " primary key)");
-
-        // Create questions table with foreign key that cascade deletes
+        // Create terms table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + TermTable.TABLE + " (" +
                 TermTable.COL_ID + " integer primary key autoincrement, " +
                 TermTable.COL_NAME + ", " +
                 TermTable.COL_START_DATE + ", " +
                 TermTable.COL_END_DATE+ ")");
 
-        // Create questions table with foreign key that cascade deletes
+        // Create courses table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + CourseTable.TABLE + " (" +
                 CourseTable.COL_ID + " integer primary key autoincrement, " +
                 CourseTable.COL_NAME + ", " +
@@ -101,7 +92,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 TermTable.TABLE + "(" + TermTable.COL_NAME + ") on delete cascade)");
 
 
-        // Create questions table with foreign key that cascade deletes
+        // Create assessments table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + AssessmentTable.TABLE + " (" +
                 AssessmentTable.COL_ID + " integer primary key autoincrement, " +
                 AssessmentTable.COL_TYPE + ", " +
@@ -111,7 +102,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 "foreign key(" + AssessmentTable.COL_COURSE + ") references " +
                 CourseTable.TABLE + "(" + CourseTable.COL_NAME + ") on delete cascade)");
 
-        // Create questions table with foreign key that cascade deletes
+        // Create instructors table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + InstructorTable.TABLE + " (" +
                 InstructorTable.COL_ID + " integer primary key autoincrement, " +
                 InstructorTable.COL_NAME + ", " +
@@ -121,6 +112,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 "foreign key(" + InstructorTable.COL_COURSE + ") references " +
                 CourseTable.TABLE + "(" + CourseTable.COL_NAME + ") on delete cascade)");
 
+        // Create notes table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + NoteTable.TABLE + " (" +
                 NoteTable.COL_ID + " integer primary key autoincrement, " +
                 NoteTable.COL_MESSAGE + ", " +
@@ -133,7 +125,8 @@ public class StudentDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("drop table if exists " + UserTable.TABLE);
+        //todo: add all tables later, example below
+//        db.execSQL("drop table if exists " + AssessmentTable.TABLE);
 //        onCreate(db);
     }
 
@@ -150,12 +143,5 @@ public class StudentDatabase extends SQLiteOpenHelper {
         }
     }
 
-//    public boolean addUser(User user) {
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(UserTable.COL_NAME, user.getUserName());
-//        long id = db.insert(UserTable.TABLE, null, values);
-//        return id != -1;
-//    }
 
 }
