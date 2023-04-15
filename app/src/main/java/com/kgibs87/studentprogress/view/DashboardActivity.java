@@ -21,7 +21,6 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         TextView welcomeText = findViewById(R.id.welcomeText);
-//        welcomeText.setText("Welcome " + MainActivity.sharedPref.getString("name",null));
         String welcomeMessage = getResources().getString(R.string.welcome_text);
         welcomeText.setText(String.format(welcomeMessage, MainActivity.sharedPref.getString("name",null)));
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
