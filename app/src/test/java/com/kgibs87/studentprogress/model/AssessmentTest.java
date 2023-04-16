@@ -1,8 +1,6 @@
-package com.kgibs87.studentprogress;
+package com.kgibs87.studentprogress.model;
 
 import static org.junit.Assert.*;
-
-import com.kgibs87.studentprogress.model.Assessment;
 
 import org.junit.Before;
 import org.junit.Test;
