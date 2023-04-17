@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.view;
+package com.kgibs87.studentprogress.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.model.StudentDatabase;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     String debugTag = "Debug";
