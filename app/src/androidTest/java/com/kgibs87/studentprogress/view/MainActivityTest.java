@@ -28,31 +28,24 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule =
             new ActivityTestRule<>(MainActivity.class,true,false);
 
-//    @Rule
-//    public ActivityTestRule<DashboardActivity> dashboardActivityActivityTestRule =
-//            new ActivityTestRule<>(DashboardActivity.class,true,false);
-
-
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         // Get a reference to the shared preferences file
         sharedPreferences =
                 InstrumentationRegistry.getInstrumentation().getTargetContext()
                         .getSharedPreferences("preferences", Context.MODE_PRIVATE);
         // Clear the shared preferences file
         sharedPreferences.edit().clear().apply();
-
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 
     @Test
