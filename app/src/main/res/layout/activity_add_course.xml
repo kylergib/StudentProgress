@@ -53,6 +53,26 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/courseNameView" />
+            <TextView
+                android:id="@+id/statusNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/status"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <Spinner
+                android:id="@+id/statusSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:prompt="@string/status"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
 
             <TextView
                 android:id="@+id/startDate"
