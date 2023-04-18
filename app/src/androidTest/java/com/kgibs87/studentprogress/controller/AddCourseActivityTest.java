@@ -1,5 +1,6 @@
 package com.kgibs87.studentprogress.controller;
 
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -19,6 +20,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.kgibs87.studentprogress.AddInstructorActivity;
+import com.kgibs87.studentprogress.AddNoteActivity;
 import com.kgibs87.studentprogress.R;
 
 import org.junit.After;
@@ -27,59 +30,69 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
-@RunWith(AndroidJUnit4.class)
-public class AddTermActivityTest {
+public class AddCourseActivityTest {
 
     @Rule
     public ActivityTestRule<AddTermActivity> addTermActivityTestRule =
             new ActivityTestRule<>(AddTermActivity.class,true,false);
 
-    @Rule
-    public ActivityTestRule<DashboardActivity> dashboardActivityTestRule =
-            new ActivityTestRule<>(DashboardActivity.class,true,false);
-
     @Before
     public void setUp() throws Exception {
-
         // Initialize Espresso-Intents
         Intents.init();
 
         // Start dashboardActivity
-        dashboardActivityTestRule.launchActivity(null);
-        // clicks button to add term
-        onView(withId(R.id.addTermButton)).perform(click());
-    }
+        addTermActivityTestRule.launchActivity(null);
 
+        onView(withId(R.id.addCourseButton))
+                .perform(ViewActions.scrollTo());
+
+        onView(withId(R.id.addCourseButton)).perform(click());
+    }
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         Intents.release();
     }
+    @Test
+    public void addAssessmentClick() {
 
+        onView(withId(R.id.addAssessmentButton))
+                .perform(ViewActions.scrollTo());
+        onView(withId(R.id.addAssessmentButton)).perform(click());
+
+        intended(hasComponent(AddAssessmentActivity.class.getName()));
+    }
+    @Test
+    public void addInstructorClick() {
+        onView(withId(R.id.addInstructorButton))
+                .perform(ViewActions.scrollTo());
+        onView(withId(R.id.addInstructorButton)).perform(click());
+
+        intended(hasComponent(AddInstructorActivity.class.getName()));
+    }
+    @Test
+    public void addNoteClick() {
+        onView(withId(R.id.addNoteButton))
+                .perform(ViewActions.scrollTo());
+
+        onView(withId(R.id.addNoteButton)).perform(click());
+
+        intended(hasComponent(AddNoteActivity.class.getName()));
+    }
+    @Test
+    public void cancelCourseClick() {
+        onView(withId(R.id.cancelCourseButton))
+                .perform(ViewActions.scrollTo());
+
+        onView(withId(R.id.cancelCourseButton)).perform(click());
+        onView(withId(R.id.termNameView))
+                .perform(ViewActions.scrollTo());
+        onView(withId(R.id.termNameView)).check(matches(isDisplayed()));
+
+    }
     @Test
     public void addCourseClick() {
+        //TODO: add test once i add the logic for the course prolly?
     }
 
-    @Test
-    public void cancelTermClick() {
-
-        onView(withId(R.id.cancelTermButton))
-                .perform(ViewActions.scrollTo());
-
-        onView(withId(R.id.cancelTermButton)).perform(click());
-        onView(withId(R.id.listTermsLayout)).check(matches(isDisplayed()));
-
-
-    }
-
-    @Test
-    public void addTermClick() {
-
-        onView(withId(R.id.addTermButton))
-                .perform(ViewActions.scrollTo());
-        onView(withId(R.id.addTermButton)).perform(click());
-        onView(withId(R.id.listTermsLayout)).check(matches(isDisplayed()));
-        //TODO: add check that new term is showing on dashboard now
-
-    }
 }

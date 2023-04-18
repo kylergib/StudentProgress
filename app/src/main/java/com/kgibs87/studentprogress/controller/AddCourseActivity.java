@@ -2,12 +2,15 @@ package com.kgibs87.studentprogress.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.kgibs87.studentprogress.AddInstructorActivity;
+import com.kgibs87.studentprogress.AddNoteActivity;
 import com.kgibs87.studentprogress.R;
 
 import java.util.Arrays;
@@ -37,13 +40,18 @@ public class AddCourseActivity extends AppCompatActivity {
         });
     }
     public void addAssessmentClick(View view) {
+        Intent assessmentIntent = new Intent(getApplicationContext(), AddAssessmentActivity.class);
+        startActivity(assessmentIntent);
 
     }
     public void addInstructorClick(View view) {
+        Intent instructorIntent = new Intent(getApplicationContext(), AddInstructorActivity.class);
+        startActivity(instructorIntent);
 
     }
     public void addNoteClick(View view) {
-
+        Intent noteIntent = new Intent(getApplicationContext(), AddNoteActivity.class);
+        startActivity(noteIntent);
     }
     public void cancelCourseClick(View view) {
         finish();
