@@ -22,6 +22,7 @@ public class AddCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+
         List<String> statusList = Arrays.asList("in progress", "completed", "dropped", "plan to take");
         Spinner spinner = findViewById(R.id.statusSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, statusList);

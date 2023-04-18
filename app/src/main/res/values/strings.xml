@@ -24,7 +24,9 @@
     <string name="notes"><u>Notes</u></string>
     <string name="add_note">Add Note</string>
     <string name="status"><u>Status</u></string>
-
+    <string name="assessment_header"><u>Assessment</u></string>
+    <string name="assessment_type_sub"><u>Assessment Type</u></string>
+    <string name="assessment_name"><u>Assessment Name</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
