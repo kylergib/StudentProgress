@@ -12,6 +12,9 @@
         android:theme="@style/Theme.StudentProgress"
         tools:targetApi="31">
         <activity
+            android:name=".controller.AddCourseActivity"
+            android:exported="false" />
+        <activity
             android:name=".controller.AddTermActivity"
             android:exported="false" />
         <activity

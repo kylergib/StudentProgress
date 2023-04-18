@@ -76,7 +76,7 @@ public class DashboardActivityTest {
 //        SharedPreferences sharedPref = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
         onView(withId(R.id.addTermButton)).perform(click());
-        intended(hasComponent(TermDetailsActivity.class.getName())
+        intended(hasComponent(AddTermActivity.class.getName())
         );
 
 

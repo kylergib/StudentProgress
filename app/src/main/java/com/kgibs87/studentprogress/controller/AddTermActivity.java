@@ -2,6 +2,7 @@ package com.kgibs87.studentprogress.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,8 @@ public class AddTermActivity extends AppCompatActivity {
 
     public void addCourseClick(View view) {
         Log.d("Debug-teg", "addcourseclicked");
+        Intent courseIntent = new Intent(getApplicationContext(), AddCourseActivity.class);
+        startActivity(courseIntent);
     }
 
     public void cancelTermClick(View view) {

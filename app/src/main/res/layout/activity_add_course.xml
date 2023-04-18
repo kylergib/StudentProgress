@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.AddTermActivity"
-    >
+    tools:context=".controller.AddCourseActivity">
 
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,13 +19,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/header_margin_top"
-                android:text="@string/add_term_header"
+                android:text="@string/add_course_header"
                 android:textSize="@dimen/header_text_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -35,11 +32,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/termNameView"
+                android:id="@+id/courseNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/header_margin_top"
-                android:text="@string/add_term_name"
+                android:text="@string/course_name"
                 android:textSize="@dimen/sub_header_text_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +44,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
 
             <EditText
-                android:id="@+id/termNameEditText"
+                android:id="@+id/courseNameEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="15"
@@ -55,7 +52,7 @@
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termNameView" />
+                app:layout_constraintTop_toBottomOf="@+id/courseNameView" />
 
             <TextView
                 android:id="@+id/startDate"
@@ -67,7 +64,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termNameEditText" />
+                app:layout_constraintTop_toBottomOf="@+id/courseNameEditText" />
 
             <DatePicker
                 android:id="@+id/startDatePicker"
@@ -104,11 +101,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/endDate" />
 
             <TextView
-                android:id="@+id/courses"
+                android:id="@+id/assessments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/header_margin_top"
-                android:text="@string/courses"
+                android:text="@string/assessments"
                 android:textSize="@dimen/sub_header_text_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,45 +113,98 @@
                 app:layout_constraintTop_toBottomOf="@+id/endDatePicker" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/courseRecyclerView"
+                android:id="@+id/assessmentsRecyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+                app:layout_constraintTop_toBottomOf="@+id/assessments" />
 
             <Button
+                android:id="@+id/addAssessmentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="addCourseClick"
-                android:text="@string/add_course_button" />
+                android:onClick="addAssessmentClick"
+                android:text="@string/add_assessment_button" />
+
+            <TextView
+                android:id="@+id/instructors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructors"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/endDatePicker" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/instructorsRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instructors" />
+
+            <Button
+                android:id="@+id/addInstructorButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addInstructorClick"
+                android:text="@string/add_instructor" />
+
+            <TextView
+                android:id="@+id/notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/notes"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notesRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/addNoteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addNoteClick"
+                android:text="@string/add_note" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/buttonBottom"
-                android:layout_marginBottom="@dimen/buttonBottom"
-
-                >
+                android:layout_marginBottom="@dimen/buttonBottom">
 
                 <Button
-                    android:id="@+id/cancelTermButton"
+                    android:id="@+id/cancelCourseButton"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/buttonBottom"
-                    android:onClick="cancelTermClick"
+                    android:onClick="cancelCourseClick"
                     android:text="@string/cancel"
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/addTermButton"
+                    android:id="@+id/addCourseButton"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="addTermClick"
-                    android:text="@string/add_term"
+                    android:onClick="addCourseClick"
+                    android:text="@string/add_course"
                     android:textStyle="bold" />
 
             </LinearLayout>

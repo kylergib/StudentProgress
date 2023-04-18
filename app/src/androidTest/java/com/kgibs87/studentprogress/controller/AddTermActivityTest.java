@@ -58,6 +58,7 @@ public class AddTermActivityTest {
     @Test
     public void addCourseClick() {
         //TODO: add test for adding course once you create add course activity
+        Intents.release();
     }
 
     @Test
@@ -79,6 +80,7 @@ public class AddTermActivityTest {
                 .perform(ViewActions.scrollTo());
         onView(withId(R.id.addTermButton)).perform(click());
         onView(withId(R.id.listTermsLayout)).check(matches(isDisplayed()));
+        //TODO: add check that new term is showing on dashboard now
 
         Intents.release();
     }
