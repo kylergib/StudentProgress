@@ -2,7 +2,8 @@
 <!-- dimens.xml -->
 <resources>
     <dimen name="header_text_size">35sp</dimen>
-    <dimen name="header_margin_top">15dp</dimen>
+    <dimen name="header_margin_top">10dp</dimen>
+    <dimen name="buttonBottom">20dp</dimen>
 
     <dimen name="sub_header_text_size">25sp</dimen>
 </resources>

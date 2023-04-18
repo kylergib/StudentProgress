@@ -72,7 +72,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void addTermClick(View view) {
-        Intent termIntent = new Intent(this, TermDetailsActivity.class);
+        Intent termIntent = new Intent(this, AddTermActivity.class);
         startActivity(termIntent);
     }
 
@@ -100,6 +100,10 @@ public class DashboardActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.i("INFO_TAG", "Clicking Test 1");
+
+            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+            startActivity(termIntent);
+
             // Start QuestionActivity, indicating what subject was clicked
             //TODO: finish what clicking the term does
 //            Intent intent = new Intent(SubjectActivity.this, QuestionActivity.class);

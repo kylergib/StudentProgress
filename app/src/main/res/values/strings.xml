@@ -5,6 +5,16 @@
     <string name="main_submit_button">Submit</string>
     <string name="welcome_text">Welcome, %s!</string>
     <string name="dashboard_default_status">You have no terms added. Click the plus to get started.</string>
+    <string name="add_term_name"><u>Term Name</u></string>
+    <string name="add_term_header"><u>Add Term</u></string>
+    <string name="add_term">Add Term</string>
+    <string name="start_date"><u>Start Date</u></string>
+    <string name="end_date"><u>End Date</u></string>
+    <string name="submit">Submit</string>
+    <string name="courses"><u>Courses</u></string>
+    <string name="add_course_button">Add Course</string>
+    <string name="cancel">Cancel</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
