@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.AddTermActivity">
+    tools:context=".controller.AddTermActivity"
+    >
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        tools:layout_editor_absoluteX="16dp"
+        tools:context=".controller.AddTermActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,13 +123,14 @@
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/welcomeText"/>
+                app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_course_button"
-                android:onClick="addCourseClick"/>
+                android:onClick="addCourseClick"
+                android:text="@string/add_course_button" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,22 +138,25 @@
                 android:layout_marginBottom="@dimen/buttonBottom"
 
                 >
+
                 <Button
+                    android:id="@+id/cancelTermButton"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/cancel"
-                    android:textStyle="bold"
                     android:layout_marginEnd="@dimen/buttonBottom"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:onClick="cancelTermClick"/>
+                    android:onClick="cancelTermClick"
+                    android:text="@string/cancel"
+                    android:textStyle="bold" />
+
                 <Button
                     android:id="@+id/addTermButton"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="addTermClick"
                     android:text="@string/add_term"
-                    android:textStyle="bold"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:onClick="addTermClick"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>

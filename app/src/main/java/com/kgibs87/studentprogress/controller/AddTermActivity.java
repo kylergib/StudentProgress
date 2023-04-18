@@ -22,9 +22,14 @@ public class AddTermActivity extends AppCompatActivity {
 
     public void cancelTermClick(View view) {
         Log.d("Debug-teg", "canceltermclicekd");
+        finish();
     }
 
     public void addTermClick(View view) {
         Log.d("Debug-teg", "addTermClick");
+
+        //TODO: create term object and add to sqlite
+
+        finish();
     }
 }
