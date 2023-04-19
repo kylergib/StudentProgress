@@ -9,8 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.kgibs87.studentprogress.AddInstructorActivity;
-import com.kgibs87.studentprogress.AddNoteActivity;
 import com.kgibs87.studentprogress.R;
 
 import java.util.Arrays;

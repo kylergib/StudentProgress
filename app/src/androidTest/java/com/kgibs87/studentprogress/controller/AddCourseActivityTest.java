@@ -10,25 +10,16 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.kgibs87.studentprogress.AddInstructorActivity;
-import com.kgibs87.studentprogress.AddNoteActivity;
 import com.kgibs87.studentprogress.R;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 public class AddCourseActivityTest {
 

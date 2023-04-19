@@ -12,10 +12,10 @@
         android:theme="@style/Theme.StudentProgress"
         tools:targetApi="31">
         <activity
-            android:name=".AddNoteActivity"
+            android:name=".controller.AddNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".AddInstructorActivity"
+            android:name=".controller.AddInstructorActivity"
             android:exported="false" />
         <activity
             android:name=".controller.AddAssessmentActivity"

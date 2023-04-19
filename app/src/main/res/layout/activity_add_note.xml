@@ -4,11 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddNoteActivity">
-    <TextView
+    tools:context=".controller.AddNoteActivity">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Note"
-        android:textSize="@dimen/header_text_size"/>
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"
+            android:textSize="@dimen/header_text_size"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/startDateFragmentContainer"
+             />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/endDateFragmentContainer"
+            />
+        <Button
+            android:id="@+id/testClickButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="testClick"
+            android:text="@string/submit"
+            android:textStyle="bold" />
 
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
