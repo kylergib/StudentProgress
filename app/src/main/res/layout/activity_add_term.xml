@@ -29,10 +29,7 @@
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:text="@string/add_term_header"
                 android:textSize="@dimen/header_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/termNameView"
@@ -41,10 +38,7 @@
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:text="@string/add_term_name"
                 android:textSize="@dimen/sub_header_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/termNameEditText"
@@ -52,10 +46,7 @@
                 android:layout_height="wrap_content"
                 android:ems="15"
                 android:importantForAutofill="no"
-                android:inputType="number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termNameView" />
+                android:inputType="number" />
 
             <TextView
                 android:id="@+id/startDate"
@@ -64,19 +55,13 @@
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:text="@string/start_date"
                 android:textSize="@dimen/sub_header_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/termNameEditText" />
+                android:textStyle="bold" />
 
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:id="@+id/startDateFragmentContainer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/startDate"
                 />
 
             <TextView
@@ -86,8 +71,7 @@
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:text="@string/end_date"
                 android:textSize="@dimen/sub_header_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/startDatePicker" />
 
@@ -96,9 +80,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:id="@+id/endDateFragmentContainer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/endDate"
                 />
 
             <TextView
@@ -108,19 +89,13 @@
                 android:layout_marginTop="@dimen/header_margin_top"
                 android:text="@string/courses"
                 android:textSize="@dimen/sub_header_text_size"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/endDatePicker" />
+                android:textStyle="bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/courseRecyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+                android:scrollbars="vertical" />
 
             <Button
                 android:id="@+id/addCourseButton"
@@ -133,9 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/buttonBottom"
-                android:layout_marginBottom="@dimen/buttonBottom"
-
-                >
+                android:layout_marginBottom="@dimen/buttonBottom">
 
                 <Button
                     android:id="@+id/cancelTermButton"
