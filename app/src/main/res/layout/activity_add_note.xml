@@ -15,11 +15,27 @@
             android:layout_height="wrap_content"
             android:text="Note"
             android:textSize="@dimen/header_text_size"/>
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/header_margin_top"
+            android:text="@string/start_date"
+            android:textSize="@dimen/sub_header_text_size"
+            android:textStyle="bold" />
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/startDateFragmentContainer"
              />
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/header_margin_top"
+            android:text="@string/end_date"
+            android:textSize="@dimen/sub_header_text_size"
+            android:textStyle="bold" />
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
