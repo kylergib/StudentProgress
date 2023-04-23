@@ -1,6 +1,8 @@
 package com.kgibs87.studentprogress.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,12 +17,15 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
 
@@ -29,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
 
     private static StudentDatabase mStudentDb ;
     private List<Term> termsList;
@@ -68,10 +73,33 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         if (termRecyclerView.getAdapter().getItemCount() > 0) statusText.setVisibility(View.GONE);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addTermButtonFragmentContainer);
+        if (addButtonFragment == null) {
+            String tag = "addTermButton";
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.END | Gravity.BOTTOM;
+            addButtonFragment = new FloatingButtonFragment(tag,params, R.drawable.plus_sign);
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.addTermButtonFragmentContainer, addButtonFragment,tag)
+                    .commit();
+            Log.d("testing kyle", String.valueOf(addButtonFragment.getId()));
+        }
 
     }
 
-    public void addTermClick(View view) {
+//    public void addTermClick(View view) {
+//        Intent termIntent = new Intent(this, AddTermActivity.class);
+//        startActivity(termIntent);
+//    }
+
+    @Override
+    public void onButtonClick(View view, String tag) {
+        Log.d("Add tag", tag);
         Intent termIntent = new Intent(this, AddTermActivity.class);
         startActivity(termIntent);
     }

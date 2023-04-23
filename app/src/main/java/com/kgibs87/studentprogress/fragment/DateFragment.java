@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

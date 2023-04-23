@@ -132,5 +132,15 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addButtonFragmentContainer"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/backButtonFragmentContainer"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

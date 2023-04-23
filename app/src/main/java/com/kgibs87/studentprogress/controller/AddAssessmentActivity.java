@@ -20,7 +20,7 @@ public class AddAssessmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assessment);
 
-        List<String> statusList = Arrays.asList("Performance", "Objective");
+        String[] statusList = {"Performance", "Objective"};
         Spinner spinner = findViewById(R.id.assessmentTypeSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, statusList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

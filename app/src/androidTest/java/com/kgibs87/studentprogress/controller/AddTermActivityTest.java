@@ -7,11 +7,13 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -20,7 +22,9 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,7 +52,9 @@ public class AddTermActivityTest {
         // Start dashboardActivity
         dashboardActivityTestRule.launchActivity(null);
         // clicks button to add term
-        onView(withId(R.id.addTermButton)).perform(click());
+        onView(withTagValue(Matchers.is((Object) "addTermButton"))).perform(click());
+
+
     }
 
     @After
@@ -67,7 +73,7 @@ public class AddTermActivityTest {
                 .perform(ViewActions.scrollTo());
 
         onView(withId(R.id.cancelTermButton)).perform(click());
-        onView(withId(R.id.listTermsLayout)).check(matches(isDisplayed()));
+        onView(withId(R.id.welcomeText)).check(matches(isDisplayed()));
 
 
     }
@@ -77,8 +83,10 @@ public class AddTermActivityTest {
 
         onView(withId(R.id.addTermButton))
                 .perform(ViewActions.scrollTo());
+
         onView(withId(R.id.addTermButton)).perform(click());
-        onView(withId(R.id.listTermsLayout)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.welcomeText)).check(matches(isDisplayed()));
         //TODO: add check that new term is showing on dashboard now
 
     }

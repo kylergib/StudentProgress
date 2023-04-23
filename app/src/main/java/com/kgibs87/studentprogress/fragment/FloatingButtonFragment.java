@@ -21,6 +21,8 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     private OnButtonClickListener listener;
     private String fragmentTag;
     private FrameLayout.LayoutParams layoutParams;
+    private int buttonSource;
+
 
     public interface OnButtonClickListener {
         void onButtonClick(View view, String tag);
@@ -48,9 +50,11 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     }
 
 
-    public FloatingButtonFragment(String fragmentTag, FrameLayout.LayoutParams layoutParams) {
+    public FloatingButtonFragment(String fragmentTag, FrameLayout.LayoutParams layoutParams,
+                                  int buttonSource) {
         this.fragmentTag = fragmentTag;
         this.layoutParams = layoutParams;
+        this.buttonSource = buttonSource;
     }
 
     @Override
@@ -71,6 +75,8 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
 
         FloatingActionButton floatButton = rootView.findViewById(R.id.floatingButton);
         floatButton.setOnClickListener(this);
+        floatButton.setImageResource(buttonSource);
+        floatButton.setTag(fragmentTag);
         return rootView;
     }
 }

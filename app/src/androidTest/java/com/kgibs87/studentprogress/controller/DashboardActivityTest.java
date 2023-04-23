@@ -6,6 +6,8 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
+import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
@@ -18,6 +20,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.kgibs87.studentprogress.R;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,9 +76,9 @@ public class DashboardActivityTest {
 
         // Start mainActivity
         dashboardActivityTestRule.launchActivity(null);
-//        SharedPreferences sharedPref = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
-        onView(withId(R.id.addTermButton)).perform(click());
+        onView(withTagValue(Matchers.is((Object) "addTermButton"))).perform(click());
+
         intended(hasComponent(AddTermActivity.class.getName())
         );
 

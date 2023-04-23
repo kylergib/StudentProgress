@@ -7,13 +7,17 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.fragment.DateFragment;
+import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 
 import java.util.Date;
 
-public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener {
+public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,36 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
 
             fragmentManager.beginTransaction()
                     .add(R.id.endDateFragmentContainer, dateFragmentEnd,endTag)
+                    .commit();
+        }
+
+        Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
+        if (addButtonFragment == null) {
+//            String endTag = "endDate";
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.END | Gravity.BOTTOM;
+            addButtonFragment = new FloatingButtonFragment("addButton",params, R.drawable.plus_sign);
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.addButtonFragmentContainer, addButtonFragment,"addButton")
+                    .commit();
+        }
+
+        Fragment backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
+        if (backButtonFragment == null) {
+//            String endTag = "endDate";
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.START | Gravity.BOTTOM;
+            backButtonFragment = new FloatingButtonFragment("backButton",params,R.drawable.arrow_back);
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.addButtonFragmentContainer, backButtonFragment,"backButton")
                     .commit();
         }
     }
@@ -69,6 +103,19 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
         } else if (tag.equals("endDate")) {
 //            endDate = date;
             Log.d("AddNoteActivity", "End date selected: " + date.toString());
+        }
+    }
+
+    @Override
+    public void onButtonClick(View view, String tag) {
+
+        if (tag.equals("backButton")) {
+            Log.d("Back tag", tag);
+            finish();
+        } else if (tag.equals("addButton")) {
+            Log.d("Add tag", tag);
+            //TODO: create term object and add to sqlite
+            finish();
         }
     }
 }
