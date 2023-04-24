@@ -47,31 +47,30 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
 
         Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
         if (addButtonFragment == null) {
-//            String endTag = "endDate";
+            String saveTag = "saveTermButton";
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT
             );
             params.gravity = Gravity.END | Gravity.BOTTOM;
-            addButtonFragment = new FloatingButtonFragment("addButton",params, R.drawable.plus_sign);
+            addButtonFragment = new FloatingButtonFragment(saveTag,params, R.drawable.baseline_check);
 
             fragmentManager.beginTransaction()
-                    .add(R.id.addButtonFragmentContainer, addButtonFragment,"addButton")
+                    .add(R.id.addButtonFragmentContainer, addButtonFragment,saveTag)
                     .commit();
         }
 
         Fragment backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
         if (backButtonFragment == null) {
-//            String endTag = "endDate";
+            String cancelTag = "cancelTermButton";
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT
             );
             params.gravity = Gravity.START | Gravity.BOTTOM;
-            backButtonFragment = new FloatingButtonFragment("backButton",params,R.drawable.arrow_back);
-
+            backButtonFragment = new FloatingButtonFragment(cancelTag,params,R.drawable.baseline_close);
             fragmentManager.beginTransaction()
-                    .add(R.id.addButtonFragmentContainer, backButtonFragment,"backButton")
+                    .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
                     .commit();
         }
     }
@@ -82,18 +81,18 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
         startActivity(courseIntent);
     }
 
-    public void cancelTermClick(View view) {
-        Log.d("Debug-teg", "canceltermclicekd");
-        finish();
-    }
+//    public void cancelTermClick(View view) {
+//        Log.d("Debug-teg", "canceltermclicekd");
+//        finish();
+//    }
 
-    public void addTermClick(View view) {
-        Log.d("Debug-teg", "addTermClick");
-
-        //TODO: create term object and add to sqlite
-
-        finish();
-    }
+//    public void addTermClick(View view) {
+//        Log.d("Debug-teg", "addTermClick");
+//
+//        //TODO: create term object and add to sqlite
+//
+//        finish();
+//    }
     @Override
     public void onDateSelected(Date date, String tag) {
         // Check the tag to determine which DateFragment is invoking the method
@@ -109,10 +108,10 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     @Override
     public void onButtonClick(View view, String tag) {
 
-        if (tag.equals("backButton")) {
+        if (tag.equals("cancelTermButton")) {
             Log.d("Back tag", tag);
             finish();
-        } else if (tag.equals("addButton")) {
+        } else if (tag.equals("saveTermButton")) {
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
             finish();

@@ -104,32 +104,6 @@
                 android:onClick="addCourseClick"
                 android:text="@string/add_course_button" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/buttonBottom"
-                android:layout_marginBottom="@dimen/buttonBottom">
-
-                <Button
-                    android:id="@+id/cancelTermButton"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/buttonBottom"
-                    android:onClick="cancelTermClick"
-                    android:text="@string/cancel"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/addTermButton"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="addTermClick"
-                    android:text="@string/add_term"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <FrameLayout

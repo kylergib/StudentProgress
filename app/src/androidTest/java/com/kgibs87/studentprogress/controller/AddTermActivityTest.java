@@ -69,11 +69,14 @@ public class AddTermActivityTest {
     @Test
     public void cancelTermClick() {
 
-        onView(withId(R.id.cancelTermButton))
-                .perform(ViewActions.scrollTo());
 
-        onView(withId(R.id.cancelTermButton)).perform(click());
+        onView(withTagValue(Matchers.is((Object) "cancelTermButton"))).perform(click());
+
+
         onView(withId(R.id.welcomeText)).check(matches(isDisplayed()));
+
+
+
 
 
     }
@@ -81,10 +84,8 @@ public class AddTermActivityTest {
     @Test
     public void addTermClick() {
 
-        onView(withId(R.id.addTermButton))
-                .perform(ViewActions.scrollTo());
 
-        onView(withId(R.id.addTermButton)).perform(click());
+        onView(withTagValue(Matchers.is((Object) "saveTermButton"))).perform(click());
 
         onView(withId(R.id.welcomeText)).check(matches(isDisplayed()));
         //TODO: add check that new term is showing on dashboard now
