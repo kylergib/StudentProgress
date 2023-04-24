@@ -87,7 +87,6 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
             fragmentManager.beginTransaction()
                     .add(R.id.addTermButtonFragmentContainer, addButtonFragment,tag)
                     .commit();
-            Log.d("testing kyle", String.valueOf(addButtonFragment.getId()));
         }
 
     }

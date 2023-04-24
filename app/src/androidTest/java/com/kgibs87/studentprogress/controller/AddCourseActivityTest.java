@@ -8,6 +8,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.espresso.action.ViewActions;
@@ -16,6 +17,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.kgibs87.studentprogress.R;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -72,10 +74,9 @@ public class AddCourseActivityTest {
     }
     @Test
     public void cancelCourseClick() {
-        onView(withId(R.id.cancelCourseButton))
-                .perform(ViewActions.scrollTo());
 
-        onView(withId(R.id.cancelCourseButton)).perform(click());
+        onView(withTagValue(Matchers.is("cancelCourseButton"))).perform(click());
+
         onView(withId(R.id.termNameView))
                 .perform(ViewActions.scrollTo());
         onView(withId(R.id.termNameView)).check(matches(isDisplayed()));
