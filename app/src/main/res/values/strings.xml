@@ -27,6 +27,10 @@
     <string name="assessment_header"><u>Assessment</u></string>
     <string name="assessment_type_sub"><u>Assessment Type</u></string>
     <string name="assessment_name"><u>Assessment Name</u></string>
+    <string name="instructor"><u>Instructor</u></string>
+    <string name="instructor_name"><u>Name</u></string>
+    <string name="instructor_number"><u>Number</u></string>
+    <string name="instructor_email"><u>Email</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

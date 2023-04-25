@@ -5,11 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.AddInstructorActivity">
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <TextView
+            <TextView
+                android:id="@+id/headerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor"
+                android:textSize="@dimen/header_text_size"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/instructorNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor_name"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/courseNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/instructorNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor_number"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/instructorNumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/instructorEmailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor_email"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/instructorEmailEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:layout_marginBottom="@dimen/last_item_margin"/>
+
+        </LinearLayout>
+    </ScrollView>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Instructor"
-        android:textSize="@dimen/header_text_size"/>
+        android:id="@+id/addButtonFragmentContainer"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/backButtonFragmentContainer"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
