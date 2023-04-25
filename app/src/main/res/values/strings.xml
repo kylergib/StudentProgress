@@ -31,6 +31,7 @@
     <string name="instructor_name"><u>Name</u></string>
     <string name="instructor_number"><u>Number</u></string>
     <string name="instructor_email"><u>Email</u></string>
+    <string name="note_header"><u>Note</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
