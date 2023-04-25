@@ -4,12 +4,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     >
-
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/header_margin_top"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"/>
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:layout_marginStart="8dp"
+            android:datePickerMode="spinner"/>
 </FrameLayout>
