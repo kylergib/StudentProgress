@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
 
+
             <TextView
                 android:id="@+id/headerTitle"
                 android:layout_width="wrap_content"
@@ -30,6 +31,7 @@
                 android:text="@string/add_term_header"
                 android:textSize="@dimen/header_text_size"
                 android:textStyle="bold" />
+
 
             <TextView
                 android:id="@+id/termNameView"
@@ -47,6 +49,29 @@
                 android:ems="15"
                 android:importantForAutofill="no"
                 android:inputType="number" />
+            <TextView
+                android:id="@+id/courses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/courses"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/courseRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+
+            <Button
+                android:id="@+id/addCourseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="addCourseClick"
+                android:text="@string/add_course_button"
+                />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +96,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/last_item_margin">
 
             <TextView
                 android:id="@+id/endDate"
@@ -88,29 +114,7 @@
                 android:id="@+id/endDateFragmentContainer"
                 />
             </LinearLayout>
-            <TextView
-                android:id="@+id/courses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/header_margin_top"
-                android:text="@string/courses"
-                android:textSize="@dimen/sub_header_text_size"
-                android:textStyle="bold"
-                />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/courseRecyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical" />
-
-            <Button
-                android:id="@+id/addCourseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="addCourseClick"
-                android:text="@string/add_course_button"
-                android:layout_marginBottom="@dimen/last_item_margin"/>
 
         </LinearLayout>
     </ScrollView>

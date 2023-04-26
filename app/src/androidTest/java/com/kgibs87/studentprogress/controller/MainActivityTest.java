@@ -46,6 +46,10 @@ public class MainActivityTest {
 
     @After
     public void tearDown() {
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+
+        sharedPrefEditor.putString("name", "Testing");
+        sharedPrefEditor.apply();
     }
 
     @Test
