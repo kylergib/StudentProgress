@@ -20,6 +20,13 @@ public class Course {
         this.id = id;
         this.term = term;
     }
+    public Course(String name, LocalDate startDate,
+                  LocalDate endDate, String status) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        setCourseStatus(status);
+    }
 
     public String getCourseName() {
         return name;

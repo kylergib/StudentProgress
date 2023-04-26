@@ -3,35 +3,47 @@ package com.kgibs87.studentprogress.controller;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.DatePicker;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
 
     private static StudentDatabase mStudentDb ;
     private LocalDate startDate = LocalDate.now();
     private LocalDate endDate = LocalDate.now();
+    public static final int COURSE_REQUEST_CODE = 1234;
+    private List<Course> courseList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         setContentView(R.layout.activity_add_term);
+
+        courseList = new ArrayList<>();
+        //TODO: get course data from database
+        updateCourses();
 
         //add dateFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -88,7 +100,23 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     public void addCourseClick(View view) {
         Log.d("Debug-teg", "addcourseclicked");
         Intent courseIntent = new Intent(getApplicationContext(), AddCourseActivity.class);
-        startActivity(courseIntent);
+//        startActivity(courseIntent);
+        startActivityForResult(courseIntent,COURSE_REQUEST_CODE);
+
+    }
+    @Override
+    public void onActivityResult(int requestCode,int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COURSE_REQUEST_CODE && resultCode == RESULT_OK) {
+            String courseName = data.getStringExtra("courseName");
+            LocalDate startDate = LocalDate.parse(data.getStringExtra("startDate"));
+            LocalDate endDate = LocalDate.parse(data.getStringExtra("endDate"));
+            String courseStatus = data.getStringExtra("courseStatus");
+            Log.d("COURSEBACK",String.format("%s - %s - %s - %s",courseName, startDate, endDate, courseStatus));
+            Course newCourse = new Course(courseName,startDate,endDate,courseStatus);
+            courseList.add(newCourse);
+            updateCourses();
+        }
     }
 
     @Override
@@ -146,17 +174,83 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
             }
 
             Term newTerm = new Term(termNameString,startDate,endDate,-1);
-            long termId = mStudentDb.addTerm(newTerm);
-            Log.d("AddTermTest", String.valueOf(termId));
-            newTerm.setId(termId);
+//            long termId = mStudentDb.addTerm(newTerm);
+//            Log.d("AddTermTest", String.valueOf(termId));
+//            newTerm.setId(termId);
+            //TODO: once i add all courses/instructors/notes/assessments insert all into database.
+
             Intent dashboardIntent = new Intent(this, DashboardActivity.class);
             startActivity(dashboardIntent);
 
+        }
+    }
+    public void updateCourses() {
+        RecyclerView courseRecyclerView = findViewById(R.id.courseRecyclerView);
 
+        RecyclerView.LayoutManager linearLayoutManager =
+                new LinearLayoutManager(this);
+        courseRecyclerView.setLayoutManager(linearLayoutManager);
+        courseRecyclerView.setAdapter(new CourseAdapter(courseList));
 
-//            finish();
+    }
+    private class CourseHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
 
+        private Course course;
+        private TextView mTextView;
+
+        public CourseHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+            itemView.setOnClickListener(this);
+            mTextView = itemView.findViewById(R.id.termView);
+        }
+
+        public void bind(Course course, int position) {
+            this.course = course;
+            mTextView.setText(course.getCourseName());
+
+            // Make the background color dependent on the length of the subject string
+//            int colorIndex = subject.getText().length() % mSubjectColors.length;
+//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.i("INFO_TAG", "Clicking Test 1");
+
+            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+            startActivity(termIntent);
+
+            //TODO: finish what clicking  does
 
         }
     }
+
+
+    private class CourseAdapter extends RecyclerView.Adapter<CourseHolder> {
+
+        private List<Course> courseList;
+
+        public CourseAdapter(List<Course> courses) {
+            courseList = courses;
+        }
+
+        @Override
+        public CourseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+            return new CourseHolder(layoutInflater, parent);
+        }
+
+
+        @Override
+        public void onBindViewHolder(CourseHolder holder, int position){
+            holder.bind(courseList.get(position), position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return courseList.size();
+        }
+    }
+
 }

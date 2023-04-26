@@ -50,6 +50,7 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
 
 
         TextView welcomeText = findViewById(R.id.welcomeText);
+
         String welcomeMessage = getResources().getString(R.string.welcome_text);
         welcomeText.setText(String.format(welcomeMessage, sharedPref.getString("name",null)));
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
@@ -120,9 +121,6 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
             this.term = term;
             mTextView.setText(term.getName());
 
-            // Make the background color dependent on the length of the subject string
-//            int colorIndex = subject.getText().length() % mSubjectColors.length;
-//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
         }
 
         @Override

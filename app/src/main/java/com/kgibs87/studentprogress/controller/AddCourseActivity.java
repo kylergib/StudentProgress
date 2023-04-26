@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
@@ -24,6 +25,10 @@ import java.util.Date;
 import java.util.List;
 
 public class AddCourseActivity extends AppCompatActivity  implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
+    private EditText courseNameEditText;
+    private String courseStatus;
+    private LocalDate startDate = LocalDate.now();
+    private LocalDate endDate = LocalDate.now();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Handle the selected item here
+                courseStatus = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -95,6 +101,9 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
                     .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
                     .commit();
         }
+        courseNameEditText = findViewById(R.id.courseNameEditText);
+
+
     }
 
     public void addAssessmentClick(View view) {
@@ -125,9 +134,11 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         if (tag.equals("startDate")) {
 //            startDate = date;
             Log.d("AddCourseActivity", "Start date selected: " + localDate.toString());
+            startDate = localDate;
         } else if (tag.equals("endDate")) {
 //            endDate = date;
             Log.d("AddCourseActivity", "End date selected: " + localDate.toString());
+            endDate = localDate;
         }
     }
 
@@ -135,10 +146,18 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
     public void onButtonClick(View view, String tag) {
         if (tag.equals("cancelCourseButton")) {
             Log.d("Back tag", tag);
+
+            setResult(RESULT_CANCELED);
             finish();
         } else if (tag.equals("saveCourseButton")) {
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("courseName", String.valueOf(courseNameEditText.getText()));
+            returnIntent.putExtra("startDate",startDate.toString());
+            returnIntent.putExtra("endDate",endDate.toString());
+            returnIntent.putExtra("courseStatus",courseStatus);
+            setResult(RESULT_OK, returnIntent);
             finish();
         }
     }
