@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 
 import com.kgibs87.studentprogress.R;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,7 +24,7 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
 
     // Interface to communicate with parent activity
     public interface OnDateSelectedListener {
-        void onDateSelected(Date date, String tag);
+        void onDateSelected(LocalDate localDate, String tag);
     }
 
     @Override
@@ -47,9 +48,12 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         // Get the selected date from the DatePicker
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, monthOfYear, dayOfMonth);
-        Date selectedDate = calendar.getTime();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(year, monthOfYear, dayOfMonth);
+
+        //have to add because calendar start at 0
+        LocalDate selectedDate = LocalDate.of(year,monthOfYear+1,dayOfMonth);
+//        Date selectedDate = calendar.getTime();
         // Call the interface method to communicate with parent activity
         listener.onDateSelected(selectedDate, fragmentTag);
     }

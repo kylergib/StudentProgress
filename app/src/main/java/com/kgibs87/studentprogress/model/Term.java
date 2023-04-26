@@ -6,9 +6,9 @@ public class Term {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private int id;
+    private long id;
 
-    public Term(String name, LocalDate startDate, LocalDate endDate, int id) {
+    public Term(String name, LocalDate startDate, LocalDate endDate, long id) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -39,11 +39,11 @@ public class Term {
         this.endDate = endDate;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

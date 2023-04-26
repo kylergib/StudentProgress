@@ -57,8 +57,9 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
         //TESTING
         Term term1 = new Term("Test1", LocalDate.of(2023,1,1),LocalDate.of(2023,6,30),1);
         Term term2 = new Term("Test2", LocalDate.of(2023,1,1),LocalDate.of(2023,6,30),2);
-//        termsList = new ArrayList<>();
-        termsList = Arrays.asList(term1,term2);
+
+//        termsList = Arrays.asList(term1,term2);
+        termsList = mStudentDb.getTerms();
 
         RecyclerView termRecyclerView = findViewById(R.id.termRecyclerView);
 

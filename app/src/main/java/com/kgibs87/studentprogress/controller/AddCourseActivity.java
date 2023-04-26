@@ -18,6 +18,7 @@ import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -119,14 +120,14 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
 //    }
 
     @Override
-    public void onDateSelected(Date date, String tag) {
+    public void onDateSelected(LocalDate localDate, String tag) {
 // Check the tag to determine which DateFragment is invoking the method
         if (tag.equals("startDate")) {
 //            startDate = date;
-            Log.d("AddCourseActivity", "Start date selected: " + date.toString());
+            Log.d("AddCourseActivity", "Start date selected: " + localDate.toString());
         } else if (tag.equals("endDate")) {
 //            endDate = date;
-            Log.d("AddCourseActivity", "End date selected: " + date.toString());
+            Log.d("AddCourseActivity", "End date selected: " + localDate.toString());
         }
     }
 
