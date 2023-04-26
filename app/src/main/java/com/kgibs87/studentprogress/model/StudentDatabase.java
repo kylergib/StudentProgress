@@ -1,9 +1,15 @@
 package com.kgibs87.studentprogress.model;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDatabase extends SQLiteOpenHelper {
 
@@ -141,6 +147,36 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 db.setForeignKeyConstraintsEnabled(true);
             }
         }
+    }
+
+    public long addTerm(Term term) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TermTable.COL_NAME, term.getName());
+        values.put(TermTable.COL_START_DATE, String.valueOf(term.getStartDate()));
+        values.put(TermTable.COL_END_DATE, String.valueOf(term.getEndDate()));
+        long termId = db.insert(TermTable.TABLE, null, values);
+        return termId;
+    }
+    public List<Term> getTerms() {
+        List<Term> terms = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "select * from " + TermTable.TABLE + " order by " + TermTable.COL_START_DATE;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                LocalDate startDate = LocalDate.parse(cursor.getString(2));
+                LocalDate endDate = LocalDate.parse(cursor.getString(3));
+                Term term = new Term(cursor.getString(1),startDate,endDate,cursor.getLong(0));
+                terms.add(term);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return terms;
+
+
     }
 
 
