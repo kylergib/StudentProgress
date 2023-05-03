@@ -1,18 +1,32 @@
 package com.kgibs87.studentprogress.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Term {
+public class Term implements Serializable {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private long id;
+    private List<Course> termCourses;
 
     public Term(String name, LocalDate startDate, LocalDate endDate, long id) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.id = id;
+        this.termCourses = new ArrayList<>();
+    }
+    public Term(String name, LocalDate startDate, LocalDate endDate) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.termCourses = new ArrayList<>();
+    }
+    public Term() {
+        this.termCourses = new ArrayList<>();
     }
 
     public String getName() {
@@ -45,5 +59,16 @@ public class Term {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Course> getTermCourses() {
+        return termCourses;
+    }
+
+    public void addTermCourse(Course termCourse) {
+        this.termCourses.add(termCourse);
+    }
+    public void setTermCourses(List<Course> termCourses) {
+        this.termCourses = termCourses;
     }
 }

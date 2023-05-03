@@ -35,7 +35,7 @@
                 android:textStyle="bold"/>
 
             <EditText
-                android:id="@+id/courseNameEditText"
+                android:id="@+id/instructorNameEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="15"
@@ -73,8 +73,8 @@
                 android:layout_height="wrap_content"
                 android:ems="15"
                 android:importantForAutofill="no"
-                android:inputType="text"
-                android:layout_marginBottom="@dimen/last_item_margin"/>
+                android:layout_marginBottom="@dimen/last_item_margin"
+                android:inputType="text" />
 
         </LinearLayout>
     </ScrollView>

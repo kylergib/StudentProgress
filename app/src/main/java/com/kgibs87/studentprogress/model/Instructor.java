@@ -1,18 +1,25 @@
 package com.kgibs87.studentprogress.model;
 
 public class Instructor {
-    private int id;
+    private long id;
     private String name;
     private String number;
     private String email;
-    private String course;
+    private long courseID;
 
-    public Instructor(int id, String name, String number, String email, String course) {
+    public Instructor(long id, String name, String number, String email) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.email = email;
-        this.course = course;
+    }
+    public Instructor(String name, String number, String email) {
+        this.name = name;
+        this.number = number;
+        this.email = email;
+    }
+    public Instructor() {
+
     }
 
     public String getInstructorName() {
@@ -39,19 +46,20 @@ public class Instructor {
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getCourse() {
-        return course;
+    public long getCourseID() {
+        return courseID;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
     }
+
 }

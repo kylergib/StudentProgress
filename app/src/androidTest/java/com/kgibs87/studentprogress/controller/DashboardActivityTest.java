@@ -6,17 +6,16 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 
 import com.kgibs87.studentprogress.R;
 
@@ -30,16 +29,14 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class DashboardActivityTest {
 
-    private SharedPreferences sharedPreferences;
     @Rule
-    public ActivityTestRule<DashboardActivity> dashboardActivityTestRule =
-            new ActivityTestRule<>(DashboardActivity.class,true,false);
+    public ActivityScenarioRule<DashboardActivity> activityRule = new ActivityScenarioRule<>(DashboardActivity.class);
 
     @Before
     public void setUp() {
 
         // Get a reference to the shared preferences file
-        sharedPreferences =
+        SharedPreferences sharedPreferences =
                 InstrumentationRegistry.getInstrumentation().getTargetContext()
                         .getSharedPreferences("preferences", Context.MODE_PRIVATE);
         // Clear the shared preferences file
@@ -49,42 +46,32 @@ public class DashboardActivityTest {
     }
 
     @Test
-    public void onCreate() {
+    public void testViewsExist() {
+        onView(withId(R.id.welcomeText)).check(matches(ViewMatchers.isDisplayed()));
 
-        // Initialize Espresso-Intents
-        Intents.init();
-
-        // Start mainActivity
-        dashboardActivityTestRule.launchActivity(null);
-//        SharedPreferences sharedPref = InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
-        // Verify DashboardActivity started with test subject
-        intended(hasComponent(DashboardActivity.class.getName()));
-
-        onView(withId(R.id.welcomeText))
-                .check(matches(withText(String.format("Welcome, %s!", sharedPreferences.getString("name", null)))));
-
-        // Must be called at end of each test case
-        Intents.release();
+        //TODO: if recycler has data then statustext is not shown
+//        onView(withId(R.id.termRecyclerView)).check(matches(ViewMatchers.isDisplayed())); //wont work if recycler view is blank
+//        onView(withId(R.id.statusText)).check(matches(ViewMatchers.isDisplayed()));
+        onView(withId(R.id.addTermButtonFragmentContainer)).check(matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
     public void addTermClick() {
-
-        // Initialize Espresso-Intents
         Intents.init();
-
-        // Start mainActivity
-        dashboardActivityTestRule.launchActivity(null);
-
-        onView(withTagValue(Matchers.is((Object) "addTermButton"))).perform(click());
-
-        intended(hasComponent(AddTermActivity.class.getName())
+        onView(withTagValue(Matchers.is("addTermButton"))).perform(click());
+        intended(hasComponent(TermActivity.class.getName())
         );
+        onView(withId(R.id.courses)).check(matches(ViewMatchers.isDisplayed()));
+//        onView(withId(R.id.courseRecyclerView)).check(matches(ViewMatchers.isDisplayed())); //wont work if recycler view is blank
+        onView(withId(R.id.addCourseButton)).check(matches(ViewMatchers.isDisplayed()));
+        onView(withId(R.id.startDate)).check(matches(ViewMatchers.isDisplayed()));
 
-
-        // Must be called at end of each test case
+        //clicks cancel button to see if it goes back to previous activity correctly.
+        onView(withTagValue(Matchers.is("cancelTermButton"))).perform(click());
+        testViewsExist();
         Intents.release();
-
     }
+
+
+
 }

@@ -16,7 +16,7 @@ public class DefaultObjectsForTests {
         String assessmentTitle = "Performance Assessment";
         String assessmentType = "Performance";
         LocalDate endDate = LocalDate.of(2023,1,2);
-        Assessment testAssessment = new Assessment(1, assessmentType, assessmentTitle, endDate, "Test Course");
+        Assessment testAssessment = new Assessment(1, assessmentType, assessmentTitle, endDate);
         testAssessment.setAssessmentEndDate(endDate);
 
         return testAssessment;
@@ -26,7 +26,7 @@ public class DefaultObjectsForTests {
         String assessmentTitle = "Objective Assessment";
         String assessmentType = "Objective";
         LocalDate endDate = LocalDate.of(2023,1,2);
-        Assessment testAssessment = new Assessment(2, assessmentType, assessmentTitle, endDate, "Test Course");
+        Assessment testAssessment = new Assessment(2, assessmentType, assessmentTitle, endDate);
         testAssessment.setAssessmentEndDate(endDate);
 
         return testAssessment;
@@ -37,7 +37,7 @@ public class DefaultObjectsForTests {
         String number = "5555555050";
         String email = "testemail@gmail.com";
 
-        return new Instructor(1, name, number, email, defaultCourse().getCourseName());
+        return new Instructor(1, name, number, email);
     }
 
     public static Course defaultCourse() {
@@ -48,10 +48,10 @@ public class DefaultObjectsForTests {
 
         return new Course(courseName,courseStartDate,
                 courseEndDate,courseStatus,
-                1,"Spring Term");
+                1,1);
     }
     public static Note defaultNote() {
-        return new Note("This is a test note", defaultCourse().getCourseName(),1);
+        return new Note("This is a test note",1);
     }
 
     public static Term defaultTerm() {

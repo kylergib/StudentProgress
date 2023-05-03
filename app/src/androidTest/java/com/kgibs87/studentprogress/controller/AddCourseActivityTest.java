@@ -26,8 +26,8 @@ import org.junit.Test;
 public class AddCourseActivityTest {
 
     @Rule
-    public ActivityTestRule<AddTermActivity> addTermActivityTestRule =
-            new ActivityTestRule<>(AddTermActivity.class,true,false);
+    public ActivityTestRule<TermActivity> addTermActivityTestRule =
+            new ActivityTestRule<>(TermActivity.class,true,false);
 
     @Before
     public void setUp() throws Exception {

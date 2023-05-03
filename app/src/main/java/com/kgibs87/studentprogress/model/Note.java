@@ -2,13 +2,17 @@ package com.kgibs87.studentprogress.model;
 
 public class Note {
     private String message;
-    private String course;
-    private int id;
-
-    public Note(String message, String course, int id) {
+    private long id;
+    private long courseID;
+    public Note(String message, long id) {
         this.message = message;
-        this.course = course;
         this.id = id;
+    }
+    public Note(String message) {
+        this.message = message;
+    }
+    public Note() {
+
     }
 
     public String getMessage() {
@@ -19,19 +23,19 @@ public class Note {
         this.message = message;
     }
 
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public long getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
     }
 }

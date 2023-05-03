@@ -1,11 +1,5 @@
 package com.kgibs87.studentprogress.controller;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.DateFragment;
@@ -25,23 +26,38 @@ import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
+public class TermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
 
     private static StudentDatabase mStudentDb ;
     private LocalDate startDate = LocalDate.now();
-    private LocalDate endDate = LocalDate.now();
+    public LocalDate endDate = LocalDate.now();
     public static final int COURSE_REQUEST_CODE = 1234;
-    private List<Course> courseList;
+    public static Term currentTerm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
-        setContentView(R.layout.activity_add_term);
+        setContentView(R.layout.activity_term);
 
-        courseList = new ArrayList<>();
+        Intent intent = getIntent();
+
+        boolean intentHasTerm = intent.hasExtra("currentTerm");
+
+        if (intentHasTerm) {
+            currentTerm = (Term) intent.getSerializableExtra("currentTerm");
+            TextView headerText = findViewById(R.id.headerTitle);
+            headerText.setText(currentTerm.getName());
+        } else {
+            addTermSetUp();
+        }
+
+
+    }
+
+    public void addTermSetUp() {
+        currentTerm = new Term();
         //TODO: get course data from database
         updateCourses();
 
@@ -108,13 +124,13 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == COURSE_REQUEST_CODE && resultCode == RESULT_OK) {
-            String courseName = data.getStringExtra("courseName");
-            LocalDate startDate = LocalDate.parse(data.getStringExtra("startDate"));
-            LocalDate endDate = LocalDate.parse(data.getStringExtra("endDate"));
-            String courseStatus = data.getStringExtra("courseStatus");
-            Log.d("COURSEBACK",String.format("%s - %s - %s - %s",courseName, startDate, endDate, courseStatus));
-            Course newCourse = new Course(courseName,startDate,endDate,courseStatus);
-            courseList.add(newCourse);
+//            String courseName = data.getStringExtra("courseName");
+//            LocalDate startDate = LocalDate.parse(data.getStringExtra("startDate"));
+//            LocalDate endDate = LocalDate.parse(data.getStringExtra("endDate"));
+//            String courseStatus = data.getStringExtra("courseStatus");
+//            Log.d("COURSEBACK",String.format("%s - %s - %s - %s",courseName, startDate, endDate, courseStatus));
+//            Course newCourse = new Course(courseName,startDate,endDate,courseStatus);
+//            currentTerm.addTermCourse(newCourse);
             updateCourses();
         }
     }
@@ -128,61 +144,20 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
             startDate = localDate;
         } else if (tag.equals("endDate")) {
 //            endDate = date;
-            Log.d("AddNoteActivity", "End date selected: " + localDate.toString());
+            Log.d("AddNoteActivity", tag + " selected: " + localDate.toString());
             endDate = localDate;
         }
     }
 
     @Override
     public void onButtonClick(View view, String tag) {
-
+        Log.d("AddTermActivity", tag);
         if (tag.equals("cancelTermButton")) {
-            Log.d("Back tag", tag);
             finish();
         } else if (tag.equals("saveTermButton")) {
-            Log.d("Add tag", tag);
-            //TODO: create term object and add to sqlite
-            EditText termNameEditText = findViewById(R.id.termNameEditText);
-            String termNameString = termNameEditText.getText().toString();
-
-
-
-            boolean endBeforeStart = endDate.isBefore(startDate);
-            boolean startEqualsEnd = startDate.isEqual(endDate);
-            boolean termNameEmpty = (termNameString.isEmpty());
-
-
-
-
-            Log.d("AddTermActivity", String.format("%s - %s - %s",termNameString,startDate.toString(),endDate.toString()));
-            Log.d("AddTermActivity", String.format("%s - %s - %s",termNameString,endBeforeStart,termNameEmpty));
-            if (endBeforeStart) {
-                Log.d("AddTermActivity", "Start date is not before the end date.");
-                return;
-                //TODO: add dialog pop up
-            }
-            else if (startEqualsEnd) {
-                Log.d("AddTermActivity", "Start date and end date cannot be the same");
-                return;
-                //TODO: add dialog pop up
-            }
-
-            if (termNameEmpty) {
-                Log.d("AddTermActivity", "Term name cannot be empty");
-                return;
-                //TODO: add dialog pop up
-            }
-
-            Term newTerm = new Term(termNameString,startDate,endDate,-1);
-//            long termId = mStudentDb.addTerm(newTerm);
-//            Log.d("AddTermTest", String.valueOf(termId));
-//            newTerm.setId(termId);
-            //TODO: once i add all courses/instructors/notes/assessments insert all into database.
-
-            Intent dashboardIntent = new Intent(this, DashboardActivity.class);
-            startActivity(dashboardIntent);
-
+            saveTerm();
         }
+        currentTerm = null;
     }
     public void updateCourses() {
         RecyclerView courseRecyclerView = findViewById(R.id.courseRecyclerView);
@@ -190,9 +165,16 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
         RecyclerView.LayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
         courseRecyclerView.setLayoutManager(linearLayoutManager);
-        courseRecyclerView.setAdapter(new CourseAdapter(courseList));
+        courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses()));
+    }
+
+    public void addTerm() {
 
     }
+
+
+
+
     private class CourseHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
 
@@ -209,9 +191,6 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
             this.course = course;
             mTextView.setText(course.getCourseName());
 
-            // Make the background color dependent on the length of the subject string
-//            int colorIndex = subject.getText().length() % mSubjectColors.length;
-//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
         }
 
         @Override
@@ -224,6 +203,108 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
             //TODO: finish what clicking  does
 
         }
+    }
+
+    public void saveTerm() {
+        EditText termNameEditText = findViewById(R.id.termNameEditText);
+        String termNameString = termNameEditText.getText().toString();
+
+        boolean endBeforeStart = endDate.isBefore(startDate);
+        boolean startEqualsEnd = startDate.isEqual(endDate);
+        boolean termNameEmpty = (termNameString.isEmpty());
+
+        if (endBeforeStart) {
+            Log.d("AddTermActivity", "Start date is not before the end date.");
+            Toast.makeText(TermActivity.this, "Start date is not before the end date.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (startEqualsEnd) {
+            Log.d("AddTermActivity", "Start date and end date cannot be the same");
+            Toast.makeText(TermActivity.this, "Start date and end date cannot be the same",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (termNameEmpty) {
+            Log.d("AddTermActivity", "Term name cannot be empty");
+            Toast.makeText(TermActivity.this, "Term name cannot be empty",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        currentTerm.setName(termNameString);
+        currentTerm.setStartDate(startDate);
+        currentTerm.setEndDate(endDate);
+        Log.d("Add Term Tag", String.format("%s - %s - %s",
+                currentTerm.getName(), currentTerm.getStartDate().toString(),
+                currentTerm.getEndDate().toString()));
+
+        //add term to database
+        long termId = mStudentDb.addTerm(currentTerm);
+        Log.d("AddTermTest", String.valueOf(termId));
+        currentTerm.setId(termId);
+
+        //TODO: leftoff
+
+
+
+        boolean courseListNotEmpty = !currentTerm.getTermCourses().isEmpty();
+
+
+        if (courseListNotEmpty) {
+            currentTerm.getTermCourses().forEach(course -> {
+                boolean assessmentListNotEmpty = !course.getCourseAssessments().isEmpty();
+                boolean instructorListNotEmpty = !course.getCourseInstructors().isEmpty();
+                boolean noteListNotEmpty = !course.getCourseNotes().isEmpty();
+                course.setTermID(termId);
+                long courseId = mStudentDb.addCourse(course);
+
+                if (courseId < 1) return;
+
+                Log.d("Add Term:", "Added course with ID: " + courseId);
+                course.setId(courseId);
+
+                Log.d("Course:", course.getCourseName());
+                if (assessmentListNotEmpty) {
+                    course.getCourseAssessments().forEach(assessment -> {
+                        assessment.setCourseID(courseId);
+                        long assessmentId = mStudentDb.addAssessment(assessment);
+                        Log.d("Add Term:", "Added assessment with ID: " + assessmentId);
+                        assessment.setAssessmentId(assessmentId);
+
+                    });
+                } else {
+                    Log.d("Add term", "Assessment List is empty");
+                }
+                if (instructorListNotEmpty) {
+                    course.getCourseInstructors().forEach(instructor -> {
+                        instructor.setCourseID(courseId);
+                        long instructorId = mStudentDb.addInstructor(instructor);
+                        Log.d("Add Term:", "Added instructor with ID: " + instructorId);
+                        instructor.setId(instructorId);
+                    });
+                } else {
+                    Log.d("Add term", "Instructor List is empty");
+                }
+                if (noteListNotEmpty) {
+                    course.getCourseNotes().forEach(note -> {
+                        note.setCourseID(courseId);
+                        long noteID = mStudentDb.addNote(note);
+                        Log.d("Add Term:", "Added note with ID: " + noteID);
+                        note.setId(noteID);
+                    });
+                } else {
+                    Log.d("Add term", "Note List is empty");
+                }
+            });
+        } else {
+            Log.d("Add term", "Course List is empty");
+        }
+
+
+        Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardIntent);
+
     }
 
 

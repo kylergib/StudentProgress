@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,15 +14,18 @@ import androidx.fragment.app.FragmentManager;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.model.Note;
 
 import java.util.Date;
 
 public class AddNoteActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
-
+    private Note currentNote;
+    private EditText messageEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
+        messageEditText = findViewById(R.id.note_edit_text);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -63,7 +68,16 @@ public class AddNoteActivity extends AppCompatActivity implements FloatingButton
         } else if (tag.equals("saveNoteButton")) {
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
+            boolean messageIsEmpty = messageEditText.getText().toString().isEmpty();
+            if (messageIsEmpty) {
+                Toast.makeText(this, "Message cannot be empty.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            String message = messageEditText.getText().toString();
+            Note newNote = new Note(message);
+            AddCourseActivity.currentCourse.addCourseNote(newNote);
             finish();
         }
+        currentNote = null;
     }
 }

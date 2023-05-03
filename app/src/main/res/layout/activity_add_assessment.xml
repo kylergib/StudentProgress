@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:ems="15"
                 android:importantForAutofill="no"
-                android:inputType="number"
+                android:inputType="text"
+                android:contentDescription="Assessment name input line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/courseNameView" />

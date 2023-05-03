@@ -55,6 +55,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
         private static final String COL_ID = "_id";
         private static final String COL_TYPE = "type";
         private static final String COL_TITLE = "title";
+        private static final String COL_START_DATE = "startDate";
         private static final String COL_END_DATE = "endDate";
         private static final String COL_COURSE = "course";
     }
@@ -94,8 +95,8 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 CourseTable.COL_END_DATE + ", " +
                 CourseTable.COL_STATUS + ", " +
                 CourseTable.COL_TERM + ", " +
-                "foreign key(" +CourseTable.COL_TERM + ") references " +
-                TermTable.TABLE + "(" + TermTable.COL_NAME + ") on delete cascade)");
+                "foreign key(" + CourseTable.COL_TERM + ") references " +
+                TermTable.TABLE + "(" + TermTable.COL_ID + ") on delete cascade)");
 
 
         // Create assessments table with foreign key that cascade deletes
@@ -103,10 +104,11 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 AssessmentTable.COL_ID + " integer primary key autoincrement, " +
                 AssessmentTable.COL_TYPE + ", " +
                 AssessmentTable.COL_TITLE + ", " +
+                AssessmentTable.COL_START_DATE + ", " +
                 AssessmentTable.COL_END_DATE + ", " +
                 AssessmentTable.COL_COURSE + ", " +
                 "foreign key(" + AssessmentTable.COL_COURSE + ") references " +
-                CourseTable.TABLE + "(" + CourseTable.COL_NAME + ") on delete cascade)");
+                CourseTable.TABLE + "(" + CourseTable.COL_ID + ") on delete cascade)");
 
         // Create instructors table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + InstructorTable.TABLE + " (" +
@@ -116,7 +118,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 InstructorTable.COL_EMAIL + ", " +
                 InstructorTable.COL_COURSE + ", " +
                 "foreign key(" + InstructorTable.COL_COURSE + ") references " +
-                CourseTable.TABLE + "(" + CourseTable.COL_NAME + ") on delete cascade)");
+                CourseTable.TABLE + "(" + CourseTable.COL_ID + ") on delete cascade)");
 
         // Create notes table with foreign key that cascade deletes
         sqLiteDatabase.execSQL("create table " + NoteTable.TABLE + " (" +
@@ -124,7 +126,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 NoteTable.COL_MESSAGE + ", " +
                 NoteTable.COL_COURSE + ", " +
                 "foreign key(" + NoteTable.COL_COURSE + ") references " +
-                CourseTable.TABLE + "(" + CourseTable.COL_NAME + ") on delete cascade)");
+                CourseTable.TABLE + "(" + CourseTable.COL_ID + ") on delete cascade)");
 
 
     }
@@ -166,17 +168,90 @@ public class StudentDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()) {
             do {
+                long termId = cursor.getLong(0);
+                String termName = cursor.getString(1);
                 LocalDate startDate = LocalDate.parse(cursor.getString(2));
                 LocalDate endDate = LocalDate.parse(cursor.getString(3));
-                Term term = new Term(cursor.getString(1),startDate,endDate,cursor.getLong(0));
+                Term term = new Term(termName,startDate,endDate,termId);
                 terms.add(term);
             } while (cursor.moveToNext());
         }
         cursor.close();
 
         return terms;
+    }
+    public long addCourse(Course course) {
+        SQLiteDatabase db = getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(CourseTable.COL_NAME, course.getCourseName());
+        values.put(CourseTable.COL_START_DATE, course.getCourseStartDate().toString());
+        values.put(CourseTable.COL_END_DATE, course.getCourseEndDate().toString());
+        values.put(CourseTable.COL_STATUS, course.getStatus());
+        values.put(CourseTable.COL_TERM, course.getTermID());
 
+        long courseId = db.insert(CourseTable.TABLE, null, values);
+        return courseId;
+    }
+    public List<Course> getCoursesForTerm(long termId) {
+        List<Course> courses = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "select * from " + CourseTable.TABLE + " where term = ? order by " + TermTable.COL_START_DATE;
+        Cursor cursor = db.rawQuery(sql, new String[] {String.valueOf(termId)});
+        if (cursor.moveToFirst()) {
+            do {
+                Long courseID = cursor.getLong(0);
+                String courseName = cursor.getString(1);
+                LocalDate startDate = LocalDate.parse(cursor.getString(2));
+                LocalDate endDate = LocalDate.parse(cursor.getString(3));
+                String status = cursor.getString(4);
+                Long courseTermId = cursor.getLong(5);
+
+                Course course = new Course(courseName, startDate, endDate,status,
+                        courseID, courseTermId);
+
+                courses.add(course);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return courses;
+    }
+    public long addInstructor(Instructor instructor) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(InstructorTable.COL_NAME,instructor.getInstructorName());
+        values.put(InstructorTable.COL_NUMBER,instructor.getInstructorPhoneNumber());
+        values.put(InstructorTable.COL_EMAIL,instructor.getInstructorEmail());
+        values.put(InstructorTable.COL_COURSE,instructor.getCourseID());
+
+        long instructorId = db.insert(InstructorTable.TABLE, null, values);
+        return instructorId;
+    }
+    public long addAssessment(Assessment assessment) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(AssessmentTable.COL_TYPE , assessment.getAssessmentType());
+        values.put(AssessmentTable.COL_TITLE , assessment.getAssessmentTitle());
+        values.put(AssessmentTable.COL_START_DATE , String.valueOf(assessment.getAssessmentStartDate()));
+        values.put(AssessmentTable.COL_END_DATE , String.valueOf(assessment.getAssessmentEndDate()));
+        values.put(AssessmentTable.COL_COURSE , assessment.getCourseID());
+
+        long assessmentId = db.insert(AssessmentTable.TABLE, null, values);
+        return assessmentId;
+    }
+
+    public long addNote(Note note) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(NoteTable.COL_MESSAGE , note.getMessage());
+        values.put(NoteTable.COL_COURSE , note.getCourseID());
+
+        long noteId = db.insert(NoteTable.TABLE, null, values);
+        return noteId;
     }
 
 

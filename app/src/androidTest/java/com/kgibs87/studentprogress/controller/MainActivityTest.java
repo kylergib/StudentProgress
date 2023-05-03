@@ -2,8 +2,10 @@ package com.kgibs87.studentprogress.controller;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.content.Context;
@@ -13,7 +15,9 @@ import android.widget.EditText;
 import org.junit.After;
 import org.junit.Before;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -27,89 +31,63 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
-
-    private SharedPreferences sharedPreferences;
-
-    @Rule
-    public ActivityTestRule<MainActivity> mainActivityActivityTestRule =
-            new ActivityTestRule<>(MainActivity.class,true,false);
-
     @Before
     public void setUp() {
-        // Get a reference to the shared preferences file
-        sharedPreferences =
-                InstrumentationRegistry.getInstrumentation().getTargetContext()
-                        .getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        // Clear the shared preferences file
-        sharedPreferences.edit().clear().apply();
-    }
 
+    }
     @After
     public void tearDown() {
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-
-        sharedPrefEditor.putString("name", "Testing");
-        sharedPrefEditor.apply();
     }
 
     @Test
-    public void onCreateNoPreferences() {
+    public void testViewsExist() {
+        InstrumentationRegistry.getInstrumentation().getTargetContext()
+                        .getSharedPreferences("preferences", Context.MODE_PRIVATE)
+                                .edit().clear().apply();
 
-
-        // Initialize Espresso-Intents
-        Intents.init();
-        // Start mainActivity
-        mainActivityActivityTestRule.launchActivity(null);
-        intended(allOf(
-                hasComponent(MainActivity.class.getName())
-        ));
-
-        // Must be called at end of each test case
-        Intents.release();
+        ActivityScenario.launch(MainActivity.class);
+        onView(withId(R.id.header_title)).check(matches(isDisplayed()));
+        onView(withId(R.id.enterNameTextView)).check(matches(isDisplayed()));
+        onView(withId(R.id.nameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.submitButton)).check(matches(isDisplayed()));
 
     }
+
 
     @Test
     public void onCreatePreferences() {
 
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+        InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getSharedPreferences("preferences", Context.MODE_PRIVATE)
+                .edit().putString("name","Test").apply();
 
-        sharedPrefEditor.putString("name", "Testing");
-        sharedPrefEditor.apply();
-
-        // Initialize Espresso-Intents
         Intents.init();
-        // Start mainActivity
-        mainActivityActivityTestRule.launchActivity(null);
-
+        ActivityScenario.launch(MainActivity.class);
         intended(hasComponent(DashboardActivity.class.getName()));
-
-        // Must be called at end of each test case
         Intents.release();
 
     }
 
+
     @Test
     public void submitName() {
-        // Initialize Espresso-Intents
+        InstrumentationRegistry.getInstrumentation().getTargetContext()
+                .getSharedPreferences("preferences", Context.MODE_PRIVATE)
+                .edit().clear().apply();
+
+        ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class);
+
         Intents.init();
-
-        // Start mainActivity
-        mainActivityActivityTestRule.launchActivity(null);
-
-        EditText enterName =
-                mainActivityActivityTestRule.getActivity().findViewById(R.id.nameEditText);
-        enterName.setText("Testing");
-
-        // Click on submit button
+        scenario.onActivity(activity -> {
+            EditText enterName =
+                    activity.findViewById(R.id.nameEditText);
+            enterName.setText("Testing");
+        });
         onView(withId(R.id.submitButton)).perform(click());
-
-        // Verify QuestionActivity started with test subject
+        // Verify DashboardActivity started with test subject
         intended(allOf(
                 hasComponent(DashboardActivity.class.getName())
         ));
-
-        // Must be called at end of each test case
         Intents.release();
     }
 

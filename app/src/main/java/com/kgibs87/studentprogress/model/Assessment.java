@@ -6,21 +6,29 @@ import java.time.LocalDate;
 public class Assessment {
     private String type;
     private String title;
+    private LocalDate startDate;
     private LocalDate endDate;
-    private int id;
-    private String course;
+    private long id;
+    private long courseID;
 
+    public Assessment() {
+    }
     public Assessment(String type, String title) {
         setAssessmentType(type);
         setAssessmentTitle(title);
     }
 
-    public Assessment(int id, String type, String title, LocalDate endDate,  String course) {
+    public Assessment(long id, String type, String title, LocalDate endDate) {
         setAssessmentType(type);
         this.title = title;
         this.endDate = endDate;
         this.id = id;
-        this.course = course;
+    }
+    public Assessment(String title, LocalDate startDate, LocalDate endDate,String type) {
+        setAssessmentType(type);
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String getAssessmentType() {
@@ -42,6 +50,14 @@ public class Assessment {
         this.title = title;
     }
 
+    public LocalDate getAssessmentStartDate() {
+        return startDate;
+    }
+
+    public void setAssessmentStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
     public LocalDate getAssessmentEndDate() {
         return endDate;
     }
@@ -50,19 +66,20 @@ public class Assessment {
         this.endDate = endDate;
     }
 
-    public int getAssessmentId() {
+    public long getAssessmentId() {
         return id;
     }
 
-    public void setAssessmentId(int id) {
+    public void setAssessmentId(long id) {
         this.id = id;
     }
 
-    public String getCourse() {
-        return course;
+    public long getCourseID() {
+        return courseID;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setCourseID(long courseID) {
+        this.courseID = courseID;
     }
+
 }

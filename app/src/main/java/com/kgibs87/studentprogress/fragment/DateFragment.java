@@ -82,6 +82,7 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
 
         // Set the OnDateChangedListener on the DatePicker view
         datePicker.setOnDateChangedListener(this);
+        datePicker.setTag(fragmentTag);
 
         return rootView;
     }

@@ -4,18 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.model.Assessment;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -23,11 +26,22 @@ import java.util.Date;
 import java.util.List;
 
 public class AddAssessmentActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
-
+    private EditText assessmentNameEditText;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String assessmentType;
+    private static Assessment currentAssessment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assessment);
+        if (currentAssessment == null) {
+            startDate = LocalDate.now();
+            endDate = LocalDate.now();
+        }
+        assessmentNameEditText = findViewById(R.id.courseNameEditText);
+        if (currentAssessment == null)
+            currentAssessment = new Assessment();
 
         String[] statusList = {"Performance", "Objective"};
         Spinner spinner = findViewById(R.id.assessmentTypeSpinner);
@@ -38,6 +52,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Handle the selected item here
+                assessmentType = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -127,7 +142,17 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
         } else if (tag.equals("saveAssessmentButton")) {
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
+            Intent returnIntent = new Intent();
+            String assessmentName = String.valueOf(assessmentNameEditText.getText());
+//            returnIntent.putExtra("assessmentName", assessmentName);
+//            returnIntent.putExtra("startDate",startDate.toString());
+//            returnIntent.putExtra("endDate",endDate.toString());
+//            returnIntent.putExtra("assessmentType",assessmentType);
+            Assessment newAssessment = new Assessment(assessmentName,startDate,endDate,assessmentType);
+            AddCourseActivity.currentCourse.addCourseAssessment(newAssessment);
+            setResult(RESULT_OK, returnIntent);
             finish();
         }
+        currentAssessment = null;
     }
 }

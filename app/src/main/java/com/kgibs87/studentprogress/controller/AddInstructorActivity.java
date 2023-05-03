@@ -8,17 +8,31 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.model.Instructor;
 
 public class AddInstructorActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
-
+    private EditText instructorNameEditText;
+    private EditText instructorNumberEditText;
+    private EditText instructorEmailEditText;
+    private Instructor currentInstructor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_instructor);
+
+        instructorNameEditText = findViewById(R.id.instructorNameEditText);
+        instructorNumberEditText = findViewById(R.id.instructorNumberEditText);
+        instructorEmailEditText = findViewById(R.id.instructorEmailEditText);
+
+        if (currentInstructor == null)
+            currentInstructor = new Instructor();
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -51,6 +65,8 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
                     .commit();
         }
 
+
+
     }
 
     @Override
@@ -61,7 +77,23 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
         } else if (tag.equals("saveInstructorButton")) {
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
+            boolean nameEmpty = instructorNameEditText.getText().toString().isEmpty();
+
+            if (nameEmpty) {
+                Toast.makeText(AddInstructorActivity.this, "Name cannot be empty",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String name = instructorNameEditText.getText().toString();
+            String number = instructorNumberEditText.getText().toString();
+            String email = instructorEmailEditText.getText().toString();
+
+            Instructor newInstructor = new Instructor(name, number, email);
+            AddCourseActivity.currentCourse.addCourseInstructor(newInstructor);
+
             finish();
         }
+        currentInstructor = null;
     }
 }

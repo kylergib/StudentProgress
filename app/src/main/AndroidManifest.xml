@@ -27,7 +27,7 @@
             android:name=".controller.AddCourseActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.AddTermActivity"
+            android:name=".controller.TermActivity"
             android:exported="false" />
         <activity
             android:name=".controller.TermDetailsActivity"

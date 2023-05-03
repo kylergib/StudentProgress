@@ -86,6 +86,9 @@ public class AddInstructorActivityTest {
 
     @Test
     public void onButtonClickSave() {
+
+        //TODO: this test fails because fields cannot be left blank, fix please
+
         // Initialize Espresso-Intents
         Intents.init();
 

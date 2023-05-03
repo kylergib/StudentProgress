@@ -30,8 +30,6 @@ import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
@@ -101,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
     @Override
     public void onButtonClick(View view, String tag) {
         Log.d("Add tag", tag);
-        Intent termIntent = new Intent(this, AddTermActivity.class);
+        Intent termIntent = new Intent(this, TermActivity.class);
         startActivity(termIntent);
     }
 
@@ -127,14 +125,9 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
         public void onClick(View view) {
             Log.i("INFO_TAG", "Clicking Test 1");
 
-            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+            Intent termIntent = new Intent(getApplicationContext(), TermActivity.class);
+            termIntent.putExtra("currentTerm", term);
             startActivity(termIntent);
-
-            // Start QuestionActivity, indicating what subject was clicked
-            //TODO: finish what clicking the term does
-//            Intent intent = new Intent(SubjectActivity.this, QuestionActivity.class);
-//            intent.putExtra(QuestionActivity.EXTRA_SUBJECT, mSubject.getText());
-//            startActivity(intent);
         }
     }
 
@@ -161,11 +154,15 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
         public int getItemCount() {
             return termList.size();
         }
+
+        public List<Term> getTermList() {
+            return termList;
+        }
     }
 
 
     //TODO: possibly change how below border looks for recyclerview
-    private class DividerItemDecoration extends RecyclerView.ItemDecoration {
+    private static class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
         private final Paint mPaint;
 
