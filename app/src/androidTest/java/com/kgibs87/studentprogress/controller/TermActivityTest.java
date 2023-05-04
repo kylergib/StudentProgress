@@ -64,10 +64,12 @@ public class TermActivityTest {
 
         String termName = String.format("Test %f",Math.random());
         onView(withId(R.id.termNameEditText)).perform(typeText(termName));
+
         closeSoftKeyboard();
         onView(withTagValue(Matchers.is("saveTermButton"))).perform(click());
         onView(withId(R.id.welcomeText)).check(matches(isDisplayed()));
         ActivityScenario<DashboardActivity> scenario = ActivityScenario.launch(DashboardActivity.class);
+        //checks if
         scenario.onActivity(activity -> {
 
             RecyclerView termRecyclerView = activity.findViewById(R.id.termRecyclerView);
@@ -81,8 +83,16 @@ public class TermActivityTest {
             assertTrue(matchesNewTermName);
         });
 
+    }
 
-
-
+    @Test
+    public void addCourseThenCancel() {
+        onView(withId(R.id.addCourseButton)).perform(click());
+        onView(withId(R.id.headerTitleCourse)).check(matches(isDisplayed()));
+        onView(withId(R.id.courseNameView)).check(matches(isDisplayed()));
+        onView(withId(R.id.courseNameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.statusNameView)).check(matches(isDisplayed()));
+        onView(withTagValue(Matchers.is("cancelCourseButton"))).perform(click());
+        testViewsExist();
     }
 }
