@@ -10,9 +10,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 
 import static org.junit.Assert.assertTrue;
-
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,13 +19,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.kgibs87.studentprogress.R;
-import com.kgibs87.studentprogress.model.Term;
 
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 
