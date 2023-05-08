@@ -25,6 +25,8 @@ import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 import com.kgibs87.studentprogress.model.Assessment;
 import com.kgibs87.studentprogress.model.Course;
+import com.kgibs87.studentprogress.model.Instructor;
+import com.kgibs87.studentprogress.model.Note;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -142,11 +144,36 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         courseRecyclerView.setLayoutManager(linearLayoutManager);
         courseRecyclerView.setAdapter(new AssessmentAdapter(currentCourse.getCourseAssessments()));
     }
+
+    public void updateInstructors() {
+        RecyclerView recyclerView = findViewById(R.id.instructorsRecyclerView);
+
+        RecyclerView.LayoutManager linearLayoutManager =
+                new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(new InstructorAdapter(currentCourse.getCourseInstructors()));
+    }
+
+    public void updateNotes() {
+        RecyclerView recyclerView = findViewById(R.id.notesRecyclerView);
+
+        RecyclerView.LayoutManager linearLayoutManager =
+                new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(new NoteAdapter(currentCourse.getCourseNotes()));
+    }
     @Override
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == ASSESSMENT_REQUEST_CODE && resultCode == RESULT_OK) {
             updateAssessments();
+        }
+        else if (requestCode == INSTRUCTOR_REQUEST_CODE && resultCode == RESULT_OK) {
+            updateInstructors();
+        }
+        else if (requestCode == NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
+            updateNotes();
         }
 
     }
@@ -249,6 +276,126 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         @Override
         public int getItemCount() {
             return assessmentList.size();
+        }
+    }
+
+    private static class InstructorHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
+
+        private Instructor instructor;
+        private TextView mTextView;
+
+        public InstructorHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+            itemView.setOnClickListener(this);
+            mTextView = itemView.findViewById(R.id.termView);
+        }
+
+        public void bind(Instructor instructor, int position) {
+            this.instructor = instructor;
+            mTextView.setText(instructor.getInstructorName());
+
+            // Make the background color dependent on the length of the subject string
+//            int colorIndex = subject.getText().length() % mSubjectColors.length;
+//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.i("INFO_TAG", "Clicking Test 1");
+
+//            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+//            startActivity(termIntent);
+
+            //TODO: finish what clicking  does
+
+        }
+    }
+
+
+    private class InstructorAdapter extends RecyclerView.Adapter<InstructorHolder> {
+
+        private List<Instructor> instructorList;
+
+        public InstructorAdapter(List<Instructor> instructors) {
+            instructorList = instructors;
+        }
+
+        @Override
+        public InstructorHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+            return new InstructorHolder(layoutInflater, parent);
+        }
+
+
+        @Override
+        public void onBindViewHolder(InstructorHolder holder, int position){
+            holder.bind(instructorList.get(position), position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return instructorList.size();
+        }
+    }
+
+    private static class NoteHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener{
+
+        private Note note;
+        private TextView mTextView;
+
+        public NoteHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+            itemView.setOnClickListener(this);
+            mTextView = itemView.findViewById(R.id.termView);
+        }
+
+        public void bind(Note note, int position) {
+            this.note = note;
+            mTextView.setText(note.getMessage());
+
+            // Make the background color dependent on the length of the subject string
+//            int colorIndex = subject.getText().length() % mSubjectColors.length;
+//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.i("INFO_TAG", "Clicking Test 1");
+
+//            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+//            startActivity(termIntent);
+
+            //TODO: finish what clicking  does
+
+        }
+    }
+
+
+    private class NoteAdapter extends RecyclerView.Adapter<NoteHolder> {
+
+        private List<Note> noteList;
+
+        public NoteAdapter(List<Note> notes) {
+            noteList = notes;
+        }
+
+        @Override
+        public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+            return new NoteHolder(layoutInflater, parent);
+        }
+
+
+        @Override
+        public void onBindViewHolder(NoteHolder holder, int position){
+            holder.bind(noteList.get(position), position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return noteList.size();
         }
     }
 }

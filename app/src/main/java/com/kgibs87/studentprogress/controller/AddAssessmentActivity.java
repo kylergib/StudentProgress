@@ -144,10 +144,6 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
             //TODO: create term object and add to sqlite
             Intent returnIntent = new Intent();
             String assessmentName = String.valueOf(assessmentNameEditText.getText());
-//            returnIntent.putExtra("assessmentName", assessmentName);
-//            returnIntent.putExtra("startDate",startDate.toString());
-//            returnIntent.putExtra("endDate",endDate.toString());
-//            returnIntent.putExtra("assessmentType",assessmentType);
             Assessment newAssessment = new Assessment(assessmentName,startDate,endDate,assessmentType);
             AddCourseActivity.currentCourse.addCourseAssessment(newAssessment);
             setResult(RESULT_OK, returnIntent);

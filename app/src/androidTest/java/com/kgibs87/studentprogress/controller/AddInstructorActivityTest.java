@@ -9,6 +9,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 
+import static org.junit.Assert.assertTrue;
+
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,8 +61,7 @@ public class AddInstructorActivityTest {
                 TextView textView = (TextView) instructorRecyclerView.getChildAt(i);
                 matchesNewInstructorName = name.equals(textView.getText().toString());
             }
-            //TODO: fails because it has not been implemented yet
-//            assertTrue(matchesNewInstructorName);
+            assertTrue(matchesNewInstructorName);
         });
 
 

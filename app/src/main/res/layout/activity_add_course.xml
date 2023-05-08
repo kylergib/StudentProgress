@@ -22,6 +22,11 @@
             android:orientation="vertical"
             >
 
+            <FrameLayout
+                android:id="@+id/backButtonFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <TextView
                 android:id="@+id/headerTitleCourse"
                 android:layout_width="wrap_content"
@@ -204,11 +209,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/addButtonFragmentContainer"
-        />
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/backButtonFragmentContainer"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

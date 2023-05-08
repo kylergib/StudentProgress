@@ -61,7 +61,6 @@ public class AddAssessmentActivityTest {
                 TextView textView = (TextView) recyclerView.getChildAt(i);
                 matchesNewAssessmentName = testName.equals(textView.getText().toString());
             }
-            //TODO: check if note shows up on next view. not implemented in
             assertTrue(matchesNewAssessmentName);
         });
         Intents.release();

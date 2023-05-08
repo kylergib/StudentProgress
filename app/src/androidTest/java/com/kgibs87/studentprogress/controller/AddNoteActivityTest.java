@@ -68,8 +68,7 @@ public class AddNoteActivityTest {
                 TextView textView = (TextView) recyclerView.getChildAt(i);
                 matchesNewNoteName = testNote.equals(textView.getText().toString());
             }
-            //TODO: check if note shows up on next view. not implemented in
-//            assertTrue(matchesNewNoteName);
+            assertTrue(matchesNewNoteName);
         });
         Intents.release();
     }

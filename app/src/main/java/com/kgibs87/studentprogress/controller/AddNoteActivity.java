@@ -1,5 +1,6 @@
 package com.kgibs87.studentprogress.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -75,7 +76,11 @@ public class AddNoteActivity extends AppCompatActivity implements FloatingButton
             }
             String message = messageEditText.getText().toString();
             Note newNote = new Note(message);
+            Intent returnIntent = new Intent();
             AddCourseActivity.currentCourse.addCourseNote(newNote);
+
+
+            setResult(RESULT_OK, returnIntent);
             finish();
         }
         currentNote = null;

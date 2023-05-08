@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -90,8 +91,12 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
             String email = instructorEmailEditText.getText().toString();
 
             Instructor newInstructor = new Instructor(name, number, email);
+            Intent returnIntent = new Intent();
             AddCourseActivity.currentCourse.addCourseInstructor(newInstructor);
 
+
+
+            setResult(RESULT_OK, returnIntent);
             finish();
         }
         currentInstructor = null;
