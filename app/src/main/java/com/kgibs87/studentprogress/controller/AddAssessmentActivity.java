@@ -39,7 +39,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
             startDate = LocalDate.now();
             endDate = LocalDate.now();
         }
-        assessmentNameEditText = findViewById(R.id.courseNameEditText);
+        assessmentNameEditText = findViewById(R.id.assessmentNameEditText);
         if (currentAssessment == null)
             currentAssessment = new Assessment();
 

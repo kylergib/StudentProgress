@@ -148,28 +148,8 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         if (requestCode == ASSESSMENT_REQUEST_CODE && resultCode == RESULT_OK) {
             updateAssessments();
         }
-//            String assessmentName = data.getStringExtra("assessmentName");
-//            LocalDate startDate = LocalDate.parse(data.getStringExtra("startDate"));
-//            LocalDate endDate = LocalDate.parse(data.getStringExtra("endDate"));
-//            String assessmentType = data.getStringExtra("assessmentType");
-//            Log.d("ASSESSMENT BACK",String.format("%s - %s - %s - %s",assessmentName, startDate, endDate, assessmentType));
-//            Assessment newAssessment = new Assessment(assessmentName,startDate,endDate,assessmentType);
-//            newAssessment.add(newAssessment);
-//            updateCourses();
-//        } else if (requestCode == INSTRUCTOR_REQUEST_CODE && resultCode == RESULT_OK) {
-//
-//        } else if (requestCode == NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
-//
-//        }
-    }
-//    public void cancelCourseClick(View view) {
-//        finish();
-//    }
-//    public void addCourseClick(View view) {
-//        //TODO: add course to database
-//        finish();
-//    }
 
+    }
     @Override
     public void onDateSelected(LocalDate localDate, String tag) {
 // Check the tag to determine which DateFragment is invoking the method

@@ -49,8 +49,9 @@ public class AddCourseActivityTest {
     @Test
     public void addInstructorClickThenCancel() {
         ActivityScenario.launch(AddCourseActivity.class);
-        testViewsExist();
         Intents.init();
+        testViewsExist();
+
         onView(withId(R.id.addInstructorButton))
                 .perform(ViewActions.scrollTo());
         onView(withId(R.id.addInstructorButton)).perform(click());
@@ -63,8 +64,9 @@ public class AddCourseActivityTest {
     @Test
     public void addNoteClickThenCancel() {
         ActivityScenario.launch(AddCourseActivity.class);
-        testViewsExist();
         Intents.init();
+        testViewsExist();
+
         onView(withId(R.id.addNoteButton))
                 .perform(ViewActions.scrollTo());
 
