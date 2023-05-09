@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -21,9 +21,6 @@ import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 import com.kgibs87.studentprogress.model.Assessment;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 public class AddAssessmentActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
     private EditText assessmentNameEditText;

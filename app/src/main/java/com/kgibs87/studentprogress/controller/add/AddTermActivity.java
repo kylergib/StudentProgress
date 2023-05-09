@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.DashboardActivity;
+import com.kgibs87.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 import com.kgibs87.studentprogress.model.Course;
@@ -28,7 +30,7 @@ import com.kgibs87.studentprogress.model.Term;
 import java.time.LocalDate;
 import java.util.List;
 
-public class TermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
+public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
 
     private static StudentDatabase mStudentDb ;
     private LocalDate startDate = LocalDate.now();
@@ -215,20 +217,20 @@ public class TermActivity extends AppCompatActivity implements DateFragment.OnDa
 
         if (endBeforeStart) {
             Log.d("AddTermActivity", "Start date is not before the end date.");
-            Toast.makeText(TermActivity.this, "Start date is not before the end date.",
+            Toast.makeText(AddTermActivity.this, "Start date is not before the end date.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
         else if (startEqualsEnd) {
             Log.d("AddTermActivity", "Start date and end date cannot be the same");
-            Toast.makeText(TermActivity.this, "Start date and end date cannot be the same",
+            Toast.makeText(AddTermActivity.this, "Start date and end date cannot be the same",
                     Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (termNameEmpty) {
             Log.d("AddTermActivity", "Term name cannot be empty");
-            Toast.makeText(TermActivity.this, "Term name cannot be empty",
+            Toast.makeText(AddTermActivity.this, "Term name cannot be empty",
                     Toast.LENGTH_SHORT).show();
             return;
         }

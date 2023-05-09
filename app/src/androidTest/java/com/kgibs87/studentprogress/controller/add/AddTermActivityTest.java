@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
@@ -19,6 +19,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.DashboardActivity;
 
 import org.hamcrest.Matchers;
 import org.junit.Rule;
@@ -29,10 +30,10 @@ import java.time.LocalDate;
 
 
 @RunWith(AndroidJUnit4.class)
-public class TermActivityTest {
+public class AddTermActivityTest {
 
     @Rule
-    public ActivityScenarioRule<TermActivity> activityRule = new ActivityScenarioRule<>(TermActivity.class);
+    public ActivityScenarioRule<AddTermActivity> activityRule = new ActivityScenarioRule<>(AddTermActivity.class);
 
 
     @Test

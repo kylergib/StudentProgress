@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -212,7 +212,7 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
             currentCourse.setCourseEndDate(endDate);
             currentCourse.setCourseStatus(courseStatus);
 
-            TermActivity.currentTerm.addTermCourse(currentCourse);
+            AddTermActivity.currentTerm.addTermCourse(currentCourse);
 
             setResult(RESULT_OK, returnIntent);
             finish();

@@ -15,22 +15,22 @@
             android:name=".InstructorActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.AddNoteActivity"
+            android:name=".controller.add.AddNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.AddInstructorActivity"
+            android:name=".controller.add.AddInstructorActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.AddAssessmentActivity"
+            android:name=".controller.add.AddAssessmentActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.AddCourseActivity"
+            android:name=".controller.add.AddCourseActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.TermActivity"
+            android:name=".controller.add.AddTermActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.TermDetailsActivity"
+            android:name=".controller.detail.TermDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".controller.DashboardActivity"

@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
@@ -13,24 +13,19 @@ import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 
 import static org.junit.Assert.assertTrue;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.add.AddCourseActivity;
+import com.kgibs87.studentprogress.controller.add.AddNoteActivity;
 
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

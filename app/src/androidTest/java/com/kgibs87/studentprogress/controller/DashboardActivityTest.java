@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.add.AddTermActivity;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -59,7 +60,7 @@ public class DashboardActivityTest {
     public void addTermClick() {
         Intents.init();
         onView(withTagValue(Matchers.is("addTermButton"))).perform(click());
-        intended(hasComponent(TermActivity.class.getName())
+        intended(hasComponent(AddTermActivity.class.getName())
         );
         onView(withId(R.id.courses)).check(matches(ViewMatchers.isDisplayed()));
 //        onView(withId(R.id.courseRecyclerView)).check(matches(ViewMatchers.isDisplayed())); //wont work if recycler view is blank

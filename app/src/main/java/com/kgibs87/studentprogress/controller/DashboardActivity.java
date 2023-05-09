@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.add.AddTermActivity;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
@@ -99,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
     @Override
     public void onButtonClick(View view, String tag) {
         Log.d("Add tag", tag);
-        Intent termIntent = new Intent(this, TermActivity.class);
+        Intent termIntent = new Intent(this, AddTermActivity.class);
         startActivity(termIntent);
     }
 
@@ -125,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
         public void onClick(View view) {
             Log.i("INFO_TAG", "Clicking Test 1");
 
-            Intent termIntent = new Intent(getApplicationContext(), TermActivity.class);
+            Intent termIntent = new Intent(getApplicationContext(), AddTermActivity.class);
             termIntent.putExtra("currentTerm", term);
             startActivity(termIntent);
         }

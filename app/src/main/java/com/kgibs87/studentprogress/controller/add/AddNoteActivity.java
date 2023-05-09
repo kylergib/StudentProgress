@@ -1,8 +1,4 @@
-package com.kgibs87.studentprogress.controller;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+package com.kgibs87.studentprogress.controller.add;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,33 +9,28 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
-import com.kgibs87.studentprogress.model.Instructor;
+import com.kgibs87.studentprogress.model.Note;
 
-public class AddInstructorActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
-    private EditText instructorNameEditText;
-    private EditText instructorNumberEditText;
-    private EditText instructorEmailEditText;
-    private Instructor currentInstructor;
+public class AddNoteActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
+    private Note currentNote;
+    private EditText messageEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_instructor);
-
-        instructorNameEditText = findViewById(R.id.instructorNameEditText);
-        instructorNumberEditText = findViewById(R.id.instructorNumberEditText);
-        instructorEmailEditText = findViewById(R.id.instructorEmailEditText);
-
-        if (currentInstructor == null)
-            currentInstructor = new Instructor();
-
+        setContentView(R.layout.activity_add_note);
+        messageEditText = findViewById(R.id.note_edit_text);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
         if (addButtonFragment == null) {
-            String saveTag = "saveInstructorButton";
+            String saveTag = "saveNoteButton";
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT
@@ -54,7 +45,7 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
 
         Fragment backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
         if (backButtonFragment == null) {
-            String cancelTag = "cancelInstructorButton";
+            String cancelTag = "cancelNoteButton";
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.WRAP_CONTENT,
                     FrameLayout.LayoutParams.WRAP_CONTENT
@@ -66,39 +57,30 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
                     .commit();
         }
 
-
-
     }
 
     @Override
     public void onButtonClick(View view, String tag) {
-        if (tag.equals("cancelInstructorButton")) {
+        if (tag.equals("cancelNoteButton")) {
             Log.d("Back tag", tag);
             finish();
-        } else if (tag.equals("saveInstructorButton")) {
+        } else if (tag.equals("saveNoteButton")) {
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
-            boolean nameEmpty = instructorNameEditText.getText().toString().isEmpty();
-
-            if (nameEmpty) {
-                Toast.makeText(AddInstructorActivity.this, "Name cannot be empty",
-                        Toast.LENGTH_SHORT).show();
+            boolean messageIsEmpty = messageEditText.getText().toString().isEmpty();
+            if (messageIsEmpty) {
+                Toast.makeText(this, "Message cannot be empty.", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            String name = instructorNameEditText.getText().toString();
-            String number = instructorNumberEditText.getText().toString();
-            String email = instructorEmailEditText.getText().toString();
-
-            Instructor newInstructor = new Instructor(name, number, email);
+            String message = messageEditText.getText().toString();
+            Note newNote = new Note(message);
             Intent returnIntent = new Intent();
-            AddCourseActivity.currentCourse.addCourseInstructor(newInstructor);
-
+            AddCourseActivity.currentCourse.addCourseNote(newNote);
 
 
             setResult(RESULT_OK, returnIntent);
             finish();
         }
-        currentInstructor = null;
+        currentNote = null;
     }
 }

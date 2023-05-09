@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
@@ -79,7 +79,7 @@ public class AddCourseActivityTest {
     }
     @Test
     public void cancelCourseClick() {
-        ActivityScenario<TermActivity> scenario = ActivityScenario.launch(TermActivity.class);
+        ActivityScenario<AddTermActivity> scenario = ActivityScenario.launch(AddTermActivity.class);
         Intents.init();
         onView(withId(R.id.addCourseButton))
                 .perform(ViewActions.scrollTo());
@@ -95,7 +95,7 @@ public class AddCourseActivityTest {
     }
     @Test
     public void addCourseClick() {
-        ActivityScenario<TermActivity> scenario = ActivityScenario.launch(TermActivity.class);
+        ActivityScenario<AddTermActivity> scenario = ActivityScenario.launch(AddTermActivity.class);
 
         onView(withId(R.id.addCourseButton))
                 .perform(ViewActions.scrollTo());

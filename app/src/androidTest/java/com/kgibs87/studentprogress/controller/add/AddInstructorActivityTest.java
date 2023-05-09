@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.add;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
@@ -19,6 +19,8 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.add.AddCourseActivity;
+import com.kgibs87.studentprogress.controller.add.AddInstructorActivity;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;

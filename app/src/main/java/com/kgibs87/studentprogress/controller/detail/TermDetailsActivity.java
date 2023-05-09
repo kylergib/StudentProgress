@@ -1,4 +1,4 @@
-package com.kgibs87.studentprogress.controller;
+package com.kgibs87.studentprogress.controller.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.controller.DashboardActivity;
 import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.Term;
 
