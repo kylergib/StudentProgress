@@ -107,7 +107,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 AssessmentTable.COL_TITLE + ", " +
                 AssessmentTable.COL_START_DATE + ", " +
                 AssessmentTable.COL_END_DATE + ", " +
-                AssessmentTable.COL_COURSE + ", " +
+                AssessmentTable.COL_COURSE + " integer, " +
                 "foreign key(" + AssessmentTable.COL_COURSE + ") references " +
                 CourseTable.TABLE + "(" + CourseTable.COL_ID + ") on delete cascade)");
 
@@ -117,7 +117,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 InstructorTable.COL_NAME + ", " +
                 InstructorTable.COL_NUMBER + ", " +
                 InstructorTable.COL_EMAIL + ", " +
-                InstructorTable.COL_COURSE + ", " +
+                InstructorTable.COL_COURSE + " integer, " +
                 "foreign key(" + InstructorTable.COL_COURSE + ") references " +
                 CourseTable.TABLE + "(" + CourseTable.COL_ID + ") on delete cascade)");
 
@@ -125,7 +125,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("create table " + NoteTable.TABLE + " (" +
                 NoteTable.COL_ID + " integer primary key autoincrement, " +
                 NoteTable.COL_MESSAGE + ", " +
-                NoteTable.COL_COURSE + ", " +
+                NoteTable.COL_COURSE + " integer, " +
                 "foreign key(" + NoteTable.COL_COURSE + ") references " +
                 CourseTable.TABLE + "(" + CourseTable.COL_ID + ") on delete cascade)");
 
@@ -212,7 +212,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
 //        Cursor cursor = db.rawQuery(sql, null);
 
         String sql = "select * from " + CourseTable.TABLE + " where " + CourseTable.COL_TERM + " = ?";
-        Cursor cursor = db.rawQuery(sql, new String[] {Integer.toString(termIdInt)});
+        Cursor cursor = db.rawQuery(sql, new String[] {Long.toString(termId)});
 
 
 
@@ -226,12 +226,14 @@ public class StudentDatabase extends SQLiteOpenHelper {
         Log.d("StudentDatabase", cursor.toString());
         if (cursor.moveToFirst()) {
             do {
+                Log.d("StudentDatabase", "found course");
                 Long courseID = cursor.getLong(0);
                 String courseName = cursor.getString(1);
                 LocalDate startDate = LocalDate.parse(cursor.getString(2));
                 LocalDate endDate = LocalDate.parse(cursor.getString(3));
                 String status = cursor.getString(4);
                 Long courseTermId = cursor.getLong(5);
+                Log.d("StudentDatabase", String.valueOf(courseID));
 
                 Course course = new Course(courseName, startDate, endDate,status,
                         courseID, courseTermId);
@@ -255,6 +257,36 @@ public class StudentDatabase extends SQLiteOpenHelper {
 
         long instructorId = db.insert(InstructorTable.TABLE, null, values);
         return instructorId;
+    }
+    public List<Instructor> getInstructorsForTerm(long courseId) {
+        List<Instructor> instructors = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+
+
+        String sql = "select * from " + InstructorTable.TABLE + " where " + InstructorTable.COL_COURSE + " = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] {Long.toString(courseId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("StudentDatabase", "found course");
+                Long instructorId = cursor.getLong(0);
+                String instructorName = cursor.getString(1);
+                String instructorNumber = cursor.getString(2);
+                String instructorEmail = cursor.getString(3);
+                Long instructorCourseId = cursor.getLong(4);
+                Log.d("StudentDatabase", String.valueOf(instructorCourseId));
+                //TODO: add courseId in constructor
+                Instructor instructor = new Instructor(instructorId,instructorName,
+                        instructorNumber,instructorEmail);
+                instructor.setCourseID(instructorCourseId);
+
+                instructors.add(instructor);
+                Log.d("StudentDatabase", instructor.getInstructorName());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return instructors;
     }
     public long addAssessment(Assessment assessment) {
         SQLiteDatabase db = getWritableDatabase();

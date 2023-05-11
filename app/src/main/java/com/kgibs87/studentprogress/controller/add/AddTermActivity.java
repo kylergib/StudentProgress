@@ -20,10 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.adapter.CourseAdapter;
 import com.kgibs87.studentprogress.controller.DashboardActivity;
 import com.kgibs87.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.holder.CourseHolder;
 import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
@@ -31,7 +33,8 @@ import com.kgibs87.studentprogress.model.Term;
 import java.time.LocalDate;
 import java.util.List;
 
-public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
+public class AddTermActivity extends AppCompatActivity implements DateFragment.OnDateSelectedListener,
+        FloatingButtonFragment.OnButtonClickListener, CourseHolder.OnCourseClickListener {
 
     private static StudentDatabase mStudentDb ;
     private LocalDate startDate = LocalDate.now();
@@ -166,44 +169,9 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
         RecyclerView.LayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
         courseRecyclerView.setLayoutManager(linearLayoutManager);
-        courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses()));
+        courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses(),this));
     }
 
-
-
-
-
-    private class CourseHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener{
-
-        private Course course;
-        private TextView mTextView;
-
-        public CourseHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
-            itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
-            //TESTING
-
-        }
-
-        public void bind(Course course, int position) {
-            this.course = course;
-            mTextView.setText(course.getCourseName());
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.i("INFO_TAG", "Clicking Test 1");
-
-            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-            startActivity(termIntent);
-
-            //TODO: finish what clicking  does
-
-        }
-    }
 
     public void saveTerm() {
 
@@ -308,31 +276,10 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
 
     }
 
-
-    private class CourseAdapter extends RecyclerView.Adapter<CourseHolder> {
-
-        private List<Course> courseList;
-
-        public CourseAdapter(List<Course> courses) {
-            courseList = courses;
-        }
-
-        @Override
-        public CourseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-            return new CourseHolder(layoutInflater, parent);
-        }
-
-
-        @Override
-        public void onBindViewHolder(CourseHolder holder, int position){
-            holder.bind(courseList.get(position), position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return courseList.size();
-        }
+    @Override
+    public void onCourseClick(View view, Course course) {
+        //TODO: add view for course later
     }
+
 
 }

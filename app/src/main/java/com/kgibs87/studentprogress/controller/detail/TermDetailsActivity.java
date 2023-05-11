@@ -38,7 +38,6 @@ public class TermDetailsActivity extends AppCompatActivity implements
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         setContentView(R.layout.activity_detail_term);
 
-        //TODO: figure out why background color of button is not changing.
         Button deleteTermButton = findViewById(R.id.deleteTermButton);
         deleteTermButton.setBackgroundColor(Color.rgb(168,0,0));
 
@@ -94,6 +93,7 @@ public class TermDetailsActivity extends AppCompatActivity implements
         headerText.setText(currentTerm.getName());
     }
     public void setRecyclerCourse() {
+
         Log.d("termdetail", String.valueOf(currentTerm.getTermCourses()));
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
         RecyclerView.LayoutManager linearLayoutManager =
@@ -126,7 +126,9 @@ public class TermDetailsActivity extends AppCompatActivity implements
         boolean deletedTermBool = mStudentDb.deleteTerm(currentTerm.getId());
         if (deletedTermBool) {
             Log.d("deleteTermClick", "Successfully deleted " + currentTerm.getId());
-            finish();
+            Intent dashboardIntent = new Intent(this, DashboardActivity.class);
+            startActivity(dashboardIntent);
+            currentTerm = null;
         }
         else Log.d("deleteTermClick", "Could not delete " + currentTerm.getId());
 
