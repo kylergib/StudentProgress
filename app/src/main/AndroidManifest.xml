@@ -12,7 +12,7 @@
         android:theme="@style/Theme.StudentProgress"
         tools:targetApi="31">
         <activity
-            android:name=".InstructorActivity"
+            android:name=".controller.detail.CourseDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".controller.add.AddNoteActivity"

@@ -1,6 +1,7 @@
 package com.kgibs87.studentprogress.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,27 +18,36 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.adapter.TermAdapter;
 import com.kgibs87.studentprogress.controller.add.AddTermActivity;
+import com.kgibs87.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.holder.TermHolder;
+import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.model.Term;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
+public class DashboardActivity extends AppCompatActivity
+        implements FloatingButtonFragment.OnButtonClickListener, TermHolder.OnTermClickListener {
 
     private static StudentDatabase mStudentDb ;
     private List<Term> termsList;
     public static SharedPreferences sharedPref;
+
 
 
     @Override
@@ -60,6 +70,11 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
 
 //        termsList = Arrays.asList(term1,term2);
         termsList = mStudentDb.getTerms();
+        for (Term term: termsList) {
+            List<Course> courses = mStudentDb.getCoursesForTerm(term.getId());
+            Log.d("DashboardActivity", String.valueOf(courses));
+            term.setTermCourses(courses);
+        }
 
         RecyclerView termRecyclerView = findViewById(R.id.termRecyclerView);
 
@@ -68,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
         termRecyclerView.setLayoutManager(linearLayoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration();
         termRecyclerView.addItemDecoration(dividerItemDecoration);
-        termRecyclerView.setAdapter(new TermAdapter(termsList));
+        termRecyclerView.setAdapter(new TermAdapter(termsList, this));
         TextView statusText = findViewById(R.id.statusText);
 
 
@@ -104,61 +119,11 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
         startActivity(termIntent);
     }
 
-    private class TermHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener{
-
-        private Term term;
-        private TextView mTextView;
-
-        public TermHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
-            itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
-        }
-
-        public void bind(Term term, int position) {
-            this.term = term;
-            mTextView.setText(term.getName());
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.i("INFO_TAG", "Clicking Test 1");
-
-            Intent termIntent = new Intent(getApplicationContext(), AddTermActivity.class);
-            termIntent.putExtra("currentTerm", term);
-            startActivity(termIntent);
-        }
-    }
-
-    private class TermAdapter extends RecyclerView.Adapter<TermHolder> {
-
-        private List<Term> termList;
-
-        public TermAdapter(List<Term> terms) {
-            termList = terms;
-        }
-
-        @Override
-        public TermHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-            return new TermHolder(layoutInflater, parent);
-        }
-
-        @Override
-        public void onBindViewHolder(TermHolder holder, int position){
-            holder.bind(termList.get(position), position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return termList.size();
-        }
-
-        public List<Term> getTermList() {
-            return termList;
-        }
+    @Override
+    public void onTermClick(View view, Term term) {
+        Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+        intent.putExtra("currentTerm", term);
+        startActivity(intent);
     }
 
 
@@ -204,4 +169,5 @@ public class DashboardActivity extends AppCompatActivity implements FloatingButt
             }
         }
     }
+
 }

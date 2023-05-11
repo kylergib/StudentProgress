@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.util.Log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                 CourseTable.COL_START_DATE + ", " +
                 CourseTable.COL_END_DATE + ", " +
                 CourseTable.COL_STATUS + ", " +
-                CourseTable.COL_TERM + ", " +
+                CourseTable.COL_TERM + " integer, " +
                 "foreign key(" + CourseTable.COL_TERM + ") references " +
                 TermTable.TABLE + "(" + TermTable.COL_ID + ") on delete cascade)");
 
@@ -180,6 +181,13 @@ public class StudentDatabase extends SQLiteOpenHelper {
 
         return terms;
     }
+    public boolean deleteTerm(long termId) {
+        SQLiteDatabase db = getWritableDatabase();
+        int rowsDeleted = db.delete(TermTable.TABLE, TermTable.COL_ID + " = ?",
+                new String[] {Long.toString(termId)});
+        return rowsDeleted > 0;
+
+    }
     public long addCourse(Course course) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -194,10 +202,28 @@ public class StudentDatabase extends SQLiteOpenHelper {
         return courseId;
     }
     public List<Course> getCoursesForTerm(long termId) {
+        int termIdInt = 1;
         List<Course> courses = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "select * from " + CourseTable.TABLE + " where term = ? order by " + TermTable.COL_START_DATE;
-        Cursor cursor = db.rawQuery(sql, new String[] {String.valueOf(termId)});
+//        String sql = "select * from " + CourseTable.TABLE + " where " + CourseTable.COL_TERM + " = ? order by " + TermTable.COL_START_DATE + " DESC";
+
+
+//        String sql = "select * from " + CourseTable.TABLE + " where " + CourseTable.COL_TERM + " = 1";
+//        Cursor cursor = db.rawQuery(sql, null);
+
+        String sql = "select * from " + CourseTable.TABLE + " where " + CourseTable.COL_TERM + " = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] {Integer.toString(termIdInt)});
+
+
+
+
+        Log.d("StudentDatabase", "termId: " + termId);
+        Log.d("StudentDatabase", sql);
+//        String[] termIdString = new String[] {String.valueOf(termId)};
+        Log.d("StudentDatabase", String.valueOf(termId));
+//        Cursor cursor = db.rawQuery(sql, new String[] { Float.toString(termId)});
+//        Cursor cursor = db.rawQuery(sql, null);
+        Log.d("StudentDatabase", cursor.toString());
         if (cursor.moveToFirst()) {
             do {
                 Long courseID = cursor.getLong(0);
@@ -211,6 +237,7 @@ public class StudentDatabase extends SQLiteOpenHelper {
                         courseID, courseTermId);
 
                 courses.add(course);
+                Log.d("StudentDatabase", course.getCourseName());
             } while (cursor.moveToNext());
         }
         cursor.close();

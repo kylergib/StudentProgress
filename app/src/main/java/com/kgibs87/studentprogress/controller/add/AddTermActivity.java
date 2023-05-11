@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
-        setContentView(R.layout.activity_term);
+        setContentView(R.layout.activity_add_term);
 
         Intent intent = getIntent();
 
@@ -59,6 +60,7 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     }
 
     public void addTermSetUp() {
+        Log.d("AddTermActivity", "starting set up");
         currentTerm = new Term();
         //TODO: get course data from database
         updateCourses();
@@ -117,6 +119,7 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
 
     public void addCourseClick(View view) {
         Log.d("Debug-teg", "addcourseclicked");
+        Log.d("AddTermActivity", String.valueOf(currentTerm));
         Intent courseIntent = new Intent(getApplicationContext(), AddCourseActivity.class);
 //        startActivity(courseIntent);
         startActivityForResult(courseIntent,COURSE_REQUEST_CODE);
@@ -126,13 +129,8 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == COURSE_REQUEST_CODE && resultCode == RESULT_OK) {
-//            String courseName = data.getStringExtra("courseName");
-//            LocalDate startDate = LocalDate.parse(data.getStringExtra("startDate"));
-//            LocalDate endDate = LocalDate.parse(data.getStringExtra("endDate"));
-//            String courseStatus = data.getStringExtra("courseStatus");
-//            Log.d("COURSEBACK",String.format("%s - %s - %s - %s",courseName, startDate, endDate, courseStatus));
-//            Course newCourse = new Course(courseName,startDate,endDate,courseStatus);
-//            currentTerm.addTermCourse(newCourse);
+            Log.d("AddTermActivity", "returning to activity");
+            Log.d("AddTermActivity", String.valueOf(currentTerm));
             updateCourses();
         }
     }
@@ -155,11 +153,12 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     public void onButtonClick(View view, String tag) {
         Log.d("AddTermActivity", tag);
         if (tag.equals("cancelTermButton")) {
+            currentTerm = null;
             finish();
         } else if (tag.equals("saveTermButton")) {
             saveTerm();
         }
-        currentTerm = null;
+
     }
     public void updateCourses() {
         RecyclerView courseRecyclerView = findViewById(R.id.courseRecyclerView);
@@ -170,9 +169,6 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
         courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses()));
     }
 
-    public void addTerm() {
-
-    }
 
 
 
@@ -187,6 +183,8 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
             super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
             itemView.setOnClickListener(this);
             mTextView = itemView.findViewById(R.id.termView);
+            //TESTING
+
         }
 
         public void bind(Course course, int position) {
@@ -208,6 +206,10 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     }
 
     public void saveTerm() {
+
+        Log.d("AddTermActivity", "returning to activity");
+        Log.d("AddTermActivity", String.valueOf(currentTerm));
+
         EditText termNameEditText = findViewById(R.id.termNameEditText);
         String termNameString = termNameEditText.getText().toString();
 
@@ -245,10 +247,6 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
         long termId = mStudentDb.addTerm(currentTerm);
         Log.d("AddTermTest", String.valueOf(termId));
         currentTerm.setId(termId);
-
-        //TODO: leftoff
-
-
 
         boolean courseListNotEmpty = !currentTerm.getTermCourses().isEmpty();
 
@@ -306,6 +304,7 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
 
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         startActivity(dashboardIntent);
+        currentTerm = null;
 
     }
 

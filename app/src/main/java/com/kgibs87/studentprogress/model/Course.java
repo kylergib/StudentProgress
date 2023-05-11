@@ -1,10 +1,11 @@
 package com.kgibs87.studentprogress.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Course {
+public class Course implements Serializable {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
