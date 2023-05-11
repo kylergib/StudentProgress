@@ -21,8 +21,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
+import com.kgibs87.studentprogress.adapter.AssessmentAdapter;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
+import com.kgibs87.studentprogress.holder.AssessmentHolder;
 import com.kgibs87.studentprogress.model.Assessment;
 import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.Instructor;
@@ -32,7 +34,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddCourseActivity extends AppCompatActivity  implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
+public class AddCourseActivity extends AppCompatActivity  implements DateFragment.OnDateSelectedListener,
+        FloatingButtonFragment.OnButtonClickListener, AssessmentHolder.OnAssessmentClickListener {
     private EditText courseNameEditText;
     private String courseStatus;
     private LocalDate startDate = LocalDate.now();
@@ -142,7 +145,7 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         RecyclerView.LayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
         courseRecyclerView.setLayoutManager(linearLayoutManager);
-        courseRecyclerView.setAdapter(new AssessmentAdapter(currentCourse.getCourseAssessments()));
+        courseRecyclerView.setAdapter(new AssessmentAdapter(currentCourse.getCourseAssessments(), this));
     }
 
     public void updateInstructors() {
@@ -219,65 +222,13 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         }
         currentCourse = null;
     }
-    private static class AssessmentHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener{
 
-        private Assessment assessment;
-        private TextView mTextView;
+    @Override
+    public void onAssessmentClick(View view, Assessment assessment) {
+        //TODO: load assessment details activity
 
-        public AssessmentHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
-            itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
-        }
-
-        public void bind(Assessment assessment, int position) {
-            this.assessment = assessment;
-            mTextView.setText(assessment.getAssessmentTitle());
-
-            // Make the background color dependent on the length of the subject string
-//            int colorIndex = subject.getText().length() % mSubjectColors.length;
-//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.i("INFO_TAG", "Clicking Test 1");
-
-//            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-//            startActivity(termIntent);
-
-            //TODO: finish what clicking  does
-
-        }
     }
 
-
-    private class AssessmentAdapter extends RecyclerView.Adapter<AssessmentHolder> {
-
-        private List<Assessment> assessmentList;
-
-        public AssessmentAdapter(List<Assessment> assessments) {
-            assessmentList = assessments;
-        }
-
-        @Override
-        public AssessmentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-            return new AssessmentHolder(layoutInflater, parent);
-        }
-
-
-        @Override
-        public void onBindViewHolder(AssessmentHolder holder, int position){
-            holder.bind(assessmentList.get(position), position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return assessmentList.size();
-        }
-    }
 
     private static class InstructorHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
