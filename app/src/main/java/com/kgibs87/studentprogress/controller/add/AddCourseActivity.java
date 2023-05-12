@@ -22,9 +22,13 @@ import android.widget.TextView;
 
 import com.kgibs87.studentprogress.R;
 import com.kgibs87.studentprogress.adapter.AssessmentAdapter;
+import com.kgibs87.studentprogress.adapter.InstructorAdapter;
+import com.kgibs87.studentprogress.adapter.NoteAdapter;
 import com.kgibs87.studentprogress.fragment.DateFragment;
 import com.kgibs87.studentprogress.fragment.FloatingButtonFragment;
 import com.kgibs87.studentprogress.holder.AssessmentHolder;
+import com.kgibs87.studentprogress.holder.InstructorHolder;
+import com.kgibs87.studentprogress.holder.NoteHolder;
 import com.kgibs87.studentprogress.model.Assessment;
 import com.kgibs87.studentprogress.model.Course;
 import com.kgibs87.studentprogress.model.Instructor;
@@ -35,7 +39,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AddCourseActivity extends AppCompatActivity  implements DateFragment.OnDateSelectedListener,
-        FloatingButtonFragment.OnButtonClickListener, AssessmentHolder.OnAssessmentClickListener {
+        FloatingButtonFragment.OnButtonClickListener, AssessmentHolder.OnAssessmentClickListener,
+        InstructorHolder.OnInstrcutorClickListener, NoteHolder.OnNoteClickListener {
     private EditText courseNameEditText;
     private String courseStatus;
     private LocalDate startDate = LocalDate.now();
@@ -154,7 +159,7 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         RecyclerView.LayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new InstructorAdapter(currentCourse.getCourseInstructors()));
+        recyclerView.setAdapter(new InstructorAdapter(currentCourse.getCourseInstructors(), this));
     }
 
     public void updateNotes() {
@@ -163,7 +168,7 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
         RecyclerView.LayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new NoteAdapter(currentCourse.getCourseNotes()));
+        recyclerView.setAdapter(new NoteAdapter(currentCourse.getCourseNotes(), this));
     }
     @Override
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
@@ -229,124 +234,14 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
 
     }
 
-
-    private static class InstructorHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener{
-
-        private Instructor instructor;
-        private TextView mTextView;
-
-        public InstructorHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
-            itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
-        }
-
-        public void bind(Instructor instructor, int position) {
-            this.instructor = instructor;
-            mTextView.setText(instructor.getInstructorName());
-
-            // Make the background color dependent on the length of the subject string
-//            int colorIndex = subject.getText().length() % mSubjectColors.length;
-//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.i("INFO_TAG", "Clicking Test 1");
-
-//            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-//            startActivity(termIntent);
-
-            //TODO: finish what clicking  does
-
-        }
+    @Override
+    public void onInstructorClick(View view, Instructor instructor) {
+        //TODO: load instructor details activity
     }
 
 
-    private class InstructorAdapter extends RecyclerView.Adapter<InstructorHolder> {
-
-        private List<Instructor> instructorList;
-
-        public InstructorAdapter(List<Instructor> instructors) {
-            instructorList = instructors;
-        }
-
-        @Override
-        public InstructorHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-            return new InstructorHolder(layoutInflater, parent);
-        }
-
-
-        @Override
-        public void onBindViewHolder(InstructorHolder holder, int position){
-            holder.bind(instructorList.get(position), position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return instructorList.size();
-        }
-    }
-
-    private static class NoteHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener{
-
-        private Note note;
-        private TextView mTextView;
-
-        public NoteHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
-            itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
-        }
-
-        public void bind(Note note, int position) {
-            this.note = note;
-            mTextView.setText(note.getMessage());
-
-            // Make the background color dependent on the length of the subject string
-//            int colorIndex = subject.getText().length() % mSubjectColors.length;
-//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.i("INFO_TAG", "Clicking Test 1");
-
-//            Intent termIntent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-//            startActivity(termIntent);
-
-            //TODO: finish what clicking  does
-
-        }
-    }
-
-
-    private class NoteAdapter extends RecyclerView.Adapter<NoteHolder> {
-
-        private List<Note> noteList;
-
-        public NoteAdapter(List<Note> notes) {
-            noteList = notes;
-        }
-
-        @Override
-        public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-            return new NoteHolder(layoutInflater, parent);
-        }
-
-
-        @Override
-        public void onBindViewHolder(NoteHolder holder, int position){
-            holder.bind(noteList.get(position), position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return noteList.size();
-        }
+    @Override
+    public void onNoteClick(View view, Note note) {
+        //TODO: load note details activity
     }
 }
