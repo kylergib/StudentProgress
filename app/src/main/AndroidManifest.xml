@@ -12,31 +12,31 @@
         android:theme="@style/Theme.StudentProgress"
         tools:targetApi="31">
         <activity
-            android:name=".controller.detail.CourseDetailsActivity"
+            android:name="com.domain.studentprogress.controller.detail.CourseDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.add.AddNoteActivity"
+            android:name="com.domain.studentprogress.controller.add.AddNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.add.AddInstructorActivity"
+            android:name="com.domain.studentprogress.controller.add.AddInstructorActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.add.AddAssessmentActivity"
+            android:name="com.domain.studentprogress.controller.add.AddAssessmentActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.add.AddCourseActivity"
+            android:name="com.domain.studentprogress.controller.add.AddCourseActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.add.AddTermActivity"
+            android:name="com.domain.studentprogress.controller.add.AddTermActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.detail.TermDetailsActivity"
+            android:name="com.domain.studentprogress.controller.detail.TermDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.DashboardActivity"
+            android:name="com.domain.studentprogress.controller.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".controller.MainActivity"
+            android:name="com.domain.studentprogress.controller.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
