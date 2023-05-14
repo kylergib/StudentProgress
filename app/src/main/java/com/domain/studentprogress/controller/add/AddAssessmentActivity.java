@@ -42,7 +42,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
 
         String[] statusList = {"Performance", "Objective"};
         Spinner spinner = findViewById(R.id.assessmentTypeSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, statusList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -110,14 +110,6 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
 
 
     }
-
-//    public void cancelAssessmentClick(View view) {
-//        finish();
-//    }
-//    public void addAssessmentClick(View view) {
-//        //TODO: add logic to add assessment to database
-//        finish();
-//    }
 
     @Override
     public void onDateSelected(LocalDate localDate, String tag) {

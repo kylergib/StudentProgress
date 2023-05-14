@@ -116,10 +116,10 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     }
 
     public void addCourseClick(View view) {
-        Log.d("Debug-teg", "addcourseclicked");
+        Log.d("Debug-teg", "addCourseClicked");
         Log.d("AddTermActivity", String.valueOf(currentTerm));
         Intent courseIntent = new Intent(getApplicationContext(), AddCourseActivity.class);
-//        startActivity(courseIntent);
+
         startActivityForResult(courseIntent,COURSE_REQUEST_CODE);
 
     }

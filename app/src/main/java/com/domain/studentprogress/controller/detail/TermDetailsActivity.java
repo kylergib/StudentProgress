@@ -94,7 +94,7 @@ public class TermDetailsActivity extends AppCompatActivity implements
     }
     public void setRecyclerCourse() {
 
-        Log.d("termdetail", String.valueOf(currentTerm.getTermCourses()));
+        Log.d("termDetail", String.valueOf(currentTerm.getTermCourses()));
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
         RecyclerView.LayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
@@ -117,6 +117,7 @@ public class TermDetailsActivity extends AppCompatActivity implements
             currentTerm = null;
             finish();
         } else if (tag.equals("saveTermButton")) {
+            //TODO: finish
 //            saveTerm();
         }
     }

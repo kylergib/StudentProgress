@@ -57,7 +57,7 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
 
         List<String> statusList = Arrays.asList("in progress", "completed", "dropped", "plan to take");
         Spinner spinner = findViewById(R.id.statusSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, statusList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -207,11 +207,6 @@ public class AddCourseActivity extends AppCompatActivity  implements DateFragmen
             Log.d("Add tag", tag);
             //TODO: create term object and add to sqlite
             Intent returnIntent = new Intent();
-
-//            returnIntent.putExtra("courseName", String.valueOf(courseNameEditText.getText()));
-//            returnIntent.putExtra("startDate",startDate.toString());
-//            returnIntent.putExtra("endDate",endDate.toString());
-//            returnIntent.putExtra("courseStatus",courseStatus);
             currentCourse.setCourseName(String.valueOf(courseNameEditText.getText()));
             currentCourse.setCourseStartDate(startDate);
             currentCourse.setCourseEndDate(endDate);

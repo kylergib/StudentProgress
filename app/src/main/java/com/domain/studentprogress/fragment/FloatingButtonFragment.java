@@ -3,6 +3,7 @@ package com.domain.studentprogress.fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,9 +18,9 @@ import com.kgibs87.studentprogress.R;
 public class FloatingButtonFragment extends Fragment implements View.OnClickListener {
 
     private OnButtonClickListener listener;
-    private String fragmentTag;
-    private FrameLayout.LayoutParams layoutParams;
-    private int buttonSource;
+    private final String fragmentTag;
+    private final FrameLayout.LayoutParams layoutParams;
+    private final int buttonSource;
 
 
     public interface OnButtonClickListener {
@@ -31,13 +32,13 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         // Make sure the parent activity implements the interface
         if (context instanceof OnButtonClickListener) {
             listener = (OnButtonClickListener) context;
         } else {
-            throw new RuntimeException(context.toString()
+            throw new RuntimeException(context
                     + " must implement OnButtonClickListener");
         }
     }

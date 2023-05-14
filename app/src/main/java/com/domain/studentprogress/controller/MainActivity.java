@@ -9,19 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.domain.studentprogress.model.StudentDatabase;
 import com.kgibs87.studentprogress.R;
 
 public class MainActivity extends AppCompatActivity {
-    String debugTag = "Debug";
-
     private EditText nameEditText;
 
     public static SharedPreferences sharedPref;
     public static SharedPreferences.Editor sharedPrefEditor;
-
-    private static StudentDatabase mStudentDb ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPref.getString("name",null) == null) {
             setContentView(R.layout.activity_main);
             nameEditText = findViewById(R.id.nameEditText);
-            mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         } else {
             startDashboard();
         }

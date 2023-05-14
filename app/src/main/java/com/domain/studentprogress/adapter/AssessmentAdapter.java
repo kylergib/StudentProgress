@@ -3,6 +3,7 @@ package com.domain.studentprogress.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.domain.studentprogress.holder.AssessmentHolder;
@@ -12,13 +13,14 @@ import java.util.List;
 
 public class AssessmentAdapter  extends RecyclerView.Adapter<AssessmentHolder> {
 
-        private List<Assessment> assessmentList;
-        private AssessmentHolder.OnAssessmentClickListener listener;
+        private final List<Assessment> assessmentList;
+        private final AssessmentHolder.OnAssessmentClickListener listener;
         public AssessmentAdapter(List<Assessment> assessments,AssessmentHolder.OnAssessmentClickListener listener) {
             assessmentList = assessments;
             this.listener = listener;
         }
 
+        @NonNull
         @Override
         public AssessmentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());

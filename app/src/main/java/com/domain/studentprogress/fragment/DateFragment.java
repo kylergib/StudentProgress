@@ -3,6 +3,7 @@ package com.domain.studentprogress.fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 public class DateFragment extends Fragment implements DatePicker.OnDateChangedListener {
 
     private OnDateSelectedListener listener;
-    private String fragmentTag;
+    private final String fragmentTag;
 
     // Interface to communicate with parent activity
     public interface OnDateSelectedListener {
@@ -25,13 +26,13 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         // Make sure the parent activity implements the interface
         if (context instanceof OnDateSelectedListener) {
             listener = (OnDateSelectedListener) context;
         } else {
-            throw new RuntimeException(context.toString()
+            throw new RuntimeException(context
                     + " must implement OnDateSelectedListener");
         }
     }

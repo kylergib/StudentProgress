@@ -3,6 +3,7 @@ package com.domain.studentprogress.adapter;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.domain.studentprogress.holder.NoteHolder;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class  NoteAdapter extends RecyclerView.Adapter<NoteHolder> {
 
-        private List<Note> noteList;
-        private NoteHolder.OnNoteClickListener listener;
+        private final List<Note> noteList;
+        private final NoteHolder.OnNoteClickListener listener;
 
         public NoteAdapter(List<Note> notes, NoteHolder.OnNoteClickListener listener) {
             noteList = notes;
@@ -21,6 +22,7 @@ public class  NoteAdapter extends RecyclerView.Adapter<NoteHolder> {
 
         }
 
+        @NonNull
         @Override
         public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());

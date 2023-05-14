@@ -1,5 +1,6 @@
 package com.domain.studentprogress.controller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -37,15 +38,15 @@ import com.domain.studentprogress.model.Term;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity
         implements FloatingButtonFragment.OnButtonClickListener, TermHolder.OnTermClickListener {
 
     private static StudentDatabase mStudentDb ;
-    private List<Term> termsList;
+
     public static SharedPreferences sharedPref;
     private static boolean notFirstRun;
-    private static boolean dev = false;
 
 
 
@@ -67,13 +68,7 @@ public class DashboardActivity extends AppCompatActivity
         String welcomeMessage = getResources().getString(R.string.welcome_text);
         welcomeText.setText(String.format(welcomeMessage, sharedPref.getString("name",null)));
 
-
-        //TESTING
-        Term term1 = new Term("Test1", LocalDate.of(2023,1,1),LocalDate.of(2023,6,30),1);
-        Term term2 = new Term("Test2", LocalDate.of(2023,1,1),LocalDate.of(2023,6,30),2);
-
-//        termsList = Arrays.asList(term1,term2);
-        termsList = mStudentDb.getTerms();
+        List<Term> termsList = mStudentDb.getTerms();
         for (Term term: termsList) {
             Log.d("DashboardActivity", String.valueOf(term.getId()));
             List<Course> courses = mStudentDb.getCoursesForTerm(term.getId());
@@ -93,7 +88,7 @@ public class DashboardActivity extends AppCompatActivity
 
 
 
-        if (termRecyclerView.getAdapter().getItemCount() > 0) statusText.setVisibility(View.GONE);
+        if (Objects.requireNonNull(termRecyclerView.getAdapter()).getItemCount() > 0) statusText.setVisibility(View.GONE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addTermButtonFragmentContainer);
         if (addButtonFragment == null) {
@@ -109,14 +104,7 @@ public class DashboardActivity extends AppCompatActivity
                     .add(R.id.addTermButtonFragmentContainer, addButtonFragment,tag)
                     .commit();
         }
-
     }
-
-//    public void addTermClick(View view) {
-//        Intent termIntent = new Intent(this, AddTermActivity.class);
-//        startActivity(termIntent);
-//    }
-
     @Override
     public void onButtonClick(View view, String tag) {
         Log.d("Add tag", tag);
@@ -143,13 +131,13 @@ public class DashboardActivity extends AppCompatActivity
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.bottom = 5; // set the height of the border
         }
 
         @Override
-        public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
+        public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.onDraw(canvas, parent, state);
 
             // set the width and height of the border
@@ -177,7 +165,6 @@ public class DashboardActivity extends AppCompatActivity
 
     //TODO: remove in future
     public void createFakeData() {
-        if (!dev) return;
         Term newTerm = new Term("Term 1", LocalDate.of(2023,1,1),
                 LocalDate.of(2023,6,30));
         Course newCourse = new Course("Test Course",LocalDate.of(2023,1,1),

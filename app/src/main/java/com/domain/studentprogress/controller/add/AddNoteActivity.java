@@ -18,7 +18,6 @@ import com.domain.studentprogress.model.Note;
 import com.kgibs87.studentprogress.R;
 
 public class AddNoteActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
-    private Note currentNote;
     private EditText messageEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,5 @@ public class AddNoteActivity extends AppCompatActivity implements FloatingButton
             setResult(RESULT_OK, returnIntent);
             finish();
         }
-        currentNote = null;
     }
 }
