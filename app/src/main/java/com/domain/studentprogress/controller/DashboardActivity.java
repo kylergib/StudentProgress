@@ -55,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         if (!notFirstRun) {
-//            createFakeData();
+            createFakeData();
             notFirstRun = true;
         }
         sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
@@ -74,6 +74,17 @@ public class DashboardActivity extends AppCompatActivity
             List<Course> courses = mStudentDb.getCoursesForTerm(term.getId());
             Log.d("DashboardActivity", String.valueOf(courses));
             term.setTermCourses(courses);
+            courses.forEach(course -> {
+//                List<Instructor> courseInstructors = mStudentDb.getInstructorsForTerm(course.getId());
+                course.setCourseInstructors(mStudentDb.getInstructorsForCourse(course.getId()));
+                Log.d("DashboardActivity-instructors", String.valueOf(course.getCourseInstructors()));
+
+                course.setCourseAssessments(mStudentDb.getAssessmentsForCourse(course.getId()));
+                Log.d("DashboardActivity-assessments", String.valueOf(course.getCourseAssessments()));
+                course.setCourseNotes(mStudentDb.getNotesForCourse(course.getId()));
+                Log.d("DashboardActivity-assessments", String.valueOf(course.getCourseNotes()));
+            });
+
         }
 
         RecyclerView termRecyclerView = findViewById(R.id.termRecyclerView);

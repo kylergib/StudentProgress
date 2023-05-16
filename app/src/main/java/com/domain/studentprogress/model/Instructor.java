@@ -1,6 +1,8 @@
 package com.domain.studentprogress.model;
 
-public class Instructor {
+import java.io.Serializable;
+
+public class Instructor implements Serializable {
     private long id;
     private String name;
     private String number;

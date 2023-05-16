@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
 
+import com.domain.studentprogress.holder.AssessmentHolder;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -258,24 +260,26 @@ public class StudentDatabase extends SQLiteOpenHelper {
         long instructorId = db.insert(InstructorTable.TABLE, null, values);
         return instructorId;
     }
-    public List<Instructor> getInstructorsForTerm(long courseId) {
+    public List<Instructor> getInstructorsForCourse(long courseId) {
         List<Instructor> instructors = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
 
 
         String sql = "select * from " + InstructorTable.TABLE + " where " + InstructorTable.COL_COURSE + " = ?";
+//        String sql = "select * from " + InstructorTable.TABLE + " where " + InstructorTable.COL_COURSE + " = " + Long.toString(courseId)};
+        Log.d("StudentDatabase", sql);
         Cursor cursor = db.rawQuery(sql, new String[] {Long.toString(courseId)});
 
         if (cursor.moveToFirst()) {
             do {
-                Log.d("StudentDatabase", "found course");
+                Log.d("StudentDatabase", "found instructor");
                 Long instructorId = cursor.getLong(0);
                 String instructorName = cursor.getString(1);
                 String instructorNumber = cursor.getString(2);
                 String instructorEmail = cursor.getString(3);
                 Long instructorCourseId = cursor.getLong(4);
                 Log.d("StudentDatabase", String.valueOf(instructorCourseId));
-                //TODO: add courseId in constructor
+
                 Instructor instructor = new Instructor(instructorId,instructorName,
                         instructorNumber,instructorEmail);
                 instructor.setCourseID(instructorCourseId);
@@ -302,6 +306,40 @@ public class StudentDatabase extends SQLiteOpenHelper {
         return assessmentId;
     }
 
+    public List<Assessment> getAssessmentsForCourse(long courseId) {
+        List<Assessment> assessments = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+
+
+        String sql = "select * from " + AssessmentTable.TABLE + " where " + AssessmentTable.COL_COURSE + " = ?";
+//        String sql = "select * from " + InstructorTable.TABLE + " where " + InstructorTable.COL_COURSE + " = " + Long.toString(courseId)};
+        Log.d("StudentDatabase", sql);
+        Cursor cursor = db.rawQuery(sql, new String[] {Long.toString(courseId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("StudentDatabase", "found instructor");
+                Long assessmentId = cursor.getLong(0);
+                String assessmentType = cursor.getString(1);
+                String assessmentTitle = cursor.getString(2);
+                String assessmentStartDate = cursor.getString(3);
+                String assessmentEndDate = cursor.getString(4);
+                Long assessmentCourseId = cursor.getLong(5);
+                Log.d("StudentDatabase", String.valueOf(assessmentCourseId));
+
+                Assessment assessment = new Assessment(assessmentId, assessmentType,
+                        assessmentTitle, LocalDate.parse(assessmentStartDate),
+                        LocalDate.parse(assessmentEndDate),assessmentCourseId);
+
+                assessments.add(assessment);
+                Log.d("StudentDatabase", assessment.getAssessmentTitle());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return assessments;
+    }
+
     public long addNote(Note note) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -313,5 +351,32 @@ public class StudentDatabase extends SQLiteOpenHelper {
         return noteId;
     }
 
+    public List<Note> getNotesForCourse(long courseId) {
+        List<Note> notes = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
 
+
+        String sql = "select * from " + NoteTable.TABLE + " where " + NoteTable.COL_COURSE + " = ?";
+
+        Log.d("StudentDatabase", sql);
+        Cursor cursor = db.rawQuery(sql, new String[] {Long.toString(courseId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d("StudentDatabase", "found instructor");
+                Long noteId = cursor.getLong(0);
+                String noteMessage = cursor.getString(1);
+                Long noteCourseId = cursor.getLong(2);
+                Log.d("StudentDatabase", String.valueOf(noteCourseId));
+
+               Note note = new Note(noteMessage, noteId, noteCourseId);
+
+                notes.add(note);
+                Log.d("StudentDatabase", note.getMessage());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return notes;
+    }
 }

@@ -40,6 +40,7 @@ import com.domain.studentprogress.holder.NoteHolder;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class CourseDetailsActivity extends AppCompatActivity  implements DateFragment.OnDateSelectedListener,
@@ -79,18 +80,32 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
 
             courseNameEditText = findViewById(R.id.courseNameEditText);
             courseNameEditText.setVisibility(View.GONE);
+            Log.d("CourseDetailsActivity", String.valueOf(currentCourse.getCourseAssessments()));
+            updateAssessments();
+            updateInstructors();
+            updateNotes();
+
         } else {
             currentCourse = new Course();
+            courseNameEditText = findViewById(R.id.courseNameEditText);
+
             addCourseSetUp();
         }
 
         updateAssessments();
 
         List<String> statusList = Arrays.asList("in progress", "completed", "dropped", "plan to take");
+        HashMap<String, Integer> statusMap = new HashMap<String, Integer>() {{
+            put("in progress",0);
+            put("completed",1);
+            put("dropped",2);
+            put("plan to take",3);
+        }};
         Spinner spinner = findViewById(R.id.statusSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        if (currentCourse.getStatus() != null) spinner.setSelection(statusMap.get(currentCourse.getStatus()));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -187,6 +202,7 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
     }
 
     public void updateAssessments() {
+        Log.d("CourseDetailsActivity", String.valueOf(currentCourse.getCourseAssessments()));
         RecyclerView courseRecyclerView = findViewById(R.id.assessmentsRecyclerView);
 
         RecyclerView.LayoutManager linearLayoutManager =

@@ -1,9 +1,10 @@
 package com.domain.studentprogress.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class Assessment {
+public class Assessment implements Serializable {
     private String type;
     private String title;
     private LocalDate startDate;
@@ -17,10 +18,19 @@ public class Assessment {
         setAssessmentType(type);
         setAssessmentTitle(title);
     }
-
-    public Assessment(long id, String type, String title, LocalDate endDate) {
+    public Assessment(long id, String type, String title, LocalDate startDate, LocalDate endDate, long courseID) {
         setAssessmentType(type);
         this.title = title;
+        this.startDate  = startDate;
+        this.endDate = endDate;
+        this.id = id;
+        this.courseID = courseID;
+    }
+
+    public Assessment(long id, String type, String title, LocalDate startDate, LocalDate endDate) {
+        setAssessmentType(type);
+        this.title = title;
+        this.startDate  = startDate;
         this.endDate = endDate;
         this.id = id;
     }

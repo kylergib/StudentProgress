@@ -319,6 +319,7 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     @Override
     public void onCourseClick(View view, Course course) {
         Log.d("onCourseClick", "onCourseClick: " + course.getCourseName());
+        Log.d("onCourseClick", String.valueOf(course.getCourseAssessments()));
         Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
         intent.putExtra("currentCourse", course);
         startActivity(intent);

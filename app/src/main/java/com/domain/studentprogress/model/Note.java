@@ -1,12 +1,19 @@
 package com.domain.studentprogress.model;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
     private String message;
     private long id;
     private long courseID;
     public Note(String message, long id) {
         this.message = message;
         this.id = id;
+    }
+    public Note(String message, long id, long courseID) {
+        this.message = message;
+        this.id = id;
+        this.courseID = courseID;
     }
     public Note(String message) {
         this.message = message;

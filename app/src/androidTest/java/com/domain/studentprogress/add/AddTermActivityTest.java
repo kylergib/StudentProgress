@@ -93,4 +93,5 @@ public class AddTermActivityTest {
         onView(withTagValue(Matchers.is("cancelCourseButton"))).perform(click());
         testViewsExist();
     }
+
 }
