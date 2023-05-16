@@ -21,6 +21,7 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     private final String fragmentTag;
     private final FrameLayout.LayoutParams layoutParams;
     private final int buttonSource;
+    private FloatingActionButton floatButton;
 
 
     public interface OnButtonClickListener {
@@ -48,6 +49,12 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
         listener = null;
     }
 
+    public FloatingButtonFragment() {
+        // Required empty public constructor
+        this.fragmentTag = null;
+        this.layoutParams = null;
+        this.buttonSource = 0;
+    }
 
     public FloatingButtonFragment(String fragmentTag, FrameLayout.LayoutParams layoutParams,
                                   int buttonSource) {
@@ -70,12 +77,16 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
 
         FrameLayout buttonFrame = rootView.findViewById(R.id.buttonFrame);
 
-        buttonFrame.setLayoutParams(layoutParams);
+        if (layoutParams != null) buttonFrame.setLayoutParams(layoutParams);
 
-        FloatingActionButton floatButton = rootView.findViewById(R.id.floatingButton);
+        floatButton = rootView.findViewById(R.id.floatingButton);
         floatButton.setOnClickListener(this);
-        floatButton.setImageResource(buttonSource);
-        floatButton.setTag(fragmentTag);
+        if (buttonSource != 0) floatButton.setImageResource(buttonSource);
+        if (fragmentTag != null) floatButton.setTag(fragmentTag);
         return rootView;
+    }
+
+    public void setImage(int buttonSource) {
+        floatButton.setImageResource(buttonSource);
     }
 }

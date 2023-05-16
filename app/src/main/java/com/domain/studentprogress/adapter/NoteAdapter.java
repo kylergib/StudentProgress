@@ -19,7 +19,6 @@ public class  NoteAdapter extends RecyclerView.Adapter<NoteHolder> {
         public NoteAdapter(List<Note> notes, NoteHolder.OnNoteClickListener listener) {
             noteList = notes;
             this.listener = listener;
-
         }
 
         @NonNull

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Note;
 import com.kgibs87.studentprogress.R;
@@ -74,7 +75,7 @@ public class AddNoteActivity extends AppCompatActivity implements FloatingButton
             String message = messageEditText.getText().toString();
             Note newNote = new Note(message);
             Intent returnIntent = new Intent();
-            AddCourseActivity.currentCourse.addCourseNote(newNote);
+            CourseDetailsActivity.currentCourse.addCourseNote(newNote);
 
 
             setResult(RESULT_OK, returnIntent);

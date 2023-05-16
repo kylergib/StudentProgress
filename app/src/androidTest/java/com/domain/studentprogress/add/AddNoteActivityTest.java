@@ -23,6 +23,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.domain.studentprogress.controller.add.AddCourseActivity;
 import com.domain.studentprogress.controller.add.AddNoteActivity;
+import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.kgibs87.studentprogress.R;
 
 import org.hamcrest.Matchers;
@@ -42,7 +43,7 @@ public class AddNoteActivityTest {
 
     @Test
     public void addNoteTest() {
-        ActivityScenario<AddCourseActivity> scenario = ActivityScenario.launch(AddCourseActivity.class);
+        ActivityScenario<CourseDetailsActivity> scenario = ActivityScenario.launch(CourseDetailsActivity.class);
         Intents.init();
         onView(withId(R.id.addNoteButton))
                 .perform(ViewActions.scrollTo());

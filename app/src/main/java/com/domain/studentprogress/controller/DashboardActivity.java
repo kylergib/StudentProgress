@@ -55,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         if (!notFirstRun) {
-            createFakeData();
+//            createFakeData();
             notFirstRun = true;
         }
         sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
@@ -108,7 +108,7 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     public void onButtonClick(View view, String tag) {
         Log.d("Add tag", tag);
-        Intent termIntent = new Intent(this, AddTermActivity.class);
+        Intent termIntent = new Intent(this, TermDetailsActivity.class);
         startActivity(termIntent);
     }
 
@@ -244,5 +244,6 @@ public class DashboardActivity extends AppCompatActivity
         }
 
     }
+
 
 }

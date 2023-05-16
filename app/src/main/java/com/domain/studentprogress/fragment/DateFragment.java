@@ -19,6 +19,9 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
 
     private OnDateSelectedListener listener;
     private final String fragmentTag;
+    private int year = 0;
+    private int month = 0;
+    private int day = 0;
 
     // Interface to communicate with parent activity
     public interface OnDateSelectedListener {
@@ -45,14 +48,7 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
     // Inside the DatePicker's OnDateChangedListener
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        // Get the selected date from the DatePicker
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(year, monthOfYear, dayOfMonth);
-
-        //have to add because calendar start at 0
         LocalDate selectedDate = LocalDate.of(year,monthOfYear+1,dayOfMonth);
-//        Date selectedDate = calendar.getTime();
-        // Call the interface method to communicate with parent activity
         listener.onDateSelected(selectedDate, fragmentTag);
     }
 
@@ -81,7 +77,15 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
         // Set the OnDateChangedListener on the DatePicker view
         datePicker.setOnDateChangedListener(this);
         datePicker.setTag(fragmentTag);
+        if (year != 0 && month != 0 && day != 0) datePicker.updateDate(year,month-1,day);
 
         return rootView;
+    }
+
+    public void setDate(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+
     }
 }

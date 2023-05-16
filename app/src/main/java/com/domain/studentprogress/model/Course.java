@@ -25,6 +25,9 @@ public class Course implements Serializable {
         setCourseStatus(status);
         this.id = id;
         this.termID = termID;
+        courseAssessments = new ArrayList<>();
+        courseInstructors = new ArrayList<>();
+        courseNotes = new ArrayList<>();
     }
     public Course(String name, LocalDate startDate,
                   LocalDate endDate, String status) {

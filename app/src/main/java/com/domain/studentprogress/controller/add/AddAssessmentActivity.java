@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
+import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.domain.studentprogress.fragment.DateFragment;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Assessment;
@@ -134,7 +135,7 @@ public class AddAssessmentActivity extends AppCompatActivity implements DateFrag
             Intent returnIntent = new Intent();
             String assessmentName = String.valueOf(assessmentNameEditText.getText());
             Assessment newAssessment = new Assessment(assessmentName,startDate,endDate,assessmentType);
-            AddCourseActivity.currentCourse.addCourseAssessment(newAssessment);
+            CourseDetailsActivity.currentCourse.addCourseAssessment(newAssessment);
             setResult(RESULT_OK, returnIntent);
             finish();
         }

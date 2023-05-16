@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.domain.studentprogress.controller.DashboardActivity;
+import com.domain.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.controller.add.AddTermActivity;
 
@@ -61,7 +62,7 @@ public class DashboardActivityTest {
     public void addTermClick() {
         Intents.init();
         onView(withTagValue(Matchers.is("addTermButton"))).perform(click());
-        intended(hasComponent(AddTermActivity.class.getName())
+        intended(hasComponent(TermDetailsActivity.class.getName())
         );
         onView(withId(R.id.courses)).check(matches(ViewMatchers.isDisplayed()));
 //        onView(withId(R.id.courseRecyclerView)).check(matches(ViewMatchers.isDisplayed())); //wont work if recycler view is blank

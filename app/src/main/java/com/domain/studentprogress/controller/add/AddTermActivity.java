@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.domain.studentprogress.adapter.CourseAdapter;
+import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.domain.studentprogress.fragment.DateFragment;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Course;
@@ -118,7 +119,7 @@ public class AddTermActivity extends AppCompatActivity implements DateFragment.O
     public void addCourseClick(View view) {
         Log.d("Debug-teg", "addCourseClicked");
         Log.d("AddTermActivity", String.valueOf(currentTerm));
-        Intent courseIntent = new Intent(getApplicationContext(), AddCourseActivity.class);
+        Intent courseIntent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
 
         startActivityForResult(courseIntent,COURSE_REQUEST_CODE);
 

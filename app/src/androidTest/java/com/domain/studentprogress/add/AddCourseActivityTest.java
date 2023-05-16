@@ -27,6 +27,8 @@ import com.domain.studentprogress.controller.add.AddCourseActivity;
 import com.domain.studentprogress.controller.add.AddInstructorActivity;
 import com.domain.studentprogress.controller.add.AddNoteActivity;
 import com.domain.studentprogress.controller.add.AddTermActivity;
+import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
+import com.domain.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.R;
 
 import org.hamcrest.Matchers;
@@ -36,15 +38,13 @@ public class AddCourseActivityTest {
 
     @Test
     public void addAssessmentClickThenCancel() {
-        ActivityScenario.launch(AddCourseActivity.class);
+        ActivityScenario.launch(CourseDetailsActivity.class);
         Intents.init();
         testViewsExist();
 
         onView(withId(R.id.addAssessmentButton))
                 .perform(ViewActions.scrollTo());
         onView(withId(R.id.addAssessmentButton)).perform(click());
-
-        intended(hasComponent(AddAssessmentActivity.class.getName()));
 
         onView(withTagValue(Matchers.is("cancelAssessmentButton"))).perform(click());
 
@@ -53,22 +53,20 @@ public class AddCourseActivityTest {
     }
     @Test
     public void addInstructorClickThenCancel() {
-        ActivityScenario.launch(AddCourseActivity.class);
+        ActivityScenario.launch(CourseDetailsActivity.class);
         Intents.init();
         testViewsExist();
 
         onView(withId(R.id.addInstructorButton))
                 .perform(ViewActions.scrollTo());
         onView(withId(R.id.addInstructorButton)).perform(click());
-
-        intended(hasComponent(AddInstructorActivity.class.getName()));
         onView(withTagValue(Matchers.is("cancelInstructorButton"))).perform(click());
         testViewsExist();
         Intents.release();
     }
     @Test
     public void addNoteClickThenCancel() {
-        ActivityScenario.launch(AddCourseActivity.class);
+        ActivityScenario.launch(CourseDetailsActivity.class);
         Intents.init();
         testViewsExist();
 
@@ -76,15 +74,13 @@ public class AddCourseActivityTest {
                 .perform(ViewActions.scrollTo());
 
         onView(withId(R.id.addNoteButton)).perform(click());
-
-        intended(hasComponent(AddNoteActivity.class.getName()));
         onView(withTagValue(Matchers.is("cancelNoteButton"))).perform(click());
         testViewsExist();
         Intents.release();
     }
     @Test
     public void cancelCourseClick() {
-        ActivityScenario<AddTermActivity> scenario = ActivityScenario.launch(AddTermActivity.class);
+        ActivityScenario<TermDetailsActivity> scenario = ActivityScenario.launch(TermDetailsActivity.class);
         Intents.init();
         onView(withId(R.id.addCourseButton))
                 .perform(ViewActions.scrollTo());
@@ -100,7 +96,7 @@ public class AddCourseActivityTest {
     }
     @Test
     public void addCourseClick() {
-        ActivityScenario<AddTermActivity> scenario = ActivityScenario.launch(AddTermActivity.class);
+        ActivityScenario<TermDetailsActivity> scenario = ActivityScenario.launch(TermDetailsActivity.class);
 
         onView(withId(R.id.addCourseButton))
                 .perform(ViewActions.scrollTo());

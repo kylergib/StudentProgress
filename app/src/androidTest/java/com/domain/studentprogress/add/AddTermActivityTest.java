@@ -19,6 +19,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.domain.studentprogress.controller.add.AddTermActivity;
+import com.domain.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.controller.DashboardActivity;
 
@@ -34,7 +35,7 @@ import java.time.LocalDate;
 public class AddTermActivityTest {
 
     @Rule
-    public ActivityScenarioRule<AddTermActivity> activityRule = new ActivityScenarioRule<>(AddTermActivity.class);
+    public ActivityScenarioRule<TermDetailsActivity> activityRule = new ActivityScenarioRule<>(TermDetailsActivity.class);
 
 
     @Test
