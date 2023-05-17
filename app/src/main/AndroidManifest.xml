@@ -21,7 +21,7 @@
             android:name="com.domain.studentprogress.controller.add.AddInstructorActivity"
             android:exported="false" />
         <activity
-            android:name="com.domain.studentprogress.controller.add.AddAssessmentActivity"
+            android:name="com.domain.studentprogress.controller.detail.AssessmentDetailActivity"
             android:exported="false" />
         <activity
             android:name="com.domain.studentprogress.controller.add.AddCourseActivity"

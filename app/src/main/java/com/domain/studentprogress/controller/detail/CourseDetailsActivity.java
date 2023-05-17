@@ -187,7 +187,7 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
     }
 
     public void addAssessmentClick(View view) {
-        Intent assessmentIntent = new Intent(getApplicationContext(), AddAssessmentActivity.class);
+        Intent assessmentIntent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
         startActivityForResult(assessmentIntent,ASSESSMENT_REQUEST_CODE);
 
     }
@@ -283,7 +283,10 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
 
     @Override
     public void onAssessmentClick(View view, Assessment assessment) {
-        //TODO: load assessment details activity
+        Intent intent = new Intent(getApplicationContext(), AssessmentDetailActivity.class);
+        intent.putExtra("currentAssessment", assessment);
+        startActivity(intent);
+
 
     }
 

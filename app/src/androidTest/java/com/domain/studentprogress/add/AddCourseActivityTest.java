@@ -203,8 +203,6 @@ public class AddCourseActivityTest {
                 instructorMatch = false;
             }
 
-
-
         });
 
 

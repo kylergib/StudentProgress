@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
         <LinearLayout
-            android:id="@+id/headerTitle"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -23,6 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/headerTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/assessment_header"

@@ -23,6 +23,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.domain.studentprogress.controller.add.AddAssessmentActivity;
 import com.domain.studentprogress.controller.add.AddCourseActivity;
+import com.domain.studentprogress.controller.detail.AssessmentDetailActivity;
 import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.kgibs87.studentprogress.R;
 
@@ -37,7 +38,7 @@ public class AddAssessmentActivityTest {
 
     @Test
     public void onCreate() {
-        ActivityScenario.launch(AddAssessmentActivity.class);
+        ActivityScenario.launch(AssessmentDetailActivity.class);
         testViewsExist();
     }
 
