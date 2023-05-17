@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.domain.studentprogress.controller.add.AddAssessmentActivity">
+    tools:context="com.domain.studentprogress.controller.detail.AssessmentDetailActivity">
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -49,7 +49,7 @@
                 android:ems="15"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:contentDescription="Assessment name input line"
+                android:hint="@string/enter_assessment_name_here"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/courseNameView" />

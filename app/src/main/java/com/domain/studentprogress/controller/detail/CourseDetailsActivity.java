@@ -13,18 +13,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.domain.studentprogress.adapter.AssessmentAdapter;
-import com.domain.studentprogress.controller.add.AddAssessmentActivity;
-import com.domain.studentprogress.controller.add.AddInstructorActivity;
-import com.domain.studentprogress.controller.add.AddNoteActivity;
-import com.domain.studentprogress.controller.add.AddTermActivity;
 import com.domain.studentprogress.fragment.DateFragment;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.holder.AssessmentHolder;
@@ -105,7 +99,9 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        if (currentCourse.getStatus() != null) spinner.setSelection(statusMap.get(currentCourse.getStatus()));
+        Integer spinnerValue = statusMap.get(currentCourse.getStatus());
+        if (currentCourse.getStatus() != null && spinnerValue != null) spinner.setSelection(spinnerValue);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -192,12 +188,12 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
 
     }
     public void addInstructorClick(View view) {
-        Intent instructorIntent = new Intent(getApplicationContext(), AddInstructorActivity.class);
+        Intent instructorIntent = new Intent(getApplicationContext(), InstructorDetailActivity.class);
         startActivityForResult(instructorIntent,INSTRUCTOR_REQUEST_CODE);
 
     }
     public void addNoteClick(View view) {
-        Intent noteIntent = new Intent(getApplicationContext(), AddNoteActivity.class);
+        Intent noteIntent = new Intent(getApplicationContext(), NoteDetailActivity.class);
         startActivityForResult(noteIntent,NOTE_REQUEST_CODE);
     }
 
@@ -292,12 +288,16 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
 
     @Override
     public void onInstructorClick(View view, Instructor instructor) {
-        //TODO: load instructor details activity
+        Intent intent = new Intent(getApplicationContext(), InstructorDetailActivity.class);
+        intent.putExtra("currentInstructor", instructor);
+        startActivity(intent);
     }
 
 
     @Override
     public void onNoteClick(View view, Note note) {
-        //TODO: load note details activity
+        Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
+        intent.putExtra("currentInstructor", note);
+        startActivity(intent);
     }
 }

@@ -21,10 +21,7 @@ import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Assessment;
 import com.kgibs87.studentprogress.R;
 
-import org.w3c.dom.Text;
-
 import java.time.LocalDate;
-import java.util.HashMap;
 
 public class AssessmentDetailActivity  extends AppCompatActivity implements DateFragment.OnDateSelectedListener, FloatingButtonFragment.OnButtonClickListener {
     private EditText assessmentNameEditText;
@@ -58,9 +55,6 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
             View startEditText = findViewById(R.id.startDateFragmentContainer);
             startEditText.setVisibility(View.GONE);
 
-
-
-
             TextView endView = findViewById(R.id.endDate);
             endView.setVisibility(View.GONE);
 
@@ -70,8 +64,6 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
             typeTextView.setVisibility(View.GONE);
             Spinner spinner = findViewById(R.id.assessmentTypeSpinner);
             spinner.setVisibility(View.GONE);
-
-
 
 
         }
@@ -111,10 +103,6 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
     public void addAssessmentSetup() {
 
         String[] statusList = {"Performance", "Objective"};
-        HashMap<String,Integer> statusMap = new HashMap<String,Integer>() {{
-            put("Performance",0);
-            put("Objective",1);
-        }};
 
         Spinner spinner = findViewById(R.id.assessmentTypeSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
@@ -202,4 +190,6 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
         }
         currentAssessment = null;
     }
+
+
 }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.domain.studentprogress.controller.add.AddTermActivity"
+    tools:context="com.domain.studentprogress.controller.detail.TermDetailsActivity"
     >
 
     <ScrollView
@@ -48,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:ems="15"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="text"
+                android:hint="@string/enter_term_name_here"/>
             <TextView
                 android:id="@+id/courses"
                 android:layout_width="wrap_content"

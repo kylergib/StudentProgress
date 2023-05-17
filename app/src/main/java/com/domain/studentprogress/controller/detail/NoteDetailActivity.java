@@ -1,4 +1,4 @@
-package com.domain.studentprogress.controller.add;
+package com.domain.studentprogress.controller.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Note;
 import com.kgibs87.studentprogress.R;
 
-public class AddNoteActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
+public class NoteDetailActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
     private EditText messageEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

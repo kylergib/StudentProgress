@@ -1,4 +1,4 @@
-package com.domain.studentprogress.add;
+package com.domain.studentprogress.detail;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
@@ -18,7 +18,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.domain.studentprogress.controller.add.AddTermActivity;
 import com.domain.studentprogress.controller.detail.TermDetailsActivity;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.controller.DashboardActivity;
@@ -32,7 +31,7 @@ import java.time.LocalDate;
 
 
 @RunWith(AndroidJUnit4.class)
-public class AddTermActivityTest {
+public class TermActivityTest {
 
     @Rule
     public ActivityScenarioRule<TermDetailsActivity> activityRule = new ActivityScenarioRule<>(TermDetailsActivity.class);
@@ -56,9 +55,9 @@ public class AddTermActivityTest {
 
     @Test
     public void addTermClick() {
-        activityRule.getScenario().onActivity(activity -> {
-            activity.endDate = LocalDate.now().plusMonths(1);
-        });
+        activityRule.getScenario().onActivity(activity ->
+                activity.endDate = LocalDate.now().plusMonths(1));
+
 
         String termName = String.format("Test %f",Math.random());
         onView(withId(R.id.termNameEditText)).perform(typeText(termName));

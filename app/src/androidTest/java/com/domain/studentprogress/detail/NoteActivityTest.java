@@ -1,6 +1,4 @@
-package com.domain.studentprogress.add;
-
-
+package com.domain.studentprogress.detail;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
@@ -21,9 +19,7 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.domain.studentprogress.controller.add.AddAssessmentActivity;
-import com.domain.studentprogress.controller.add.AddCourseActivity;
-import com.domain.studentprogress.controller.detail.AssessmentDetailActivity;
+import com.domain.studentprogress.controller.detail.NoteDetailActivity;
 import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.kgibs87.studentprogress.R;
 
@@ -33,48 +29,49 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(AndroidJUnit4.class)
-public class AddAssessmentActivityTest {
+public class NoteActivityTest {
 
 
     @Test
     public void onCreate() {
-        ActivityScenario.launch(AssessmentDetailActivity.class);
-        testViewsExist();
+
+        try (ActivityScenario<NoteDetailActivity> ignored = ActivityScenario.launch(NoteDetailActivity.class)) {
+            testViewsExist();
+        }
+
     }
 
     @Test
-    public void addAssessmentTest() {
+    public void addNoteTest() {
         ActivityScenario<CourseDetailsActivity> scenario = ActivityScenario.launch(CourseDetailsActivity.class);
         Intents.init();
-        onView(withId(R.id.addAssessmentButton))
+        onView(withId(R.id.addNoteButton))
                 .perform(ViewActions.scrollTo());
 
-        onView(withId(R.id.addAssessmentButton)).perform(click());
+        onView(withId(R.id.addNoteButton)).perform(click());
         testViewsExist();
-        String testName = "Assessment: " + Math.random();
-        onView(withId(R.id.assessmentNameEditText)).perform(typeText(testName));
+        String testNote = "This is a test note: " + Math.random();
+        onView(withId(R.id.note_edit_text)).perform(typeText(testNote));
         closeSoftKeyboard();
-
-        onView(withTagValue(Matchers.is("saveAssessmentButton"))).perform(click());
+        onView(withTagValue(Matchers.is("saveNoteButton"))).perform(click());
 
         scenario.onActivity(activity -> {
-            RecyclerView recyclerView = activity.findViewById(R.id.assessmentsRecyclerView);
-            boolean matchesNewAssessmentName = false;
+            RecyclerView recyclerView = activity.findViewById(R.id.notesRecyclerView);
+            boolean matchesNewNoteName = false;
+
             for (int i = 0; i < recyclerView.getChildCount(); i++) {
 
                 TextView textView = (TextView) recyclerView.getChildAt(i);
-                matchesNewAssessmentName = testName.equals(textView.getText().toString());
+                matchesNewNoteName = testNote.equals(textView.getText().toString());
             }
-            assertTrue(matchesNewAssessmentName);
+            assertTrue(matchesNewNoteName);
         });
         Intents.release();
     }
 
     public void testViewsExist() {
-        onView(withId(R.id.assessmentNameView)).check(matches(isDisplayed()));
-        onView(withId(R.id.assessmentNameEditText)).check(matches(isDisplayed()));
-        onView(withId(R.id.assessmentTypeView)).check(matches(isDisplayed()));
-        onView(withId(R.id.assessmentTypeSpinner)).check(matches(isDisplayed()));
+        onView(withId(R.id.noteHeader)).check(matches(isDisplayed()));
+        onView(withId(R.id.note_edit_text)).check(matches(isDisplayed()));
     }
 
 

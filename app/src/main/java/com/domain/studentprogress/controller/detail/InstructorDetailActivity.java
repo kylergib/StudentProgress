@@ -1,4 +1,4 @@
-package com.domain.studentprogress.controller.add;
+package com.domain.studentprogress.controller.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,13 +11,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Instructor;
 import com.kgibs87.studentprogress.R;
 
-public class AddInstructorActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
+public class InstructorDetailActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
     private EditText instructorNameEditText;
     private EditText instructorNumberEditText;
     private EditText instructorEmailEditText;
@@ -28,15 +29,52 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
         setContentView(R.layout.activity_add_instructor);
 
         instructorNameEditText = findViewById(R.id.instructorNameEditText);
-        instructorNumberEditText = findViewById(R.id.instructorNumberEditText);
+        instructorNumberEditText = findViewById(R.id.instructorPhoneNumberEditText);
         instructorEmailEditText = findViewById(R.id.instructorEmailEditText);
+        Intent intent = getIntent();
+        int backButtonImage;
+        if (intent.hasExtra("currentInstructor")) {
+            currentInstructor = (Instructor) intent.getSerializableExtra("currentInstructor");
+            TextView header = findViewById(R.id.headerTitleInstructor);
+            header.setText(currentInstructor.getInstructorName());
+            findViewById(R.id.instructorNameTextView).setVisibility(View.GONE);
+            findViewById(R.id.instructorNumberTextView).setVisibility(View.GONE);
+            findViewById(R.id.instructorEmailTextView).setVisibility(View.GONE);
 
-        if (currentInstructor == null)
+            instructorEmailEditText.setVisibility(View.GONE);
+            instructorNameEditText.setVisibility(View.GONE);
+            instructorNumberEditText.setVisibility(View.GONE);
+            backButtonImage = R.drawable.arrow_back;
+        } else {
             currentInstructor = new Instructor();
+            addInstructorSetup();
+            backButtonImage = R.drawable.baseline_close;
+        }
+
 
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
+        Fragment backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
+        if (backButtonFragment == null) {
+            String cancelTag = "cancelInstructorButton";
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.START | Gravity.BOTTOM;
+            backButtonFragment = new FloatingButtonFragment(cancelTag,params,backButtonImage);
+            fragmentManager.beginTransaction()
+                    .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
+                    .commit();
+        }
+
+
+
+    }
+
+    public void addInstructorSetup() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
         if (addButtonFragment == null) {
             String saveTag = "saveInstructorButton";
@@ -51,23 +89,6 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
                     .add(R.id.addButtonFragmentContainer, addButtonFragment,saveTag)
                     .commit();
         }
-
-        Fragment backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
-        if (backButtonFragment == null) {
-            String cancelTag = "cancelInstructorButton";
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.gravity = Gravity.START | Gravity.BOTTOM;
-            backButtonFragment = new FloatingButtonFragment(cancelTag,params,R.drawable.baseline_close);
-            fragmentManager.beginTransaction()
-                    .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
-                    .commit();
-        }
-
-
-
     }
 
     @Override
@@ -81,7 +102,7 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
             boolean nameEmpty = instructorNameEditText.getText().toString().isEmpty();
 
             if (nameEmpty) {
-                Toast.makeText(AddInstructorActivity.this, "Name cannot be empty",
+                Toast.makeText(this, "Name cannot be empty",
                         Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -92,7 +113,7 @@ public class AddInstructorActivity extends AppCompatActivity implements Floating
 
             Instructor newInstructor = new Instructor(name, number, email);
             Intent returnIntent = new Intent();
-            AddCourseActivity.currentCourse.addCourseInstructor(newInstructor);
+            CourseDetailsActivity.currentCourse.addCourseInstructor(newInstructor);
 
 
 

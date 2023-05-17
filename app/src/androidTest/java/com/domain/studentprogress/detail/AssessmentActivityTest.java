@@ -1,12 +1,12 @@
-package com.domain.studentprogress.add;
+package com.domain.studentprogress.detail;
+
+
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
@@ -21,8 +21,7 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.domain.studentprogress.controller.add.AddCourseActivity;
-import com.domain.studentprogress.controller.add.AddNoteActivity;
+import com.domain.studentprogress.controller.detail.AssessmentDetailActivity;
 import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
 import com.kgibs87.studentprogress.R;
 
@@ -32,46 +31,51 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(AndroidJUnit4.class)
-public class AddNoteActivityTest {
+public class AssessmentActivityTest {
 
 
     @Test
     public void onCreate() {
-        ActivityScenario.launch(AddNoteActivity.class);
-        testViewsExist();
+        try (ActivityScenario<AssessmentDetailActivity> ignored = ActivityScenario.launch(AssessmentDetailActivity.class)) {
+            testViewsExist();
+        }
+
+
     }
 
     @Test
-    public void addNoteTest() {
+    public void addAssessmentTest() {
         ActivityScenario<CourseDetailsActivity> scenario = ActivityScenario.launch(CourseDetailsActivity.class);
         Intents.init();
-        onView(withId(R.id.addNoteButton))
+        onView(withId(R.id.addAssessmentButton))
                 .perform(ViewActions.scrollTo());
 
-        onView(withId(R.id.addNoteButton)).perform(click());
+        onView(withId(R.id.addAssessmentButton)).perform(click());
         testViewsExist();
-        String testNote = "This is a test note: " + Math.random();
-        onView(withId(R.id.note_edit_text)).perform(typeText(testNote));
+        String testName = "Assessment: " + Math.random();
+        onView(withId(R.id.assessmentNameEditText)).perform(typeText(testName));
         closeSoftKeyboard();
-        onView(withTagValue(Matchers.is("saveNoteButton"))).perform(click());
+
+        onView(withTagValue(Matchers.is("saveAssessmentButton"))).perform(click());
 
         scenario.onActivity(activity -> {
-            RecyclerView recyclerView = activity.findViewById(R.id.notesRecyclerView);
-            boolean matchesNewNoteName = false;
-
+            RecyclerView recyclerView = activity.findViewById(R.id.assessmentsRecyclerView);
+            boolean matchesNewAssessmentName = false;
             for (int i = 0; i < recyclerView.getChildCount(); i++) {
 
                 TextView textView = (TextView) recyclerView.getChildAt(i);
-                matchesNewNoteName = testNote.equals(textView.getText().toString());
+                matchesNewAssessmentName = testName.equals(textView.getText().toString());
             }
-            assertTrue(matchesNewNoteName);
+            assertTrue(matchesNewAssessmentName);
         });
         Intents.release();
     }
 
     public void testViewsExist() {
-        onView(withId(R.id.noteHeader)).check(matches(isDisplayed()));
-        onView(withId(R.id.note_edit_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.assessmentNameView)).check(matches(isDisplayed()));
+        onView(withId(R.id.assessmentNameEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.assessmentTypeView)).check(matches(isDisplayed()));
+        onView(withId(R.id.assessmentTypeSpinner)).check(matches(isDisplayed()));
     }
 
 

@@ -27,7 +27,6 @@ import com.domain.studentprogress.model.Note;
 import com.domain.studentprogress.model.StudentDatabase;
 import com.domain.studentprogress.model.Term;
 import com.kgibs87.studentprogress.R;
-import com.domain.studentprogress.controller.add.AddTermActivity;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;

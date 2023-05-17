@@ -15,19 +15,13 @@
             android:name="com.domain.studentprogress.controller.detail.CourseDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="com.domain.studentprogress.controller.add.AddNoteActivity"
+            android:name="com.domain.studentprogress.controller.detail.NoteDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.domain.studentprogress.controller.add.AddInstructorActivity"
+            android:name="com.domain.studentprogress.controller.detail.InstructorDetailActivity"
             android:exported="false" />
         <activity
             android:name="com.domain.studentprogress.controller.detail.AssessmentDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.domain.studentprogress.controller.add.AddCourseActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.domain.studentprogress.controller.add.AddTermActivity"
             android:exported="false" />
         <activity
             android:name="com.domain.studentprogress.controller.detail.TermDetailsActivity"

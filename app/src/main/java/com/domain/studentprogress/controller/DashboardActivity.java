@@ -24,7 +24,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.domain.studentprogress.adapter.TermAdapter;
-import com.domain.studentprogress.controller.add.AddTermActivity;
 import com.domain.studentprogress.controller.detail.TermDetailsActivity;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.holder.TermHolder;
