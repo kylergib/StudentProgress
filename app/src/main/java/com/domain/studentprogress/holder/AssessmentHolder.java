@@ -25,7 +25,7 @@ public class AssessmentHolder extends RecyclerView.ViewHolder
         super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
         itemView.setOnClickListener(this);
         this.listener = listener;
-        mTextView = itemView.findViewById(R.id.termView);
+        mTextView = itemView.findViewById(R.id.termNameTextView);
     }
 
     public void bind(Assessment assessment, int position) {

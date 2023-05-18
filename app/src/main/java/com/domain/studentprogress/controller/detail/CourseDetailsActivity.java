@@ -61,6 +61,9 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
             currentCourse = (Course) intent.getSerializableExtra("currentCourse");
             TextView header = findViewById(R.id.headerTitleCourse);
             header.setText(currentCourse.getCourseName());
+
+            TextView statusTextView = findViewById(R.id.statusNameView);
+            statusTextView.setText("Status: " + currentCourse.getCourseStatus());
             //TODO: hide elements that you dont need?
 
             TextView startDate = findViewById(R.id.startDate);
@@ -74,6 +77,10 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
 
             courseNameEditText = findViewById(R.id.courseNameEditText);
             courseNameEditText.setVisibility(View.GONE);
+
+            Spinner spinner = findViewById(R.id.statusSpinner);
+            spinner.setVisibility(View.GONE);
+
             Log.d("CourseDetailsActivity", String.valueOf(currentCourse.getCourseAssessments()));
             updateAssessments();
             updateInstructors();
@@ -88,32 +95,7 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
 
         updateAssessments();
 
-        List<String> statusList = Arrays.asList("in progress", "completed", "dropped", "plan to take");
-        HashMap<String, Integer> statusMap = new HashMap<String, Integer>() {{
-            put("in progress",0);
-            put("completed",1);
-            put("dropped",2);
-            put("plan to take",3);
-        }};
-        Spinner spinner = findViewById(R.id.statusSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        Integer spinnerValue = statusMap.get(currentCourse.getStatus());
-        if (currentCourse.getStatus() != null && spinnerValue != null) spinner.setSelection(spinnerValue);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Handle the selected item here
-                courseStatus = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing here
-            }
-        });
 
 
         //TODO: change to back button instead of cancel
@@ -180,6 +162,33 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
                     .add(R.id.addButtonFragmentContainer, addButtonFragment,saveTag)
                     .commit();
         }
+
+        List<String> statusList = Arrays.asList("in progress", "completed", "dropped", "plan to take");
+        HashMap<String, Integer> statusMap = new HashMap<String, Integer>() {{
+            put("in progress",0);
+            put("completed",1);
+            put("dropped",2);
+            put("plan to take",3);
+        }};
+        Spinner spinner = findViewById(R.id.statusSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        Integer spinnerValue = statusMap.get(currentCourse.getStatus());
+        if (currentCourse.getStatus() != null && spinnerValue != null) spinner.setSelection(spinnerValue);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Handle the selected item here
+                courseStatus = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing here
+            }
+        });
     }
 
     public void addAssessmentClick(View view) {

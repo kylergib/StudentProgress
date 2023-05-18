@@ -37,4 +37,10 @@
     <string name="back_button">Back Button</string>
     <string name="temp">Temp</string>
     <string name="delete_term">Delete Term</string>
+    <string name="enter_instructor_number_here">Enter instructor number here</string>
+    <string name="enter_instructor_name_here">Enter instructor name here</string>
+    <string name="enter_term_name_here">Enter term name here</string>
+    <string name="enter_assessment_name_here">Enter assessment name here</string>
+    <string name="assessment_name_input_line">Assessment name input line</string>
+    <string name="enter_course_name_here">Enter course name here</string>
 </resources>

@@ -26,7 +26,7 @@ public class  InstructorHolder extends RecyclerView.ViewHolder
             super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
             this.listener = listener;
             itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
+            mTextView = itemView.findViewById(R.id.termNameTextView);
         }
 
         public void bind(Instructor instructor, int position) {

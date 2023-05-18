@@ -3,6 +3,7 @@ package com.domain.studentprogress.controller.detail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,9 @@ import com.domain.studentprogress.controller.DashboardActivity;
 import com.domain.studentprogress.holder.CourseHolder;
 import com.domain.studentprogress.model.Term;
 
+import java.text.Format;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class TermDetailsActivity  extends AppCompatActivity implements DateFragment.OnDateSelectedListener,
         FloatingButtonFragment.OnButtonClickListener, CourseHolder.OnCourseClickListener {
@@ -53,12 +56,20 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         if (intentHasTerm) {
             currentTerm = (Term) intent.getSerializableExtra("currentTerm");
             setHeader();
-            setRecyclerCourse();
-            //TODO: hide views not needed if you are just viewing term
+//            setRecyclerCourse();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
+            int smallTextSize = 15;
             TextView startDate = findViewById(R.id.startDate);
-            startDate.setVisibility(View.GONE);
+            String dateText = currentTerm.getStartDate().format(formatter) +
+                    " - " + currentTerm.getEndDate().format(formatter);
+            startDate.setText(dateText);
+            startDate.setTextSize(smallTextSize);
+
+//            startDate.setVisibility(View.GONE);
 
             TextView endDate = findViewById(R.id.endDate);
+
+//            endDate.setText("End Date: " + currentTerm.getEndDate().format(formatter));
             endDate.setVisibility(View.GONE);
 
             TextView termName = findViewById(R.id.termNameView);
@@ -74,7 +85,7 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
             addTermSetUp();
             cancelButtonImage = R.drawable.baseline_close;
         }
-        updateCourses();
+        setRecyclerCourse();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -154,9 +165,9 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
 
         Log.d("termDetail", String.valueOf(currentTerm.getTermCourses()));
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
-        RecyclerView.LayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses(),this));
     }
 
@@ -174,7 +185,7 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         if (requestCode == COURSE_REQUEST_CODE && resultCode == RESULT_OK) {
             Log.d("AddTermActivity", "returning to activity");
             Log.d("AddTermActivity", String.valueOf(currentTerm));
-            updateCourses();
+            setRecyclerCourse();
         }
     }
 
@@ -203,14 +214,14 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         }
 
     }
-    public void updateCourses() {
-        RecyclerView courseRecyclerView = findViewById(R.id.courseRecyclerView);
-
-        RecyclerView.LayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        courseRecyclerView.setLayoutManager(linearLayoutManager);
-        courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses(),this));
-    }
+//    public void updateCourses() {
+//        RecyclerView courseRecyclerView = findViewById(R.id.courseRecyclerView);
+//
+//        RecyclerView.LayoutManager linearLayoutManager =
+//                new LinearLayoutManager(this);
+//        courseRecyclerView.setLayoutManager(linearLayoutManager);
+//        courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses(),this));
+//    }
 
 
     public void saveTerm() {

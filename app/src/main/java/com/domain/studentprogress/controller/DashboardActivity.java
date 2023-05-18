@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,13 +49,12 @@ public class DashboardActivity extends AppCompatActivity
     private static boolean notFirstRun;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         if (!notFirstRun) {
-//            createFakeData();
+            createFakeData();
             notFirstRun = true;
         }
         sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);
@@ -67,6 +67,25 @@ public class DashboardActivity extends AppCompatActivity
         String welcomeMessage = getResources().getString(R.string.welcome_text);
         welcomeText.setText(String.format(welcomeMessage, sharedPref.getString("name",null)));
 
+        setTermRecyclerView();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addTermButtonFragmentContainer);
+        if (addButtonFragment == null) {
+            String tag = "addTermButton";
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.END | Gravity.BOTTOM;
+            addButtonFragment = new FloatingButtonFragment(tag,params, R.drawable.plus_sign);
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.addTermButtonFragmentContainer, addButtonFragment,tag)
+                    .commit();
+        }
+    }
+    public void setTermRecyclerView() {
         List<Term> termsList = mStudentDb.getTerms();
         for (Term term: termsList) {
             Log.d("DashboardActivity", String.valueOf(term.getId()));
@@ -85,35 +104,14 @@ public class DashboardActivity extends AppCompatActivity
             });
 
         }
-
         RecyclerView termRecyclerView = findViewById(R.id.termRecyclerView);
 
-        RecyclerView.LayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        termRecyclerView.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration();
-        termRecyclerView.addItemDecoration(dividerItemDecoration);
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(this,2);
+        termRecyclerView.setLayoutManager(layoutManager);
         termRecyclerView.setAdapter(new TermAdapter(termsList, this));
         TextView statusText = findViewById(R.id.statusText);
-
-
-
         if (Objects.requireNonNull(termRecyclerView.getAdapter()).getItemCount() > 0) statusText.setVisibility(View.GONE);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addTermButtonFragmentContainer);
-        if (addButtonFragment == null) {
-            String tag = "addTermButton";
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.gravity = Gravity.END | Gravity.BOTTOM;
-            addButtonFragment = new FloatingButtonFragment(tag,params, R.drawable.plus_sign);
-
-            fragmentManager.beginTransaction()
-                    .add(R.id.addTermButtonFragmentContainer, addButtonFragment,tag)
-                    .commit();
-        }
     }
     @Override
     public void onButtonClick(View view, String tag) {
@@ -129,56 +127,13 @@ public class DashboardActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-
-    //TODO: possibly change how below border looks for recyclerview
-    private static class DividerItemDecoration extends RecyclerView.ItemDecoration {
-
-        private final Paint mPaint;
-
-        public DividerItemDecoration() {
-            mPaint = new Paint();
-            mPaint.setColor(Color.RED);
-        }
-
-        @Override
-        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            outRect.bottom = 5; // set the height of the border
-        }
-
-        @Override
-        public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            super.onDraw(canvas, parent, state);
-
-            // set the width and height of the border
-            int borderHeight = 5;
-
-            // create a new ShapeDrawable with red color
-            ShapeDrawable border = new ShapeDrawable();
-            border.setShape(new RectShape());
-            border.getPaint().setColor(mPaint.getColor());
-            border.getPaint().setStyle(Paint.Style.FILL);
-
-            // draw the border on the bottom of each item
-            int childCount = parent.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View child = parent.getChildAt(i);
-                border.setBounds(
-                        child.getLeft(),
-                        child.getBottom() - borderHeight,
-                        child.getRight(),
-                        child.getBottom());
-                border.draw(canvas);
-            }
-        }
-    }
-
     //TODO: remove in future
     public void createFakeData() {
         Term newTerm = new Term("Term 1", LocalDate.of(2023,1,1),
                 LocalDate.of(2023,6,30));
+
         Course newCourse = new Course("Test Course",LocalDate.of(2023,1,1),
-                LocalDate.of(2023,1,2),"plan to take");
+                LocalDate.of(2023,1,2),"completed");
         Assessment newAssessment = new Assessment("Assessment Test", LocalDate.of(2023,1,1),
                 LocalDate.of(2023,1,1),"performance");
         Note newNote = new Note("this is a message");
@@ -189,6 +144,24 @@ public class DashboardActivity extends AppCompatActivity
         newCourse.addCourseInstructor(newInstructor);
 
         newTerm.addTermCourse(newCourse);
+
+        Course newCourseTwo = new Course("Test Course",LocalDate.of(2023,1,1),
+                LocalDate.of(2023,1,2),"plan to take");
+        Assessment newAssessmentTwo = new Assessment("Assessment Test", LocalDate.of(2023,1,1),
+                LocalDate.of(2023,1,1),"performance");
+        Assessment newAssessmentThree = new Assessment("Assessment Test", LocalDate.of(2023,1,1),
+                LocalDate.of(2023,1,1),"performance");
+        Note newNoteTwo = new Note("this is a message");
+        Instructor newInstructorThree = new Instructor("Instructor name",
+                "7652151070","testemail@gmail.com");
+        newCourseTwo.addCourseAssessment(newAssessmentTwo);
+        newCourseTwo.addCourseAssessment(newAssessmentThree);
+        newCourseTwo.addCourseNote(newNoteTwo);
+        newCourseTwo.addCourseInstructor(newInstructorThree);
+
+        newTerm.addTermCourse(newCourseTwo);
+
+
         Log.d("AddTermTest course", String.valueOf(newTerm.getTermCourses()));
         for (Course course: newTerm.getTermCourses()) {
             Log.d("AddTermTest course", course.getCourseName());

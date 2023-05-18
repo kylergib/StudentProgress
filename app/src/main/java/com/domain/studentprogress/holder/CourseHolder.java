@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.domain.studentprogress.model.Course;
 import com.kgibs87.studentprogress.R;
 
+import java.time.format.DateTimeFormatter;
+
 public class CourseHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
 
     private Course course;
-    private TextView mTextView;
+    private TextView courseNameTextView;
+    private TextView courseDateTextView;
+    private TextView courseStatusTextView;
     private OnCourseClickListener listener;
 
 
@@ -23,17 +27,23 @@ public class CourseHolder extends RecyclerView.ViewHolder
     }
 
     public CourseHolder(LayoutInflater inflater, ViewGroup parent, OnCourseClickListener listener) {
-        super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+        super(inflater.inflate(R.layout.recycler_view_course, parent, false));
         this.listener = listener;
         itemView.setOnClickListener(this);
-        mTextView = itemView.findViewById(R.id.termView);
+        courseNameTextView = itemView.findViewById(R.id.courseNameTextView);
+        courseDateTextView = itemView.findViewById(R.id.courseDateTextView);
+        courseStatusTextView = itemView.findViewById(R.id.courseStatusTextView);
 
 
     }
 
     public void bind(Course course, int position) {
         this.course = course;
-        mTextView.setText(course.getCourseName());
+        courseNameTextView.setText(course.getCourseName());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, u");
+        String dateRange = String.format("%s - %s", course.getStartDate().format(formatter),course.getEndDate().format(formatter));
+        courseDateTextView.setText(dateRange);
+        courseStatusTextView.setText(String.format("Status: %s", course.getStatus()));
 
 
     }

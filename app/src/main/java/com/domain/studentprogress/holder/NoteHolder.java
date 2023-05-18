@@ -25,7 +25,7 @@ public class  NoteHolder extends RecyclerView.ViewHolder
             super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
             this.listener = listener;
             itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termView);
+            mTextView = itemView.findViewById(R.id.termNameTextView);
         }
 
         public void bind(Note note, int position) {
