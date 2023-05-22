@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,28 +20,45 @@ import com.kgibs87.studentprogress.R;
 
 public class NoteDetailActivity extends AppCompatActivity implements FloatingButtonFragment.OnButtonClickListener {
     private EditText messageEditText;
+    private Note currentNote;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-        messageEditText = findViewById(R.id.note_edit_text);
-
+        messageEditText = findViewById(R.id.noteEditText);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
-        if (addButtonFragment == null) {
-            String saveTag = "saveNoteButton";
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.gravity = Gravity.END | Gravity.BOTTOM;
-            addButtonFragment = new FloatingButtonFragment(saveTag,params, R.drawable.baseline_check);
+        Intent intent = getIntent();
+        int backButtonImage;
 
-            fragmentManager.beginTransaction()
-                    .add(R.id.addButtonFragmentContainer, addButtonFragment,saveTag)
-                    .commit();
+
+        if (intent.hasExtra("currentNote")) {
+            currentNote = (Note) intent.getSerializableExtra("currentNote");
+            TextView header = findViewById(R.id.noteHeader);
+            header.setText(currentNote.getMessage());
+
+            messageEditText.setVisibility(View.GONE);
+            backButtonImage = R.drawable.arrow_back;
+        } else {
+            backButtonImage = R.drawable.baseline_close;
+
+            Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
+            if (addButtonFragment == null) {
+                String saveTag = "saveNoteButton";
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.gravity = Gravity.END | Gravity.BOTTOM;
+                addButtonFragment = new FloatingButtonFragment(saveTag,params, R.drawable.baseline_check);
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.addButtonFragmentContainer, addButtonFragment,saveTag)
+                        .commit();
+            }
         }
+
+
 
         Fragment backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
         if (backButtonFragment == null) {
@@ -50,7 +68,7 @@ public class NoteDetailActivity extends AppCompatActivity implements FloatingBut
                     FrameLayout.LayoutParams.WRAP_CONTENT
             );
             params.gravity = Gravity.START | Gravity.BOTTOM;
-            backButtonFragment = new FloatingButtonFragment(cancelTag,params,R.drawable.baseline_close);
+            backButtonFragment = new FloatingButtonFragment(cancelTag,params,backButtonImage);
             fragmentManager.beginTransaction()
                     .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
                     .commit();

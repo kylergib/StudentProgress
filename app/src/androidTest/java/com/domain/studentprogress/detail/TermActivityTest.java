@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static org.junit.Assert.assertTrue;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -73,8 +74,8 @@ public class TermActivityTest {
             boolean matchesNewTermName = false;
 
             for (int i = 0; i < termRecyclerView.getChildCount(); i++) {
-
-                TextView textView = (TextView) termRecyclerView.getChildAt(i);
+                CardView cardView = (CardView) termRecyclerView.getChildAt(i);
+                TextView textView = cardView.findViewById(R.id.termNameTextView);
                 matchesNewTermName = termName.equals(textView.getText().toString());
             }
             assertTrue(matchesNewTermName);

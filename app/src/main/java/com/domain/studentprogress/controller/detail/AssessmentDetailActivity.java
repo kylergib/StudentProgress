@@ -36,6 +36,7 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
 
 
         Intent intent = getIntent();
+        int backButtonImage;
 
         boolean intentHasAssessment = intent.hasExtra("currentAssessment");
         if (intentHasAssessment) {
@@ -64,6 +65,7 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
             typeTextView.setVisibility(View.GONE);
             Spinner spinner = findViewById(R.id.assessmentTypeSpinner);
             spinner.setVisibility(View.GONE);
+            backButtonImage = R.drawable.arrow_back;
 
 
         }
@@ -73,6 +75,7 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
             currentAssessment = new Assessment();
             assessmentNameEditText = findViewById(R.id.assessmentNameEditText);
             addAssessmentSetup();
+            backButtonImage = R.drawable.baseline_close;
         }
 
 
@@ -88,7 +91,7 @@ public class AssessmentDetailActivity  extends AppCompatActivity implements Date
                     FrameLayout.LayoutParams.WRAP_CONTENT
             );
             params.gravity = Gravity.START | Gravity.BOTTOM;
-            backButtonFragment = new FloatingButtonFragment(cancelTag,params,R.drawable.baseline_close);
+            backButtonFragment = new FloatingButtonFragment(cancelTag,params,backButtonImage);
             fragmentManager.beginTransaction()
                     .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
                     .commit();

@@ -105,12 +105,17 @@ public class DashboardActivity extends AppCompatActivity
 
         }
         RecyclerView termRecyclerView = findViewById(R.id.termRecyclerView);
+        int colSize;
+        if (termsList.size() > 1) colSize = 2;
+        else colSize = 1;
 
         RecyclerView.LayoutManager layoutManager =
-                new GridLayoutManager(this,2);
+                new GridLayoutManager(this,colSize);
+
         termRecyclerView.setLayoutManager(layoutManager);
         termRecyclerView.setAdapter(new TermAdapter(termsList, this));
         TextView statusText = findViewById(R.id.statusText);
+
         if (Objects.requireNonNull(termRecyclerView.getAdapter()).getItemCount() > 0) statusText.setVisibility(View.GONE);
     }
     @Override

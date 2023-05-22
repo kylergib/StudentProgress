@@ -24,9 +24,9 @@
                 android:textSize="@dimen/header_text_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:labelFor="@+id/note_edit_text"/>
+                android:labelFor="@+id/noteEditText"/>
             <EditText
-                android:id="@+id/note_edit_text"
+                android:id="@+id/noteEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"

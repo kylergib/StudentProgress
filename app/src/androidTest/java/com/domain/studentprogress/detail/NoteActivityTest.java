@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
@@ -51,7 +52,7 @@ public class NoteActivityTest {
         onView(withId(R.id.addNoteButton)).perform(click());
         testViewsExist();
         String testNote = "This is a test note: " + Math.random();
-        onView(withId(R.id.note_edit_text)).perform(typeText(testNote));
+        onView(withId(R.id.noteEditText)).perform(typeText(testNote));
         closeSoftKeyboard();
         onView(withTagValue(Matchers.is("saveNoteButton"))).perform(click());
 
@@ -60,8 +61,8 @@ public class NoteActivityTest {
             boolean matchesNewNoteName = false;
 
             for (int i = 0; i < recyclerView.getChildCount(); i++) {
-
-                TextView textView = (TextView) recyclerView.getChildAt(i);
+                CardView cardView = (CardView) recyclerView.getChildAt(i);
+                TextView textView = cardView.findViewById(R.id.noteMessageTextView);
                 matchesNewNoteName = testNote.equals(textView.getText().toString());
             }
             assertTrue(matchesNewNoteName);
@@ -71,7 +72,7 @@ public class NoteActivityTest {
 
     public void testViewsExist() {
         onView(withId(R.id.noteHeader)).check(matches(isDisplayed()));
-        onView(withId(R.id.note_edit_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.noteEditText)).check(matches(isDisplayed()));
     }
 
 

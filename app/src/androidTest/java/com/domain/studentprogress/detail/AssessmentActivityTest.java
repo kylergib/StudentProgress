@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
@@ -28,6 +29,7 @@ import com.kgibs87.studentprogress.R;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.w3c.dom.Text;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -63,7 +65,8 @@ public class AssessmentActivityTest {
             boolean matchesNewAssessmentName = false;
             for (int i = 0; i < recyclerView.getChildCount(); i++) {
 
-                TextView textView = (TextView) recyclerView.getChildAt(i);
+                CardView cardView = (CardView) recyclerView.getChildAt(i);
+                TextView textView = cardView.findViewById(R.id.assessmentNameTextView);
                 matchesNewAssessmentName = testName.equals(textView.getText().toString());
             }
             assertTrue(matchesNewAssessmentName);

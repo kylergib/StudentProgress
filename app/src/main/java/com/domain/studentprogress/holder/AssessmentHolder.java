@@ -10,11 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.model.Assessment;
 
+import java.time.format.DateTimeFormatter;
+
 public class AssessmentHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener{
 
     private Assessment assessment;
-    private TextView mTextView;
+    private TextView assessmentNameTextView;
+    private TextView assessmentTypeTextView;
+    private TextView assessmentEndDate;
+
     private OnAssessmentClickListener listener;
 
     public interface OnAssessmentClickListener {
@@ -22,15 +27,21 @@ public class AssessmentHolder extends RecyclerView.ViewHolder
     }
 
     public AssessmentHolder(LayoutInflater inflater, ViewGroup parent, OnAssessmentClickListener listener) {
-        super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+        super(inflater.inflate(R.layout.recycler_view_assessment, parent, false));
         itemView.setOnClickListener(this);
         this.listener = listener;
-        mTextView = itemView.findViewById(R.id.termNameTextView);
+        assessmentNameTextView = itemView.findViewById(R.id.assessmentNameTextView);
+        assessmentTypeTextView = itemView.findViewById(R.id.assessmentType);
+        assessmentEndDate = itemView.findViewById(R.id.assessmentEndDateTextView);
     }
 
     public void bind(Assessment assessment, int position) {
         this.assessment = assessment;
-        mTextView.setText(assessment.getAssessmentTitle());
+        assessmentNameTextView.setText(assessment.getAssessmentTitle());
+        assessmentTypeTextView.setText(String.format("Type: %s", assessment.getAssessmentType()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, u");
+        String dateString = String.format("End date: %s", assessment.getAssessmentEndDate().format(formatter));
+        assessmentEndDate.setText(dateString);
     }
 
     @Override

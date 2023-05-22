@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/courseCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardBackgroundColor="@color/teal_200">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/instructorNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/medium_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingTop="5dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/instructorEmailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_text_size"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/instructorPhoneNumberTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_text_size"
+            android:textStyle="bold"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

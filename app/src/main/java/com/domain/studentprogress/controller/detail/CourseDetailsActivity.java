@@ -3,6 +3,7 @@ package com.domain.studentprogress.controller.detail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,7 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
         Intent intent = getIntent();
 
         boolean intentHasCourse = intent.hasExtra("currentCourse");
+        int backButtonImage;
 
         if (intentHasCourse) {
             currentCourse = (Course) intent.getSerializableExtra("currentCourse");
@@ -85,10 +87,13 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
             updateAssessments();
             updateInstructors();
             updateNotes();
+            backButtonImage = R.drawable.arrow_back;
 
         } else {
             currentCourse = new Course();
             courseNameEditText = findViewById(R.id.courseNameEditText);
+            backButtonImage = R.drawable.baseline_close;
+
 
             addCourseSetUp();
         }
@@ -108,7 +113,7 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
                     FrameLayout.LayoutParams.WRAP_CONTENT
             );
             params.gravity = Gravity.START | Gravity.BOTTOM;
-            backButtonFragment = new FloatingButtonFragment(cancelTag,params,R.drawable.baseline_close);
+            backButtonFragment = new FloatingButtonFragment(cancelTag,params,backButtonImage);
             fragmentManager.beginTransaction()
                     .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
                     .commit();
@@ -209,28 +214,36 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
     public void updateAssessments() {
         Log.d("CourseDetailsActivity", String.valueOf(currentCourse.getCourseAssessments()));
         RecyclerView courseRecyclerView = findViewById(R.id.assessmentsRecyclerView);
+        int colSize;
+        if (currentCourse.getCourseAssessments().size() > 1) colSize = 2;
+        else colSize = 1;
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(this,colSize);
 
-        RecyclerView.LayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        courseRecyclerView.setLayoutManager(linearLayoutManager);
+        courseRecyclerView.setLayoutManager(layoutManager);
         courseRecyclerView.setAdapter(new AssessmentAdapter(currentCourse.getCourseAssessments(), this));
     }
 
     public void updateInstructors() {
         RecyclerView recyclerView = findViewById(R.id.instructorsRecyclerView);
-
-        RecyclerView.LayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        int colSize;
+        if (currentCourse.getCourseInstructors().size() > 1) colSize = 2;
+        else colSize = 1;
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(this, colSize);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new InstructorAdapter(currentCourse.getCourseInstructors(), this));
     }
 
     public void updateNotes() {
         RecyclerView recyclerView = findViewById(R.id.notesRecyclerView);
 
-        RecyclerView.LayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        int colSize;
+        if (currentCourse.getCourseNotes().size() > 1) colSize = 2;
+        else colSize = 1;
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(this,colSize);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new NoteAdapter(currentCourse.getCourseNotes(), this));
     }
     @Override
@@ -306,7 +319,7 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
     @Override
     public void onNoteClick(View view, Note note) {
         Intent intent = new Intent(getApplicationContext(), NoteDetailActivity.class);
-        intent.putExtra("currentInstructor", note);
+        intent.putExtra("currentNote", note);
         startActivity(intent);
     }
 }

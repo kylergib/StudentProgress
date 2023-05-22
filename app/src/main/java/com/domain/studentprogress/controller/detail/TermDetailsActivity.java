@@ -165,8 +165,11 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
 
         Log.d("termDetail", String.valueOf(currentTerm.getTermCourses()));
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
+        int colSize;
+        if (currentTerm.getTermCourses().size() > 1) colSize = 2;
+        else colSize = 1;
         RecyclerView.LayoutManager layoutManager =
-                new GridLayoutManager(this, 2);
+                new GridLayoutManager(this, colSize);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses(),this));
     }

@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
@@ -126,12 +127,14 @@ public class CourseActivityTest {
             onView(withId(R.id.termNameEditText)).check(matches(ViewMatchers.isDisplayed()));
             scenario.onActivity(activity -> {
 
-                RecyclerView termRecyclerView = activity.findViewById(R.id.courseRecyclerView);
+                RecyclerView courseRecyclerView = activity.findViewById(R.id.courseRecyclerView);
                 boolean matchesNewCourseName = false;
 
-                for (int i = 0; i < termRecyclerView.getChildCount(); i++) {
+                for (int i = 0; i < courseRecyclerView.getChildCount(); i++) {
 
-                    TextView textView = (TextView) termRecyclerView.getChildAt(i);
+
+                    CardView cardView = (CardView) courseRecyclerView.getChildAt(i);
+                    TextView textView = cardView.findViewById(R.id.courseNameTextView);
                     matchesNewCourseName = courseName.equals(textView.getText().toString());
                 }
                 assertTrue(matchesNewCourseName);
@@ -168,7 +171,9 @@ public class CourseActivityTest {
                 assertEquals(assessmentRecycler.getChildCount(), newCourse.getCourseAssessments().size());
                 for (int i = 0; i < assessmentRecycler.getChildCount(); i++) {
 
-                    TextView textView = (TextView) assessmentRecycler.getChildAt(i);
+                    CardView cardView = (CardView) assessmentRecycler.getChildAt(i);
+
+                    TextView textView = cardView.findViewById(R.id.assessmentNameTextView);
                     assertTrue(assessmentNames.contains((String) textView.getText()));
                 }
 
@@ -182,8 +187,8 @@ public class CourseActivityTest {
                 );
                 assertEquals(noteRecycler.getChildCount(), newCourse.getCourseNotes().size());
                 for (int i = 0; i < noteRecycler.getChildCount(); i++) {
-
-                    TextView textView = (TextView) noteRecycler.getChildAt(i);
+                    CardView cardView = (CardView) noteRecycler.getChildAt(i);
+                    TextView textView = cardView.findViewById(R.id.noteMessageTextView);
                     assertTrue(noteMessages.contains((String) textView.getText()));
 
                 }
@@ -197,15 +202,16 @@ public class CourseActivityTest {
                 );
                 assertEquals(instructorRecycler.getChildCount(), newCourse.getCourseInstructors().size());
                 for (int i = 0; i < instructorRecycler.getChildCount(); i++) {
+                    CardView cardView = (CardView) instructorRecycler.getChildAt(i);
 
-                    TextView textView = (TextView) instructorRecycler.getChildAt(i);
+                    TextView textView = cardView.findViewById(R.id.instructorNameTextView);
                     assertTrue(instructorNames.contains((String) textView.getText()));
                 }
 
             });
 
             onView(withId(R.id.headerTitleCourse)).check(matches(withText(newCourse.getCourseName())));
-            onView(withId(R.id.statusSpinner)).check(matches(withSpinnerText(newCourse.getStatus())));
+            onView(withId(R.id.statusNameView)).check(matches(withText(String.format("Status: %s",newCourse.getStatus()))));
 
 
             //checks if views are GONE or not

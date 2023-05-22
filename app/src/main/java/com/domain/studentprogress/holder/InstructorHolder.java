@@ -8,13 +8,16 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.domain.studentprogress.model.Instructor;
+import com.domain.studentprogress.util.FormatPhoneNumber;
 import com.kgibs87.studentprogress.R;
 
 public class  InstructorHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
 
         private Instructor instructor;
-        private TextView mTextView;
+        private TextView instructorNameTextView;
+        private TextView instructorEmailTextView;
+        private TextView instructorPhoneNumberTextView;
         private OnInstrcutorClickListener listener;
 
     public interface OnInstrcutorClickListener {
@@ -23,19 +26,21 @@ public class  InstructorHolder extends RecyclerView.ViewHolder
 
         public InstructorHolder(LayoutInflater inflater, ViewGroup parent,
                                 OnInstrcutorClickListener listener) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+            super(inflater.inflate(R.layout.recycler_view_instructor, parent, false));
             this.listener = listener;
             itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termNameTextView);
+            instructorNameTextView = itemView.findViewById(R.id.instructorNameTextView);
+            instructorEmailTextView = itemView.findViewById(R.id.instructorEmailTextView);
+            instructorPhoneNumberTextView = itemView.findViewById(R.id.instructorPhoneNumberTextView);
         }
 
         public void bind(Instructor instructor, int position) {
             this.instructor = instructor;
-            mTextView.setText(instructor.getInstructorName());
+            instructorNameTextView.setText(instructor.getInstructorName());
+            instructorEmailTextView.setText(instructor.getInstructorEmail());
+            String phoneNumber = FormatPhoneNumber.formatPhoneNumber(instructor.getInstructorPhoneNumber());
+            instructorPhoneNumberTextView.setText(phoneNumber);
 
-            // Make the background color dependent on the length of the subject string
-//            int colorIndex = subject.getText().length() % mSubjectColors.length;
-//            mTextView.setBackgroundColor(mSubjectColors[colorIndex]);
         }
 
         @Override

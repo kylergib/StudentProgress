@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
@@ -63,7 +64,8 @@ public class InstructorActivityTest {
 
             for (int i = 0; i < instructorRecyclerView.getChildCount(); i++) {
 
-                TextView textView = (TextView) instructorRecyclerView.getChildAt(i);
+                CardView cardView = (CardView) instructorRecyclerView.getChildAt(i);
+                TextView textView = cardView.findViewById(R.id.instructorNameTextView);
                 matchesNewInstructorName = name.equals(textView.getText().toString());
             }
             assertTrue(matchesNewInstructorName);

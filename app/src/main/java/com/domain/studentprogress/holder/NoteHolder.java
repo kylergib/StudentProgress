@@ -14,7 +14,7 @@ public class  NoteHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
 
         private Note note;
-        private TextView mTextView;
+        private TextView messageTextView;
         private OnNoteClickListener listener;
 
         public interface OnNoteClickListener {
@@ -22,15 +22,15 @@ public class  NoteHolder extends RecyclerView.ViewHolder
         }
 
         public NoteHolder(LayoutInflater inflater, ViewGroup parent, OnNoteClickListener listener) {
-            super(inflater.inflate(R.layout.recycler_view_terms, parent, false));
+            super(inflater.inflate(R.layout.recycler_view_note, parent, false));
             this.listener = listener;
             itemView.setOnClickListener(this);
-            mTextView = itemView.findViewById(R.id.termNameTextView);
+            messageTextView = itemView.findViewById(R.id.noteMessageTextView);
         }
 
         public void bind(Note note, int position) {
             this.note = note;
-            mTextView.setText(note.getMessage());
+            messageTextView.setText(note.getMessage());
 
             // Make the background color dependent on the length of the subject string
 //            int colorIndex = subject.getText().length() % mSubjectColors.length;
