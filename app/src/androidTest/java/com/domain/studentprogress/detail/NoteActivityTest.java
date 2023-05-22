@@ -22,6 +22,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.domain.studentprogress.controller.detail.NoteDetailActivity;
 import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
 
 import org.hamcrest.Matchers;
@@ -63,7 +64,8 @@ public class NoteActivityTest {
             for (int i = 0; i < recyclerView.getChildCount(); i++) {
                 CardView cardView = (CardView) recyclerView.getChildAt(i);
                 TextView textView = cardView.findViewById(R.id.noteMessageTextView);
-                matchesNewNoteName = testNote.equals(textView.getText().toString());
+                String testNoteFormatted = FormatStrings.formatBetween(testNote, 30);
+                matchesNewNoteName = testNoteFormatted.equals(textView.getText().toString());
             }
             assertTrue(matchesNewNoteName);
         });

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.model.Term;
 
@@ -38,7 +39,7 @@ public  class TermHolder extends RecyclerView.ViewHolder
 
     public void bind(Term term, int position) {
         this.term = term;
-        termNameTextView.setText(term.getName());
+        termNameTextView.setText(FormatStrings.formatBetween(term.getName(),15));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, u");
         String dateRange = String.format("%s - %s", term.getStartDate().format(formatter),term.getEndDate().format(formatter));
         termDateTextView.setText(dateRange);

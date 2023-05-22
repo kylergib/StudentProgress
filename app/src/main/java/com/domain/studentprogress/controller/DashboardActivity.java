@@ -54,7 +54,7 @@ public class DashboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         mStudentDb = StudentDatabase.getInstance(getApplicationContext());
         if (!notFirstRun) {
-            createFakeData();
+//            createFakeData();
             notFirstRun = true;
         }
         sharedPref = getSharedPreferences("preferences", Context.MODE_PRIVATE);

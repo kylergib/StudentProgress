@@ -15,11 +15,13 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.domain.studentprogress.controller.detail.TermDetailsActivity;
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.controller.DashboardActivity;
 
@@ -76,7 +78,8 @@ public class TermActivityTest {
             for (int i = 0; i < termRecyclerView.getChildCount(); i++) {
                 CardView cardView = (CardView) termRecyclerView.getChildAt(i);
                 TextView textView = cardView.findViewById(R.id.termNameTextView);
-                matchesNewTermName = termName.equals(textView.getText().toString());
+                String termNameFormatted = FormatStrings.formatBetween(termName, 15);
+                matchesNewTermName = termNameFormatted.equals(textView.getText().toString());
             }
             assertTrue(matchesNewTermName);
         });

@@ -3,8 +3,10 @@ package com.domain.studentprogress.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class FormatPhoneNumber {
-
+public abstract class FormatStrings {
+    public static String formatBetween(String string, int max) {
+        return string.substring(0,Math.min(string.length(), max));
+    }
     public static String formatPhoneNumber(String phoneNumber) {
         // Remove any non-digit characters from the input
         String digitsOnly = phoneNumber.replaceAll("\\D", "");
@@ -20,6 +22,4 @@ public abstract class FormatPhoneNumber {
             return phoneNumber;
         }
     }
-
-
 }

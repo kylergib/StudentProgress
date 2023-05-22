@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.model.Assessment;
 
@@ -37,7 +38,7 @@ public class AssessmentHolder extends RecyclerView.ViewHolder
 
     public void bind(Assessment assessment, int position) {
         this.assessment = assessment;
-        assessmentNameTextView.setText(assessment.getAssessmentTitle());
+        assessmentNameTextView.setText(FormatStrings.formatBetween(assessment.getAssessmentTitle(), 15));
         assessmentTypeTextView.setText(String.format("Type: %s", assessment.getAssessmentType()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, u");
         String dateString = String.format("End date: %s", assessment.getAssessmentEndDate().format(formatter));

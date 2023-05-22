@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.domain.studentprogress.model.Note;
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
 
 public class  NoteHolder extends RecyclerView.ViewHolder
@@ -30,7 +31,7 @@ public class  NoteHolder extends RecyclerView.ViewHolder
 
         public void bind(Note note, int position) {
             this.note = note;
-            messageTextView.setText(note.getMessage());
+            messageTextView.setText(FormatStrings.formatBetween(note.getMessage(), 30));
 
             // Make the background color dependent on the length of the subject string
 //            int colorIndex = subject.getText().length() % mSubjectColors.length;

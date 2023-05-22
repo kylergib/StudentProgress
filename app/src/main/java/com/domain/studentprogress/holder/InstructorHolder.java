@@ -8,8 +8,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.domain.studentprogress.model.Instructor;
-import com.domain.studentprogress.util.FormatPhoneNumber;
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
+
+import java.text.Format;
 
 public class  InstructorHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener{
@@ -36,9 +38,9 @@ public class  InstructorHolder extends RecyclerView.ViewHolder
 
         public void bind(Instructor instructor, int position) {
             this.instructor = instructor;
-            instructorNameTextView.setText(instructor.getInstructorName());
+            instructorNameTextView.setText(FormatStrings.formatBetween(instructor.getInstructorName(), 15));
             instructorEmailTextView.setText(instructor.getInstructorEmail());
-            String phoneNumber = FormatPhoneNumber.formatPhoneNumber(instructor.getInstructorPhoneNumber());
+            String phoneNumber = FormatStrings.formatPhoneNumber(instructor.getInstructorPhoneNumber());
             instructorPhoneNumberTextView.setText(phoneNumber);
 
         }

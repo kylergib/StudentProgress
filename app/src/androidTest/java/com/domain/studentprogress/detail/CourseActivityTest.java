@@ -46,9 +46,10 @@ public class CourseActivityTest {
 
     @Test
     public void addAssessmentClickThenCancel() {
+        Intents.init();
         try (ActivityScenario<CourseDetailsActivity> ignored = ActivityScenario.launch(CourseDetailsActivity.class)) {
 
-            Intents.init();
+
             testViewsExist();
 
             onView(withId(R.id.addAssessmentButton))
@@ -58,13 +59,15 @@ public class CourseActivityTest {
             onView(withTagValue(Matchers.is("cancelAssessmentButton"))).perform(click());
 
             testViewsExist();
-            Intents.release();
+
         }
+        Intents.release();
     }
     @Test
     public void addInstructorClickThenCancel() {
+        Intents.init();
         try (ActivityScenario<CourseDetailsActivity> ignored = ActivityScenario.launch(CourseDetailsActivity.class)) {
-            Intents.init();
+
             testViewsExist();
 
             onView(withId(R.id.addInstructorButton))
@@ -72,13 +75,15 @@ public class CourseActivityTest {
             onView(withId(R.id.addInstructorButton)).perform(click());
             onView(withTagValue(Matchers.is("cancelInstructorButton"))).perform(click());
             testViewsExist();
-            Intents.release();
+
         }
+        Intents.release();
     }
     @Test
     public void addNoteClickThenCancel() {
+        Intents.init();
         try (ActivityScenario<CourseDetailsActivity> ignored = ActivityScenario.launch(CourseDetailsActivity.class)) {
-            Intents.init();
+
             testViewsExist();
 
             onView(withId(R.id.addNoteButton))
@@ -87,13 +92,15 @@ public class CourseActivityTest {
             onView(withId(R.id.addNoteButton)).perform(click());
             onView(withTagValue(Matchers.is("cancelNoteButton"))).perform(click());
             testViewsExist();
-            Intents.release();
+
         }
+        Intents.release();
     }
     @Test
     public void cancelCourseClick() {
+        Intents.init();
         try (ActivityScenario<TermDetailsActivity> ignored = ActivityScenario.launch(TermDetailsActivity.class)) {
-            Intents.init();
+
             onView(withId(R.id.addCourseButton))
                     .perform(ViewActions.scrollTo());
 
@@ -104,8 +111,9 @@ public class CourseActivityTest {
             onView(withId(R.id.termNameView))
                     .perform(ViewActions.scrollTo());
             onView(withId(R.id.termNameView)).check(matches(isDisplayed()));
-            Intents.release();
+
         }
+        Intents.release();
     }
     @Test
     public void addCourseClick() {

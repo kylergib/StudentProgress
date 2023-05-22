@@ -24,6 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.domain.studentprogress.controller.detail.AssessmentDetailActivity;
 import com.domain.studentprogress.controller.detail.CourseDetailsActivity;
+import com.domain.studentprogress.util.FormatStrings;
 import com.kgibs87.studentprogress.R;
 
 import org.hamcrest.Matchers;
@@ -67,7 +68,8 @@ public class AssessmentActivityTest {
 
                 CardView cardView = (CardView) recyclerView.getChildAt(i);
                 TextView textView = cardView.findViewById(R.id.assessmentNameTextView);
-                matchesNewAssessmentName = testName.equals(textView.getText().toString());
+                String testNameFormatted = FormatStrings.formatBetween(testName, 15);
+                matchesNewAssessmentName = testNameFormatted.equals(textView.getText().toString());
             }
             assertTrue(matchesNewAssessmentName);
         });
