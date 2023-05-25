@@ -11,8 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -42,6 +45,10 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     public static final int COURSE_REQUEST_CODE = 1234;
     public static Term currentTerm;
     private Fragment backButtonFragment;
+    private Fragment startDateFragment;
+    private Fragment endDateFragment;
+    private boolean editMode;
+    private boolean addMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,94 +59,27 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
 
         boolean intentHasTerm = intent.hasExtra("currentTerm");
         int cancelButtonImage;
-
-        if (intentHasTerm) {
-            currentTerm = (Term) intent.getSerializableExtra("currentTerm");
-            setHeader();
-//            setRecyclerCourse();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
-            int smallTextSize = 15;
-            TextView startDate = findViewById(R.id.startDate);
-            String dateText = currentTerm.getStartDate().format(formatter) +
-                    " - " + currentTerm.getEndDate().format(formatter);
-            startDate.setText(dateText);
-            startDate.setTextSize(smallTextSize);
-
-//            startDate.setVisibility(View.GONE);
-
-            TextView endDate = findViewById(R.id.endDate);
-
-//            endDate.setText("End Date: " + currentTerm.getEndDate().format(formatter));
-            endDate.setVisibility(View.GONE);
-
-            TextView termName = findViewById(R.id.termNameView);
-            termName.setVisibility(View.GONE);
-
-            EditText termNameInput = findViewById(R.id.termNameEditText);
-            termNameInput.setVisibility(View.GONE);
-            cancelButtonImage = R.drawable.arrow_back;
-
-
-
-        } else {
-            addTermSetUp();
-            cancelButtonImage = R.drawable.baseline_close;
-        }
-        setRecyclerCourse();
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-
-        backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
-        if (backButtonFragment == null) {
-            String cancelTag = "cancelTermButton";
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.gravity = Gravity.START | Gravity.BOTTOM;
-            backButtonFragment = new FloatingButtonFragment(cancelTag,params,cancelButtonImage);
-            fragmentManager.beginTransaction()
-                    .add(R.id.addButtonFragmentContainer, backButtonFragment,cancelTag)
-                    .commit();
-        }
-        //TODO: below works to change image, but cannot be in onCreate
-//        FloatingActionButton testButton = backButtonFragment.getView().findViewWithTag("cancelTermButton");
-//        testButton.setImageResource(R.drawable.arrow_back);
-
-
-
-
-    }
-
-    public void addTermSetUp() {
-        Log.d("AddTermActivity", "starting set up");
-        if (currentTerm == null) currentTerm = new Term();
-
-        Button deleteTermButton = findViewById(R.id.deleteTermButton);
-        deleteTermButton.setVisibility(View.GONE);
-
-
-        //add dateFragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment dateFragmentStart = fragmentManager.findFragmentById(R.id.startDateFragmentContainer);
-        if (dateFragmentStart == null) {
+        startDateFragment = fragmentManager.findFragmentById(R.id.startDateFragmentContainer);
+        if (startDateFragment == null) {
             String tag = "startDate";
-            dateFragmentStart = new DateFragment(tag);
+            startDateFragment = new DateFragment(tag);
             fragmentManager.beginTransaction()
-                    .add(R.id.startDateFragmentContainer, dateFragmentStart,tag)
+                    .add(R.id.startDateFragmentContainer, startDateFragment,tag)
                     .commit();
         }
 
-        Fragment dateFragmentEnd = fragmentManager.findFragmentById(R.id.endDateFragmentContainer);
-        if (dateFragmentEnd == null) {
+        endDateFragment = fragmentManager.findFragmentById(R.id.endDateFragmentContainer);
+        if (endDateFragment == null) {
             String endTag = "endDate";
-            dateFragmentEnd = new DateFragment(endTag);
+            endDateFragment = new DateFragment(endTag);
 
 
             fragmentManager.beginTransaction()
-                    .add(R.id.endDateFragmentContainer, dateFragmentEnd,endTag)
+                    .add(R.id.endDateFragmentContainer, endDateFragment,endTag)
                     .commit();
         }
+
         Fragment addButtonFragment = fragmentManager.findFragmentById(R.id.addButtonFragmentContainer);
         if (addButtonFragment == null) {
             String saveTag = "saveTermButton";
@@ -155,11 +95,194 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
                     .commit();
         }
 
+        if (intentHasTerm) {
+            currentTerm = (Term) intent.getSerializableExtra("currentTerm");
+            addMode = false;
+            setHeader();
+            editMode = false;
+//            setRecyclerCourse();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
+            int smallTextSize = 15;
+            TextView startDate = findViewById(R.id.startDate);
+            String dateText = currentTerm.getStartDate().format(formatter) +
+                    " - " + currentTerm.getEndDate().format(formatter);
+            startDate.setText(dateText);
+            startDate.setTextSize(smallTextSize);
+
+            TextView endDate = findViewById(R.id.endDate);
+            endDate.setVisibility(View.GONE);
+
+            TextView termName = findViewById(R.id.termNameView);
+            termName.setVisibility(View.GONE);
+
+            EditText termNameInput = findViewById(R.id.termNameEditText);
+            termNameInput.setVisibility(View.GONE);
+            cancelButtonImage = R.drawable.arrow_back;
+
+            findViewById(R.id.startDateFragmentContainer).setVisibility(View.GONE);
+            findViewById(R.id.endDateFragmentContainer).setVisibility(View.GONE);
+            findViewById(R.id.addButtonFragmentContainer).setVisibility(View.GONE);
+
+
+
+
+        } else {
+            addTermSetUp();
+            cancelButtonImage = R.drawable.baseline_close;
+            addMode = true;
+        }
+        setRecyclerCourse();
+
+
+
+        backButtonFragment = fragmentManager.findFragmentById(R.id.backButtonFragmentContainer);
+        if (backButtonFragment == null) {
+            String cancelTag = "cancelTermButton";
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.START | Gravity.BOTTOM;
+            backButtonFragment = new FloatingButtonFragment(cancelTag,params,cancelButtonImage);
+            fragmentManager.beginTransaction()
+                    .add(R.id.backButtonFragmentContainer, backButtonFragment,cancelTag)
+                    .commit();
+        }
+
+
+
+
+
+
+
+
+
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.action_1);
+        if (editMode) menuItem.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_1:
+                Log.d("TermActivity-onOptionsItemSelected", "editTerm()");
+                if (!editMode) editTerm();
+                return true;
+        }
+        return false;
+    }
+    public void editTerm() {
+
+        FloatingActionButton testButton = backButtonFragment.getView().findViewWithTag("cancelTermButton");
+        testButton.setImageResource(R.drawable.baseline_close);
+        TextView startDate = findViewById(R.id.startDate);
+        startDate.setText("Start Date");
+        TextView endDate = findViewById(R.id.endDate);
+        endDate.setVisibility(View.VISIBLE);
+        TextView termName = findViewById(R.id.termNameView);
+        termName.setVisibility(View.VISIBLE);
+        EditText termNameInput = findViewById(R.id.termNameEditText);
+        termNameInput.setVisibility(View.VISIBLE);
+        termNameInput.setText(currentTerm.getName());
+        addTermSetUp();
+
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        Fragment dateFragmentStart = fragmentManager.findFragmentById(R.id.startDateFragmentContainer);
+//        DatePicker startDatePicker = startDateFragment.getView().findViewWithTag("startDate");
+//        startDatePicker.updateDate(currentTerm.getStartDate().getYear(),
+//                currentTerm.getStartDate().getMonthValue(),currentTerm.getStartDate().getDayOfMonth());
+//
+//
+////        Fragment dateFragmentEnd = fragmentManager.findFragmentById(R.id.endDateFragmentContainer);
+//        DatePicker endDatePicker = endDateFragment.getView().findViewWithTag("endDate");
+//        endDatePicker.updateDate(currentTerm.getEndDate().getYear(),
+//                currentTerm.getEndDate().getMonthValue(),currentTerm.getEndDate().getDayOfMonth());
+
+    }
+    public void viewTerm() {
+        setHeader();
+        editMode = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
+        int smallTextSize = 15;
+        TextView startDate = findViewById(R.id.startDate);
+        String dateText = currentTerm.getStartDate().format(formatter) +
+                " - " + currentTerm.getEndDate().format(formatter);
+        startDate.setText(dateText);
+        startDate.setTextSize(smallTextSize);
+
+        TextView endDate = findViewById(R.id.endDate);
+        endDate.setVisibility(View.GONE);
+
+        TextView termName = findViewById(R.id.termNameView);
+        termName.setVisibility(View.GONE);
+
+        EditText termNameInput = findViewById(R.id.termNameEditText);
+        termNameInput.setVisibility(View.GONE);
+
+        FloatingActionButton testButton = backButtonFragment.getView().findViewWithTag("cancelTermButton");
+        testButton.setImageResource(R.drawable.arrow_back);
+        findViewById(R.id.addButtonFragmentContainer).setVisibility(View.GONE);
+
+
+
+
+
+
+        findViewById(R.id.startDateFragmentContainer).setVisibility(View.GONE);
+        findViewById(R.id.endDateFragmentContainer).setVisibility(View.GONE);
+        findViewById(R.id.addButtonFragmentContainer).setVisibility(View.GONE);
+
+    }
+
+    public void addTermSetUp() {
+        Log.d("AddTermActivity", "starting set up");
+        if (currentTerm == null) currentTerm = new Term();
+//            findViewById(R.id.action_1).setVisibility(View.GONE);
+
+        editMode = true;
+
+
+        Button deleteTermButton = findViewById(R.id.deleteTermButton);
+        deleteTermButton.setVisibility(View.GONE);
+
+
+
+
+
+        if (currentTerm.getStartDate() != null) {
+            DatePicker startDatePicker = startDateFragment.getView().findViewWithTag("startDate");
+            startDatePicker.updateDate(currentTerm.getStartDate().getYear(),
+                    currentTerm.getStartDate().getMonthValue()-1,currentTerm.getStartDate().getDayOfMonth());
+        }
+        findViewById(R.id.startDateFragmentContainer).setVisibility(View.VISIBLE);
+
+        if (currentTerm.getEndDate() != null) {
+            DatePicker endDatePicker = endDateFragment.getView().findViewWithTag("endDate");
+            endDatePicker.updateDate(currentTerm.getEndDate().getYear(),
+                    currentTerm.getEndDate().getMonthValue()-1,currentTerm.getEndDate().getDayOfMonth());
+        }
+        findViewById(R.id.endDateFragmentContainer).setVisibility(View.VISIBLE);
+        findViewById(R.id.addButtonFragmentContainer).setVisibility(View.VISIBLE);
+
+    }
+
 
     public void setHeader() {
         TextView headerText = findViewById(R.id.headerTitle);
         headerText.setText(currentTerm.getName());
+
     }
     public void setRecyclerCourse() {
 
@@ -178,7 +301,8 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         Log.d("Debug-teg", "addCourseClicked");
         Log.d("AddTermActivity", String.valueOf(currentTerm));
         Intent courseIntent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
-
+        Log.d("TermActivity", String.format("Term ID: %s", currentTerm.getId()));
+        if (currentTerm.getId() > 0) courseIntent.putExtra("currentTerm", true);
         startActivityForResult(courseIntent,COURSE_REQUEST_CODE);
 
     }
@@ -210,21 +334,90 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     public void onButtonClick(View view, String tag) {
         Log.d("AddTermActivity", tag);
         if (tag.equals("cancelTermButton")) {
+
+
+
+            if (editMode && !addMode) {
+                editMode = false;
+                findViewById(R.id.action_1).setVisibility(View.VISIBLE);
+                viewTerm();
+                Button deleteTermButton = findViewById(R.id.deleteTermButton);
+                deleteTermButton.setVisibility(View.VISIBLE);
+                return;
+            }
+
             currentTerm = null;
             finish();
-        } else if (tag.equals("saveTermButton")) {
+        } else if (tag.equals("saveTermButton") && addMode) {
             saveTerm();
+
+        } else if (tag.equals("saveTermButton")) {
+
+            updateTermObject();
+            editMode = false;
+//            findViewById(R.id.action_1).setVisibility(View.VISIBLE);
+            viewTerm();
+            Button deleteTermButton = findViewById(R.id.deleteTermButton);
+            deleteTermButton.setVisibility(View.VISIBLE);
+            setInputs();
+            //TODO: save changes to term
         }
 
     }
-//    public void updateCourses() {
-//        RecyclerView courseRecyclerView = findViewById(R.id.courseRecyclerView);
-//
-//        RecyclerView.LayoutManager linearLayoutManager =
-//                new LinearLayoutManager(this);
-//        courseRecyclerView.setLayoutManager(linearLayoutManager);
-//        courseRecyclerView.setAdapter(new CourseAdapter(currentTerm.getTermCourses(),this));
-//    }
+
+    public void updateTermObject() {
+        Log.d("TermActivity-UpdateTermObject()", "updateTermObject");
+        if (!checkInputs()) return;
+
+
+        EditText termNameEditText = findViewById(R.id.termNameEditText);
+        String termNameString = termNameEditText.getText().toString();
+        currentTerm.setName(termNameString);
+        currentTerm.setStartDate(startDate);
+        currentTerm.setEndDate(endDate);
+        Log.d("TermActivity-UpdateTermObject()", "endUpdateTerm");
+    }
+
+    public void setInputs() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
+        TextView startDate = findViewById(R.id.startDate);
+        String dateText = currentTerm.getStartDate().format(formatter) +
+                " - " + currentTerm.getEndDate().format(formatter);
+        startDate.setText(dateText);
+        setHeader();
+    }
+
+    public boolean checkInputs() {
+        EditText termNameEditText = findViewById(R.id.termNameEditText);
+        String termNameString = termNameEditText.getText().toString();
+        boolean endBeforeStart = endDate.isBefore(startDate);
+        boolean startEqualsEnd = startDate.isEqual(endDate);
+        boolean termNameEmpty = (termNameString.isEmpty());
+
+        if (endBeforeStart) {
+            Log.d("AddTermActivity", "Start date is not before the end date.");
+            Toast.makeText(TermDetailsActivity.this, "Start date is not before the end date.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (startEqualsEnd) {
+            Log.d("AddTermActivity", "Start date and end date cannot be the same");
+            Toast.makeText(TermDetailsActivity.this, "Start date and end date cannot be the same",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (termNameEmpty) {
+            Log.d("AddTermActivity", "Term name cannot be empty");
+            Toast.makeText(TermDetailsActivity.this, "Term name cannot be empty",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+
+
 
 
     public void saveTerm() {
@@ -235,29 +428,31 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         EditText termNameEditText = findViewById(R.id.termNameEditText);
         String termNameString = termNameEditText.getText().toString();
 
-        boolean endBeforeStart = endDate.isBefore(startDate);
-        boolean startEqualsEnd = startDate.isEqual(endDate);
-        boolean termNameEmpty = (termNameString.isEmpty());
-
-        if (endBeforeStart) {
-            Log.d("AddTermActivity", "Start date is not before the end date.");
-            Toast.makeText(TermDetailsActivity.this, "Start date is not before the end date.",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        else if (startEqualsEnd) {
-            Log.d("AddTermActivity", "Start date and end date cannot be the same");
-            Toast.makeText(TermDetailsActivity.this, "Start date and end date cannot be the same",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (termNameEmpty) {
-            Log.d("AddTermActivity", "Term name cannot be empty");
-            Toast.makeText(TermDetailsActivity.this, "Term name cannot be empty",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
+        checkInputs();
+//
+//        boolean endBeforeStart = endDate.isBefore(startDate);
+//        boolean startEqualsEnd = startDate.isEqual(endDate);
+//        boolean termNameEmpty = (termNameString.isEmpty());
+//
+//        if (endBeforeStart) {
+//            Log.d("AddTermActivity", "Start date is not before the end date.");
+//            Toast.makeText(TermDetailsActivity.this, "Start date is not before the end date.",
+//                    Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        else if (startEqualsEnd) {
+//            Log.d("AddTermActivity", "Start date and end date cannot be the same");
+//            Toast.makeText(TermDetailsActivity.this, "Start date and end date cannot be the same",
+//                    Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if (termNameEmpty) {
+//            Log.d("AddTermActivity", "Term name cannot be empty");
+//            Toast.makeText(TermDetailsActivity.this, "Term name cannot be empty",
+//                    Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         currentTerm.setName(termNameString);
         currentTerm.setStartDate(startDate);
         currentTerm.setEndDate(endDate);

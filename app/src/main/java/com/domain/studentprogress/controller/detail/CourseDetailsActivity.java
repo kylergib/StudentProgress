@@ -292,7 +292,13 @@ public class CourseDetailsActivity extends AppCompatActivity  implements DateFra
             currentCourse.setCourseStatus(courseStatus);
 
             TermDetailsActivity.currentTerm.addTermCourse(currentCourse);
-
+            Intent intent = getIntent();
+            if (intent.hasExtra("currentTerm")) {
+                //TODO: save to database if term already exists
+                Log.d("CourseActivity", "term already exists");
+            } else {
+                Log.d("CourseActivity", "term doesn't exist");
+            }
             setResult(RESULT_OK, returnIntent);
             finish();
         }
