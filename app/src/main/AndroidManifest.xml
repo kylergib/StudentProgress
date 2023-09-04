@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,8 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentProgress"
         tools:targetApi="31">
+        <receiver
+            android:name="com.domain.studentprogress.util.MyReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
-            android:name=".MainActivity"
+            android:name="com.domain.studentprogress.controller.detail.CourseDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.domain.studentprogress.controller.detail.NoteDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.domain.studentprogress.controller.detail.InstructorDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.domain.studentprogress.controller.detail.AssessmentDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.domain.studentprogress.controller.detail.TermDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.domain.studentprogress.controller.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.domain.studentprogress.controller.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

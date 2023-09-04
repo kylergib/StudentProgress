@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.domain.studentprogress.controller.detail.InstructorDetailActivity">
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/headerTitleInstructor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor"
+                android:textSize="@dimen/header_text_size"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/instructorNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor_name"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/instructorNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:hint="@string/enter_instructor_name_here"/>
+
+            <TextView
+                android:id="@+id/instructorNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor_number"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/instructorPhoneNumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:hint="@string/enter_instructor_number_here"/>
+            <TextView
+                android:id="@+id/instructorEmailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/header_margin_top"
+                android:text="@string/instructor_email"
+                android:textSize="@dimen/sub_header_text_size"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/instructorEmailEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="15"
+                android:importantForAutofill="no"
+                android:layout_marginBottom="@dimen/last_item_margin"
+                android:inputType="textEmailAddress" />
+
+        </LinearLayout>
+    </ScrollView>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addButtonFragmentContainer"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/backButtonFragmentContainer"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
