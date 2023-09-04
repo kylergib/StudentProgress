@@ -35,7 +35,6 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        // Make sure the parent activity implements the interface
         if (context instanceof OnButtonClickListener) {
             listener = (OnButtonClickListener) context;
         } else {
@@ -50,7 +49,6 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     }
 
     public FloatingButtonFragment() {
-        // Required empty public constructor
         this.fragmentTag = null;
         this.layoutParams = null;
         this.buttonSource = 0;
@@ -72,7 +70,6 @@ public class FloatingButtonFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_floating_button, container, false);
 
         FrameLayout buttonFrame = rootView.findViewById(R.id.buttonFrame);

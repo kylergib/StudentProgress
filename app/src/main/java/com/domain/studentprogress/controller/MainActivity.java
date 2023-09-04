@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.kgibs87.studentprogress.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static SharedPreferences sharedPref;
     public static SharedPreferences.Editor sharedPrefEditor;
+    public static int numAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("preferences",Context.MODE_PRIVATE);
         sharedPrefEditor = sharedPref.edit();
+
+        if (sharedPref.getInt("numNotification", -1) == -1) {
+            sharedPrefEditor.putInt("numNotification",1);
+            MainActivity.numAlert = 1;
+        } else {
+            MainActivity.numAlert = sharedPref.getInt("numNotification", -1);
+        }
+
         //todo: change the check to reading from sqlite database
         if (sharedPref.getString("name",null) == null) {
             setContentView(R.layout.activity_main);
@@ -32,14 +42,14 @@ public class MainActivity extends AppCompatActivity {
             startDashboard();
         }
 
-
-
-
-
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
+
     public void submitName(View view) {
-        //get text in name edit text
         String nameEntered = nameEditText.getText().toString();
         if (nameEntered.equals("")) {
             Toast.makeText(MainActivity.this, "Name cannot be blank.", Toast.LENGTH_LONG).show();
@@ -53,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
     public void startDashboard() {
         Intent dashboardIntent = new Intent(this, DashboardActivity.class);
         startActivity(dashboardIntent);
+    }
+
+    public static void addNumNotification() {
+        MainActivity.numAlert += 1;
+        sharedPrefEditor.putInt("numNotification", MainActivity.numAlert);
+        sharedPrefEditor.apply();
     }
 
 

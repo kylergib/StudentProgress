@@ -29,7 +29,6 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
     private int month = 0;
     private int day = 0;
 
-    // Interface to communicate with parent activity
     public interface OnDateSelectedListener {
         void onDateSelected(LocalDate localDate, String tag);
     }
@@ -37,7 +36,6 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        // Make sure the parent activity implements the interface
         if (context instanceof OnDateSelectedListener) {
             listener = (OnDateSelectedListener) context;
         } else {
@@ -51,7 +49,6 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
         super.onDetach();
         listener = null;
     }
-    // Inside the DatePicker's OnDateChangedListener
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         LocalDate selectedDate = LocalDate.of(year,monthOfYear+1,dayOfMonth);
@@ -60,7 +57,6 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
 
 
     public DateFragment(String fragmentTag) {
-        // Required empty public constructor
         this.fragmentTag = fragmentTag;
         }
 
@@ -74,12 +70,9 @@ public class DateFragment extends Fragment implements DatePicker.OnDateChangedLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_date, container, false);
 
-        // Find the DatePicker view in the layout
         DatePicker datePicker = rootView.findViewById(R.id.datePicker);
-        // Set the OnDateChangedListener on the DatePicker view
         datePicker.setOnDateChangedListener(this);
         datePicker.setTag(fragmentTag);
         if (year != 0 && month != 0 && day != 0) datePicker.updateDate(year,month-1,day);

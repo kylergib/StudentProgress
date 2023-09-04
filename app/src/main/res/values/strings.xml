@@ -43,4 +43,7 @@
     <string name="enter_assessment_name_here">Enter assessment name here</string>
     <string name="assessment_name_input_line">Assessment name input line</string>
     <string name="enter_course_name_here">Enter course name here</string>
+    <string name="delete_course">Delete Course</string>
+    <string name="channel_name">StudentChannel</string>
+    <string name="channel_description">Displays when a course or assessment is starting or ending</string>
 </resources>

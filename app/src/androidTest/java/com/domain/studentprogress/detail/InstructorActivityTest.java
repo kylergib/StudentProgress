@@ -36,8 +36,6 @@ public class InstructorActivityTest {
         try (ActivityScenario<InstructorDetailActivity> ignored = ActivityScenario.launch(InstructorDetailActivity.class)) {
             testViewsExist();
         }
-
-
     }
     @Test
     public void saveInstructor() {

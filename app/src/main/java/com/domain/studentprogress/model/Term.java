@@ -64,6 +64,31 @@ public class Term implements Serializable {
     public List<Course> getTermCourses() {
         return termCourses;
     }
+    public void removeTermCourse(Course course) {
+        Course deleteCourse = null;
+        System.out.println(termCourses);
+        System.out.println(course.getCourseName() + " trying to delete");
+        for (Course termCours : termCourses) {
+            if (termCours.getId() == course.getId()) {
+                deleteCourse = termCours;
+            }
+        }
+        termCourses.remove(deleteCourse);
+        System.out.println(termCourses);
+    }
+    public void updateTermCourse(Course course) {
+        Course deleteCourse = null;
+        System.out.println(termCourses);
+        System.out.println(course.getCourseName() + " trying to delete");
+        for (Course termCours : termCourses) {
+            if (termCours.getId() == course.getId()) {
+                deleteCourse = termCours;
+            }
+        }
+        termCourses.remove(deleteCourse);
+        termCourses.add(course);
+        System.out.println(termCourses);
+    }
 
     public void addTermCourse(Course termCourse) {
         this.termCourses.add(termCourse);

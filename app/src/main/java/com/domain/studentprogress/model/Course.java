@@ -129,6 +129,19 @@ public class Course implements Serializable {
     public void addCourseAssessment(Assessment courseAssessment) {
         this.courseAssessments.add(courseAssessment);
     }
+    public void removeCourseAssessment(Assessment courseAssessment) {
+        Assessment deleteAssessment = null;
+        for (Assessment assessment : courseAssessments) {
+            if (assessment.getAssessmentId() == courseAssessment.getAssessmentId()) {
+                deleteAssessment = assessment;
+            }
+        }
+        courseAssessments.remove(deleteAssessment);
+    }
+    public void updateCourseAssessment(Assessment courseAssessment) {
+        removeCourseAssessment(courseAssessment);
+        courseAssessments.add(courseAssessment);
+    }
 
     public void setCourseAssessments(List<Assessment> courseAssessments) {
         this.courseAssessments = courseAssessments;
@@ -140,6 +153,19 @@ public class Course implements Serializable {
     public void addCourseInstructor(Instructor courseInstructor) {
         this.courseInstructors.add(courseInstructor);
     }
+    public void removeCourseInstructor(Instructor courseInstructor) {
+        Instructor deleteInstructor = null;
+        for (Instructor instructor : courseInstructors) {
+            if (instructor.getId() == courseInstructor.getId()) {
+                deleteInstructor = instructor;
+            }
+        }
+        courseInstructors.remove(deleteInstructor);
+    }
+    public void updateInstructor(Instructor courseInstructor) {
+        removeCourseInstructor(courseInstructor);
+        addCourseInstructor(courseInstructor);
+    }
 
     public void setCourseInstructors(List<Instructor> courseInstructors) {
         this.courseInstructors = courseInstructors;
@@ -150,6 +176,20 @@ public class Course implements Serializable {
     }
     public void addCourseNote(Note courseNote) {
         this.courseNotes.add(courseNote);
+    }
+    public void removeNote(Note courseNote) {
+        Note deleteNote = null;
+        for (Note note : courseNotes) {
+            if (note.getId() == courseNote.getId()) {
+                deleteNote = note;
+            }
+        }
+        courseNotes.remove(deleteNote);
+
+    }
+    public void updateNote(Note courseNote) {
+        removeNote(courseNote);
+        courseNotes.add(courseNote);
     }
 
     public void setCourseNotes(List<Note> courseNotes) {

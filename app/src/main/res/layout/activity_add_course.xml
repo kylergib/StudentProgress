@@ -157,6 +157,13 @@
                 android:onClick="addNoteClick"
                 android:text="@string/add_note"
                 />
+            <Button
+                android:id="@+id/exportAllNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="exportNotesClick"
+                android:text="Export Notes"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,17 +204,27 @@
                     android:layout_marginTop="@dimen/header_margin_top"
                     android:id="@+id/endDateFragmentContainer"
                     />
+
             </LinearLayout>
+            <Button
+                android:id="@+id/deleteCourseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="deleteCourseClick"
+                android:text="@string/delete_course"
+                />
+
+
 
         </LinearLayout>
     </ScrollView>
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/addButtonFragmentContainer"
-        />
-    <FrameLayout
         android:id="@+id/backButtonFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/addButtonFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

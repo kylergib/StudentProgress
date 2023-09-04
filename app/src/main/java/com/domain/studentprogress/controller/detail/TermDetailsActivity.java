@@ -1,10 +1,10 @@
 package com.domain.studentprogress.controller.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -26,13 +26,13 @@ import com.domain.studentprogress.fragment.DateFragment;
 import com.domain.studentprogress.fragment.FloatingButtonFragment;
 import com.domain.studentprogress.model.Course;
 import com.domain.studentprogress.model.StudentDatabase;
+import com.domain.studentprogress.util.Helper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kgibs87.studentprogress.R;
 import com.domain.studentprogress.controller.DashboardActivity;
 import com.domain.studentprogress.holder.CourseHolder;
 import com.domain.studentprogress.model.Term;
 
-import java.text.Format;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -44,6 +44,7 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     public LocalDate endDate = LocalDate.now();
     public static final int COURSE_REQUEST_CODE = 1234;
     public static Term currentTerm;
+    public static Term oldTerm;
     private Fragment backButtonFragment;
     private Fragment startDateFragment;
     private Fragment endDateFragment;
@@ -56,6 +57,7 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         setContentView(R.layout.activity_detail_term);
 
         Intent intent = getIntent();
+
 
         boolean intentHasTerm = intent.hasExtra("currentTerm");
         int cancelButtonImage;
@@ -97,10 +99,10 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
 
         if (intentHasTerm) {
             currentTerm = (Term) intent.getSerializableExtra("currentTerm");
+            oldTerm = (Term) intent.getSerializableExtra("currentTerm");
             addMode = false;
             setHeader();
             editMode = false;
-//            setRecyclerCourse();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u");
             int smallTextSize = 15;
             TextView startDate = findViewById(R.id.startDate);
@@ -149,14 +151,6 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
                     .commit();
         }
 
-
-
-
-
-
-
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -185,6 +179,8 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     }
     public void editTerm() {
 
+        ActionMenuItemView menuItem = findViewById(R.id.action_1);
+        menuItem.setVisibility(View.GONE);
         FloatingActionButton testButton = backButtonFragment.getView().findViewWithTag("cancelTermButton");
         testButton.setImageResource(R.drawable.baseline_close);
         TextView startDate = findViewById(R.id.startDate);
@@ -197,18 +193,6 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         termNameInput.setVisibility(View.VISIBLE);
         termNameInput.setText(currentTerm.getName());
         addTermSetUp();
-
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fragment dateFragmentStart = fragmentManager.findFragmentById(R.id.startDateFragmentContainer);
-//        DatePicker startDatePicker = startDateFragment.getView().findViewWithTag("startDate");
-//        startDatePicker.updateDate(currentTerm.getStartDate().getYear(),
-//                currentTerm.getStartDate().getMonthValue(),currentTerm.getStartDate().getDayOfMonth());
-//
-//
-////        Fragment dateFragmentEnd = fragmentManager.findFragmentById(R.id.endDateFragmentContainer);
-//        DatePicker endDatePicker = endDateFragment.getView().findViewWithTag("endDate");
-//        endDatePicker.updateDate(currentTerm.getEndDate().getYear(),
-//                currentTerm.getEndDate().getMonthValue(),currentTerm.getEndDate().getDayOfMonth());
 
     }
     public void viewTerm() {
@@ -235,11 +219,6 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         testButton.setImageResource(R.drawable.arrow_back);
         findViewById(R.id.addButtonFragmentContainer).setVisibility(View.GONE);
 
-
-
-
-
-
         findViewById(R.id.startDateFragmentContainer).setVisibility(View.GONE);
         findViewById(R.id.endDateFragmentContainer).setVisibility(View.GONE);
         findViewById(R.id.addButtonFragmentContainer).setVisibility(View.GONE);
@@ -249,7 +228,6 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     public void addTermSetUp() {
         Log.d("AddTermActivity", "starting set up");
         if (currentTerm == null) currentTerm = new Term();
-//            findViewById(R.id.action_1).setVisibility(View.GONE);
 
         editMode = true;
 
@@ -285,8 +263,8 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
 
     }
     public void setRecyclerCourse() {
-
-        Log.d("termDetail", String.valueOf(currentTerm.getTermCourses()));
+        if (currentTerm.getTermCourses().size() == 0) return;
+        Log.d("termDetail", String.valueOf(currentTerm.getTermCourses().size()));
         RecyclerView recyclerView = findViewById(R.id.courseRecyclerView);
         int colSize;
         if (currentTerm.getTermCourses().size() > 1) colSize = 2;
@@ -309,22 +287,21 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
     @Override
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("termDetailsActivity Result", resultCode + " - " + requestCode);
         if (requestCode == COURSE_REQUEST_CODE && resultCode == RESULT_OK) {
             Log.d("AddTermActivity", "returning to activity");
             Log.d("AddTermActivity", String.valueOf(currentTerm));
-            setRecyclerCourse();
+
         }
+        setRecyclerCourse();
     }
 
     @Override
     public void onDateSelected(LocalDate localDate, String tag) {
-        // Check the tag to determine which DateFragment is invoking the method
         if (tag.equals("startDate")) {
-//            startDate = date;
             Log.d("AddNoteActivity", "Start date selected: " + localDate.toString());
             startDate = localDate;
         } else if (tag.equals("endDate")) {
-//            endDate = date;
             Log.d("AddNoteActivity", tag + " selected: " + localDate.toString());
             endDate = localDate;
         }
@@ -353,29 +330,31 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
 
         } else if (tag.equals("saveTermButton")) {
 
-            updateTermObject();
+            if (!updateTermObject()) {
+                return;
+            }
             editMode = false;
-//            findViewById(R.id.action_1).setVisibility(View.VISIBLE);
             viewTerm();
             Button deleteTermButton = findViewById(R.id.deleteTermButton);
             deleteTermButton.setVisibility(View.VISIBLE);
             setInputs();
+            Helper.closeKeyboard(this,view);
             //TODO: save changes to term
+            mStudentDb.updateTerm(currentTerm);
         }
 
     }
 
-    public void updateTermObject() {
+    public boolean updateTermObject() {
         Log.d("TermActivity-UpdateTermObject()", "updateTermObject");
-        if (!checkInputs()) return;
-
-
+        if (!checkInputs()) return false;
         EditText termNameEditText = findViewById(R.id.termNameEditText);
         String termNameString = termNameEditText.getText().toString();
         currentTerm.setName(termNameString);
         currentTerm.setStartDate(startDate);
         currentTerm.setEndDate(endDate);
         Log.d("TermActivity-UpdateTermObject()", "endUpdateTerm");
+        return true;
     }
 
     public void setInputs() {
@@ -415,12 +394,7 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         }
         return true;
     }
-
-
-
-
-
-    public void saveTerm() {
+    public void  saveTerm() {
 
         Log.d("AddTermActivity", "returning to activity");
         Log.d("AddTermActivity", String.valueOf(currentTerm));
@@ -428,31 +402,9 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         EditText termNameEditText = findViewById(R.id.termNameEditText);
         String termNameString = termNameEditText.getText().toString();
 
-        checkInputs();
-//
-//        boolean endBeforeStart = endDate.isBefore(startDate);
-//        boolean startEqualsEnd = startDate.isEqual(endDate);
-//        boolean termNameEmpty = (termNameString.isEmpty());
-//
-//        if (endBeforeStart) {
-//            Log.d("AddTermActivity", "Start date is not before the end date.");
-//            Toast.makeText(TermDetailsActivity.this, "Start date is not before the end date.",
-//                    Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        else if (startEqualsEnd) {
-//            Log.d("AddTermActivity", "Start date and end date cannot be the same");
-//            Toast.makeText(TermDetailsActivity.this, "Start date and end date cannot be the same",
-//                    Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        if (termNameEmpty) {
-//            Log.d("AddTermActivity", "Term name cannot be empty");
-//            Toast.makeText(TermDetailsActivity.this, "Term name cannot be empty",
-//                    Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (!checkInputs()) {
+            return;
+        }
         currentTerm.setName(termNameString);
         currentTerm.setStartDate(startDate);
         currentTerm.setEndDate(endDate);
@@ -460,7 +412,6 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
                 currentTerm.getName(), currentTerm.getStartDate().toString(),
                 currentTerm.getEndDate().toString()));
 
-        //add term to database
         long termId = mStudentDb.addTerm(currentTerm);
         Log.d("AddTermTest", String.valueOf(termId));
         currentTerm.setId(termId);
@@ -531,12 +482,21 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
         Log.d("onCourseClick", String.valueOf(course.getCourseAssessments()));
         Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
         intent.putExtra("currentCourse", course);
-        startActivity(intent);
+        if (currentTerm.getId() > 0) intent.putExtra("currentTerm", true);
+        startActivityForResult(intent,COURSE_REQUEST_CODE);
+
+
     }
 
 
     public void deleteTermClick(View view) {
-        //todo add pop up to confirm deleting term (cannot be reversed)
+
+        if (currentTerm.getTermCourses().size() > 0) {
+            Log.w("deleteTermClick","Cannot delete term because it has a course. ");
+            Toast.makeText(TermDetailsActivity.this, "Cannot delete a term if it has a course in it. Please delete course first.",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         Log.d("TermDetails", "Delete: " + currentTerm.getId());
         boolean deletedTermBool = mStudentDb.deleteTerm(currentTerm.getId());
         if (deletedTermBool) {
@@ -545,12 +505,14 @@ public class TermDetailsActivity  extends AppCompatActivity implements DateFragm
             startActivity(dashboardIntent);
             currentTerm = null;
         }
-        else Log.d("deleteTermClick", "Could not delete " + currentTerm.getId());
+        else {
+            Log.d("deleteTermClick", "Could not delete " + currentTerm.getId());
+            Toast.makeText(TermDetailsActivity.this, "There was an error deleting term, please try again",
+                    Toast.LENGTH_SHORT).show();
+        }
 
 
     }
-
-    //TODO: add edit button
 
 
 }

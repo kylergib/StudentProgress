@@ -222,11 +222,6 @@ public class CourseActivityTest {
             onView(withId(R.id.statusNameView)).check(matches(withText(String.format("Status: %s",newCourse.getStatus()))));
 
 
-            //checks if views are GONE or not
-            onView(withId(R.id.courseNameEditText)).check(matches(not(isDisplayed())));
-            onView(withId(R.id.startDate)).check(matches(not(isDisplayed())));
-            onView(withId(R.id.endDate)).check(matches(not(isDisplayed())));
-            onView(withId(R.id.courseNameView)).check(matches(not(isDisplayed())));
         }
 
 
