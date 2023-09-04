@@ -3,7 +3,6 @@
 ## Final for class
 
 ### Kyle Gibson
-### 04/11/2023
 
 ## Description:
 
